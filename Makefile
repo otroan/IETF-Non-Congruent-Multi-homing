@@ -3,7 +3,7 @@
 # April 2009
 
 REVISION=00
-DRAFT=draft-troan-multihoming-without-nat66.txt \
+DRAFT=draft-troan-multihoming-without-nat.txt \
 
 XML2RFC=./xml2rfc-1.34/xml2rfc.tcl
 
