@@ -364,7 +364,130 @@ strongly.</t>
  <section anchor="terminology" title="Terminology">
  </section>
 
-<section title="Problem statement / Analysis">
+<section title="Problem statement and Analysis">
+
+  <t>The problems described in section 2 can be classified into these
+  three problems:<list>
+  <t>- Wrong next hop selection</t>
+  <t>- Wrong source address selection</t>
+  <t>- Wrong DNS server selection</t>
+  </list></t>
+
+  <t>In this section, it reviews each problem for all scenarios, and
+  describes that which device need to have the features to solve these
+  problems.</t>
+
+  <section title="next hop selection">
+    <t>IPv6 multi-homed host or gateway router will have multiple
+    uplinks, that means it has multiple default routers with only
+    Neighbor Discovery Protocol [RFC4861] used for distributing
+    default route/next hop information to host or gateway router.</t>
+
+    <t>In such case, the host or gateway router may chose wrong next
+    hop and may not be reachable to required destination host.  For
+    example, in all scenarios described in section 2, when the
+    destination server is in network 2 and it does not have
+    reachability from network 1 because it's used for closed service,
+    the source host or gateway router does not know which next hop is
+    proper route for the destination server. The host or gateway
+    router may chose rtr1 as next hop for the server. It results
+    losing connectivity for the server.  The host or gateway router
+    should have route information for each service, but the use of
+    dynamic routing protocol between end node and service provider
+    edge router is not a appropriate way in general.  In IPv4
+    services, the solution was provided as one of the feature of
+    gateway router, like pre-configured service route
+    information,static route configuration by user,etc. But in IPv6,
+    more dynamic and manageable solution is required to relieve the
+    users of complexity of IPv6 address and mis-operation.</t>
+
+    <t>Extensions to Neighbor Discovery protocol defined in [RFC4191]
+    provides the preferences for multiple default routes as well as
+    more specific routes, but it does not allow per node operation in
+    multi access topology because same information is multicasted to
+    all nodes in the segment. Network operator prefers per node
+    operation and centralized management, and [draft-dec] proposes
+    DHCPv6 based solution.</t>
+
+    <t>Scenario 1: "Host" needs to support the solution for this
+    problem</t>
+    <t>Scenario 2: "GW rtr" needs to support the solution for this
+    problem</t>
+    <t>Scenario 3: "Host" needs to support the solution for this
+    problem</t>
+    
+  </section>
+
+  <section title="Source address selection">
+
+    <t>IPv6 multi-homed host may have multiple IPv6 addresses assigned
+    from each service provider on one same uplink or each different
+    uplinks.  When the host sends packets for the destination server
+    in network 2, the host may choose the address assigned from
+    network 1 as it's source address, and it may be filtered out by
+    network 2's operation policy.  The host should have the way to
+    chose correct source address based on destination
+    addresses/prefixes.</t>
+
+    <t>In IPv4, the solution was provided by using NAT, with
+    translating source address for each service. But in IPv6, to keep
+    the transparency and reap IPv6's benefits, avoidance of using NAT
+    is required for not breaking transparency in any case.</t>
+
+    <t>As described in [draft-ietf-6man-addr-select-sol], [RFC3484]
+    defines the rules for selecting source address, but it does not
+    work in some cases and network operator requires the way to
+    distribute address selection policy for each node.
+    [draft-fujisaki-dhc-addr-select-opt] proposes the way to enforce
+    address selection policy for each node via DHCPv6 option.</t>
+
+    <t>Scenario 1: "Host" needs to support the solution for this
+    problem</t>
+
+    <t>Scenario 2: "Host" needs to support the solution for this
+    problem</t>
+
+    <t>Scenario 3: "Host" needs to support the solution for this
+    problem</t>
+
+  </section>
+
+  <section title="DNS server selection">
+
+      <t>IPv6 multi-homed host or gateway router may have multiple DNS
+      server information from each connected services. When the host
+      sends DNS query for destination host, the host can not know
+      which DNS server should be used for the query.</t>
+
+      <t>In IPv4, the query was sent to all DNS servers and the host
+      waits to get the reply from any one of DNS server. In IPv6, it
+      requires more intelligent DNS server selection way to minimize
+      the impact for DNS server load.And sometimes ASP provides
+      host/address information only for it's ASP subscribers as closed
+      service. In such case, if the host sends the query for ASP's
+      server to internet/ISP's DNS server, it may not be able to get
+      proper DNS response and loose the connectivity, and xSP operator
+      may not want the own hosts information to be leaked to internet
+      for security reason.</t>
+
+      <t>IPv6 multi-homed host or gateway router should have the
+      feature to select DNS server for each service based on domain
+      space for the destination, and it's selection policy should be
+      distributed from each service.
+      [draft-savolainen-mif-dns-server-selection] proposes DNS server
+      selection policy enforcement solution with DHCPv6 option.</t>
+
+      <t>Scenario 1: "Host" needs to support the solution for this
+      problem</t>
+
+      <t>Scenario 2: "GW rtr" needs to support the solution for this
+      problem</t>
+
+      <t>Scenario 3: "Host" needs to support the solution for this
+      problem</t>
+
+  </section>
+
 </section>
 
 <section title="Requirements">

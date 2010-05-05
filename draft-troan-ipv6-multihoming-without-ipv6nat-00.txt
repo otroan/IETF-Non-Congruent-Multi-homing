@@ -81,23 +81,23 @@ Table of Contents
      3.2.  Multihomed network environment . . . . . . . . . . . . . .  7
      3.3.  Problem happens at multihoming scenarios . . . . . . . . .  8
    4.  Terminology  . . . . . . . . . . . . . . . . . . . . . . . . .  8
-   5.  Problem statement / Analysis . . . . . . . . . . . . . . . . .  8
-   6.  Requirements . . . . . . . . . . . . . . . . . . . . . . . . .  9
-     6.1.  End-to-End transparency  . . . . . . . . . . . . . . . . .  9
-     6.2.  Policy enforcement . . . . . . . . . . . . . . . . . . . .  9
-     6.3.  Scalability  . . . . . . . . . . . . . . . . . . . . . . .  9
-   7.  Implementation approach  . . . . . . . . . . . . . . . . . . . 10
-   8.  Consideration for legacy host support  . . . . . . . . . . . . 11
-     8.1.  Discrete interface . . . . . . . . . . . . . . . . . . . . 12
-     8.2.  Rewriting source prefix  . . . . . . . . . . . . . . . . . 12
-   9.  Security Considerations  . . . . . . . . . . . . . . . . . . . 12
-   10. IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 12
-   11. Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 12
-   12. Normative References . . . . . . . . . . . . . . . . . . . . . 12
-   Author's Address . . . . . . . . . . . . . . . . . . . . . . . . . 13
-
-
-
+   5.  Problem statement and Analysis . . . . . . . . . . . . . . . .  8
+     5.1.  next hop selection . . . . . . . . . . . . . . . . . . . .  9
+     5.2.  Source address selection . . . . . . . . . . . . . . . . . 10
+     5.3.  DNS server selection . . . . . . . . . . . . . . . . . . . 10
+   6.  Requirements . . . . . . . . . . . . . . . . . . . . . . . . . 11
+     6.1.  End-to-End transparency  . . . . . . . . . . . . . . . . . 11
+     6.2.  Policy enforcement . . . . . . . . . . . . . . . . . . . . 11
+     6.3.  Scalability  . . . . . . . . . . . . . . . . . . . . . . . 12
+   7.  Implementation approach  . . . . . . . . . . . . . . . . . . . 12
+   8.  Consideration for legacy host support  . . . . . . . . . . . . 14
+     8.1.  Discrete interface . . . . . . . . . . . . . . . . . . . . 14
+     8.2.  Rewriting source prefix  . . . . . . . . . . . . . . . . . 14
+   9.  Security Considerations  . . . . . . . . . . . . . . . . . . . 14
+   10. IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 14
+   11. Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 15
+   12. Normative References . . . . . . . . . . . . . . . . . . . . . 15
+   Author's Address . . . . . . . . . . . . . . . . . . . . . . . . . 15
 
 
 
@@ -436,10 +436,10 @@ Internet-Draft        IPv6 multi-homing withou NAT            April 2010
 4.  Terminology
 
 
-5.  Problem statement / Analysis
+5.  Problem statement and Analysis
 
-
-
+   The problems described in section 2 can be classified into these
+   three problems:
 
 
 
@@ -447,6 +447,128 @@ Internet-Draft        IPv6 multi-homing withou NAT            April 2010
 Troan                    Expires October 3, 2010                [Page 8]
 
 Internet-Draft        IPv6 multi-homing withou NAT            April 2010
+
+
+      - Wrong next hop selection
+
+      - Wrong source address selection
+
+      - Wrong DNS server selection
+
+   In this section, it reviews each problem for all scenarios, and
+   describes that which device need to have the features to solve these
+   problems.
+
+5.1.  next hop selection
+
+   IPv6 multi-homed host or gateway router will have multiple uplinks,
+   that means it has multiple default routers with only Neighbor
+   Discovery Protocol [RFC4861] used for distributing default route/next
+   hop information to host or gateway router.
+
+   In such case, the host or gateway router may chose wrong next hop and
+   may not be reachable to required destination host.  For example, in
+   all scenarios described in section 2, when the destination server is
+   in network 2 and it does not have reachability from network 1 because
+   it's used for closed service, the source host or gateway router does
+   not know which next hop is proper route for the destination server.
+   The host or gateway router may chose rtr1 as next hop for the server.
+   It results losing connectivity for the server.  The host or gateway
+   router should have route information for each service, but the use of
+   dynamic routing protocol between end node and service provider edge
+   router is not a appropriate way in general.  In IPv4 services, the
+   solution was provided as one of the feature of gateway router, like
+   pre-configured service route information,static route configuration
+   by user,etc.  But in IPv6, more dynamic and manageable solution is
+   required to relieve the users of complexity of IPv6 address and mis-
+   operation.
+
+   Extensions to Neighbor Discovery protocol defined in [RFC4191]
+   provides the preferences for multiple default routes as well as more
+   specific routes, but it does not allow per node operation in multi
+   access topology because same information is multicasted to all nodes
+   in the segment.  Network operator prefers per node operation and
+   centralized management, and [draft-dec] proposes DHCPv6 based
+   solution.
+
+   Scenario 1: "Host" needs to support the solution for this problem
+
+   Scenario 2: "GW rtr" needs to support the solution for this problem
+
+   Scenario 3: "Host" needs to support the solution for this problem
+
+
+
+
+Troan                    Expires October 3, 2010                [Page 9]
+
+Internet-Draft        IPv6 multi-homing withou NAT            April 2010
+
+
+5.2.  Source address selection
+
+   IPv6 multi-homed host may have multiple IPv6 addresses assigned from
+   each service provider on one same uplink or each different uplinks.
+   When the host sends packets for the destination server in network 2,
+   the host may choose the address assigned from network 1 as it's
+   source address, and it may be filtered out by network 2's operation
+   policy.  The host should have the way to chose correct source address
+   based on destination addresses/prefixes.
+
+   In IPv4, the solution was provided by using NAT, with translating
+   source address for each service.  But in IPv6, to keep the
+   transparency and reap IPv6's benefits, avoidance of using NAT is
+   required for not breaking transparency in any case.
+
+   As described in [draft-ietf-6man-addr-select-sol], [RFC3484] defines
+   the rules for selecting source address, but it does not work in some
+   cases and network operator requires the way to distribute address
+   selection policy for each node. [draft-fujisaki-dhc-addr-select-opt]
+   proposes the way to enforce address selection policy for each node
+   via DHCPv6 option.
+
+   Scenario 1: "Host" needs to support the solution for this problem
+
+   Scenario 2: "Host" needs to support the solution for this problem
+
+   Scenario 3: "Host" needs to support the solution for this problem
+
+5.3.  DNS server selection
+
+   IPv6 multi-homed host or gateway router may have multiple DNS server
+   information from each connected services.  When the host sends DNS
+   query for destination host, the host can not know which DNS server
+   should be used for the query.
+
+   In IPv4, the query was sent to all DNS servers and the host waits to
+   get the reply from any one of DNS server.  In IPv6, it requires more
+   intelligent DNS server selection way to minimize the impact for DNS
+   server load.And sometimes ASP provides host/address information only
+   for it's ASP subscribers as closed service.  In such case, if the
+   host sends the query for ASP's server to internet/ISP's DNS server,
+   it may not be able to get proper DNS response and loose the
+   connectivity, and xSP operator may not want the own hosts information
+   to be leaked to internet for security reason.
+
+   IPv6 multi-homed host or gateway router should have the feature to
+   select DNS server for each service based on domain space for the
+   destination, and it's selection policy should be distributed from
+
+
+
+Troan                    Expires October 3, 2010               [Page 10]
+
+Internet-Draft        IPv6 multi-homing withou NAT            April 2010
+
+
+   each service. [draft-savolainen-mif-dns-server-selection] proposes
+   DNS server selection policy enforcement solution with DHCPv6 option.
+
+   Scenario 1: "Host" needs to support the solution for this problem
+
+   Scenario 2: "GW rtr" needs to support the solution for this problem
+
+   Scenario 3: "Host" needs to support the solution for this problem
 
 
 6.  Requirements
@@ -487,6 +609,14 @@ Internet-Draft        IPv6 multi-homing withou NAT            April 2010
    support node-specific behavior control.  Even when multiple nodes are
    on the same subnet, the mechanism should be able to provide a method
    for the network administrator to make nodes behave differently.  For
+
+
+
+Troan                    Expires October 3, 2010               [Page 11]
+
+Internet-Draft        IPv6 multi-homing withou NAT            April 2010
+
+
    example, each node may have a different set of assigned prefixes.  In
    such a case, the appropriate behavior may be different.
 
@@ -497,14 +627,6 @@ Internet-Draft        IPv6 multi-homing withou NAT            April 2010
    to manage thousand of sites.  In such environment, sending packets
    periodically to each sites may impact edge system performance, so
    static configuration mechanisms such as DHCPv6 are suitable for such
-
-
-
-Troan                    Expires October 3, 2010                [Page 9]
-
-Internet-Draft        IPv6 multi-homing withou NAT            April 2010
-
-
    cases.
 
 
@@ -544,6 +666,13 @@ Internet-Draft        IPv6 multi-homing withou NAT            April 2010
    The routing information based approach has a clear advantage on the
    point of the implementational and operational experiences.
 
+
+
+Troan                    Expires October 3, 2010               [Page 12]
+
+Internet-Draft        IPv6 multi-homing withou NAT            April 2010
+
+
    The existing proposed or standardized routing information
    distribution mechanisms are the routing protocols, such as RIPng and
    OSPFv3, the RA (Router Advertisement) extention option defined in RFC
@@ -553,14 +682,6 @@ Internet-Draft        IPv6 multi-homing withou NAT            April 2010
    The RA based mechanism has difficulty in per-host routing information
    distribution.  The dynamic routing protocols like RIPng are not
    usually used between the residential users and ISP networks because
-
-
-
-Troan                    Expires October 3, 2010               [Page 10]
-
-Internet-Draft        IPv6 multi-homing withou NAT            April 2010
-
-
    of their scalability implications.  DHCPv6 mechanism does not have
    these difficulties and has an advantage of its relaying functionality
    and deploymental experiences.
@@ -600,6 +721,14 @@ Internet-Draft        IPv6 multi-homing withou NAT            April 2010
    the option.
 
 
+
+
+
+Troan                    Expires October 3, 2010               [Page 13]
+
+Internet-Draft        IPv6 multi-homing withou NAT            April 2010
+
+
 8.  Consideration for legacy host support
 
    This section presents serveral option along with legacy host.  There
@@ -609,14 +738,6 @@ Internet-Draft        IPv6 multi-homing withou NAT            April 2010
    such as Set-top Box, DVR, video game console and etc. have widely
    been used in current residential network, it is expected to remain
    without upgrade for long periods.  For supporting those legacy host,
-
-
-
-Troan                    Expires October 3, 2010               [Page 11]
-
-Internet-Draft        IPv6 multi-homing withou NAT            April 2010
-
-
    some kind of solution needs to be provided.  The following is the
    option on CPE device to mitigate it to a certain extent.
 
@@ -658,19 +779,16 @@ Internet-Draft        IPv6 multi-homing withou NAT            April 2010
 11.  Acknowledgements
 
 
+
+Troan                    Expires October 3, 2010               [Page 14]
+
+Internet-Draft        IPv6 multi-homing withou NAT            April 2010
+
+
 12.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
-
-
-
-
-
-
-Troan                    Expires October 3, 2010               [Page 12]
-
-Internet-Draft        IPv6 multi-homing withou NAT            April 2010
 
 
 Author's Address
@@ -718,11 +836,5 @@ Author's Address
 
 
 
-
-
-
-
-
-
-Troan                    Expires October 3, 2010               [Page 13]
+Troan                    Expires October 3, 2010               [Page 15]
 
