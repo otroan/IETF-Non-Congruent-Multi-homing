@@ -44,15 +44,16 @@ Network Address Translation</title>
   <t>Since IPv6 providing vast of global unique address space, which
   should be conserved with NAT in IPv4, all Internet community have
   been trying to deploy IPv6 then enjoy end-to-end transparency. In an
-  IPv4network, NAT works well not only for conserving global address
-  but also solving multihoming problems such as next hop resolution,
-  source address selection and DNS resolution. Since these functions
-  are not yet defined for IPv6, it is unavoidable that multihoming
-  situation unfortunately requires IPv6 NAT with current standard
-  suite. In this document, we analyze these functions that ware
-  conjuncted with NAT, and also describe the requirements of functions
-  for multihoming that excludes NAT in IPv6. Then we introduce useful
-  activity for these functions and support them strongly.</t>
+  IPv4 network, NAT works well not only for conserving global address
+  but also solving multihoming problems because a IPv4 NAT router
+  implement three functions, which are next hop resolution, source
+  address selection and DNS resolution.  Since these functions are not
+  yet defined for IPv6, it is unavoidable that multihoming situation
+  unfortunately requires IPv6 NAT with current standard suite. In this
+  document, we analyze the situations of multihoming and also describe
+  the requirements of functions for multihoming that excludes NAT in
+  IPv6. Then we introduce useful activity for these functions and
+  support them strongly.</t>
 </abstract>
 
 </front>

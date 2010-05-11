@@ -15,15 +15,16 @@ Abstract
    Since IPv6 providing vast of global unique address space, which
    should be conserved with NAT in IPv4, all Internet community have
    been trying to deploy IPv6 then enjoy end-to-end transparency.  In an
-   IPv4network, NAT works well not only for conserving global address
-   but also solving multihoming problems such as next hop resolution,
-   source address selection and DNS resolution.  Since these functions
-   are not yet defined for IPv6, it is unavoidable that multihoming
-   situation unfortunately requires IPv6 NAT with current standard
-   suite.  In this document, we analyze these functions that ware
-   conjuncted with NAT, and also describe the requirements of functions
-   for multihoming that excludes NAT in IPv6.  Then we introduce useful
-   activity for these functions and support them strongly.
+   IPv4 network, NAT works well not only for conserving global address
+   but also solving multihoming problems because a IPv4 NAT router
+   implement three functions, which are next hop resolution, source
+   address selection and DNS resolution.  Since these functions are not
+   yet defined for IPv6, it is unavoidable that multihoming situation
+   unfortunately requires IPv6 NAT with current standard suite.  In this
+   document, we analyze the situations of multihoming and also describe
+   the requirements of functions for multihoming that excludes NAT in
+   IPv6.  Then we introduce useful activity for these functions and
+   support them strongly.
 
 Status of this Memo
 
@@ -48,7 +49,6 @@ Status of this Memo
 
    This Internet-Draft will expire on October 3, 2010.
 
-Copyright Notice
 
 
 
@@ -56,6 +56,8 @@ Troan                    Expires October 3, 2010                [Page 1]
 
 Internet-Draft        IPv6 multi-homing withou NAT            April 2010
 
+
+Copyright Notice
 
    Copyright (c) 2010 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
@@ -99,8 +101,6 @@ Table of Contents
    12. Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 15
    13. Normative References . . . . . . . . . . . . . . . . . . . . . 15
    Author's Address . . . . . . . . . . . . . . . . . . . . . . . . . 15
-
-
 
 
 
@@ -789,7 +789,7 @@ Internet-Draft        IPv6 multi-homing withou NAT            April 2010
 
    The following people contributed to this document: Akiko Hattori,
    Arifumi Matsumoto, David Miles, Dan Wing, Frank Brockners, Fred
-   Baker, Tomohiro Fujisaki, Kato Junya, Tadahisa Okimoto, Shigeru
+   Baker, Tomohiro Fujisaki, Jun-ya Kato, Tadahisa Okimoto, Shigeru
    Akiyama, Satoru Matsushima, Seiichi Morikawa, Mark Townsley, Wojciech
    Dec, Yasuo Kashimura, Yuji Yamazaki
 
