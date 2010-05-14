@@ -637,38 +637,62 @@ Network Address Translation</title>
 
 <section title="Consideration for legacy host support">
 
-  <t>This section presents serveral option along with legacy host.
-  There may still remain the above issues on legacy hosts, which
-  cannot support the enhancement of 'source address selection policy'
-  described in Chapter 5.x. Considering the various networking devices
-  such as Set-top Box, DVR, video game console and etc. have widely
-  been used in current residential network, it is expected to remain
-  without upgrade for long periods. For supporting those legacy host,
-  some kind of solution needs to be provided. The following is the
-  option on CPE device to mitigate it to a certain extent.</t>
+  <t>This section presents alternative approach to mitigate the
+  problem in multihomed network. This approach will help even legacy
+  host, which is not capable of the enhancements for source address
+  selection policy, nexthop selection policy and DNS selection policy
+  described in section 7.  The idea is to delegate only a single
+  prefix to the host.  Other three features need to be implemented
+  into GW rtr in Scenario 2.</t>
 
-  <t>This draft intends to raise the need for holistic approach in
-  multiprefix environment. Details of the problem in these option are
-  not covered.</t>
+  <t>Furthermore, In case of typical IPv4 multihomed network
+  deployment, IPv4 NAT is practically used and it can eventually avoid
+  assigning multiple addresses to the hosts and solve the nexthop
+  selection problem.  In a similar fashion, IPv6 NAT can be applicable
+  to IPv6 multihomed network deployment so as to assign a single IPv6
+  prefix to a host.</t>
 
-  <section title="Discrete interface">
-    <t>CPE has multiple LAN interfaces or multiple logical interfaces,
-    which are divided internally to associate the specific LAN
-    interface with each service. Hosts are connected to each interface
-    associated with the service.  In this way, the host could
-    substantively bind its source address to the appropriate
-    service. While the usability could be impaired for some users.
-    This is applicable to Scenario 2.</t>
-  </section>
-  <section title="Rewriting source prefix">
-    <t>A single prefix (global or ULA) is given to the hosts. Then its
-    source prefix is rewritten at the CPE to the associated prefix
-    according to the destination or service. a.k.a. NAT66
-    (draft-mrw-behave-nat66).  The usability could be improved
-    compared with Option 2. Although it is recognized that there will
-    be issues in transparency of application due to the changing of
-    source address.  This is applicable to Scenario 1,2 and 3.</t>
-  </section>
+  <t>Considering the scenario 2 as a popular deployment for
+  residential network, legacy hosts such as PC, Mac and also any other
+  networked appliances (STB and gaming console) can be helped by GW
+  rtr with IPv6 NAT.</t>
+
+  <t>IPv6 NAT is implemented on GW rtr. Only a single prefix (global
+  or ULA) is assigned to a host. Its source prefix is rewritten at the
+  GW rtr to the associated prefix according to the destination or
+  service.  Here is a possible implementation on GW rtr.</t>
+
+  <figure align="center" anchor="legacy_host">
+    <preamble></preamble>
+
+    <artwork align="left"><![CDATA[
+
+                                              __________
+                                             /          \
+                                        +---/  Internet  \
+                        GW rtr          |   \            /
+  +------+     +---------------------+  |    \__________/
+  |      |     |   |        |  WAN1  +--+
+  | host |-----|LAN| Router |--------|
+  |      |     |   |        |NAT|WAN2+--+
+  +------+     +---------------------+  |     __________
+                                        |    /          \
+                                        +---/    ASP     \
+                                            \            /
+                                             \__________/
+
+        ]]></artwork>
+    
+    <postamble></postamble>
+  </figure>
+
+  <t>GW router also has to support the three features described in
+  section 7.</t>
+
+  <t>The implementation and issues of IPv6 NAT are out of the scope of
+  this document. It may be covered by other document under discussion
+  (draft-mrw-behave-nat66).</t>
+
 </section>
 
 <section anchor="Security" title="Security Considerations">

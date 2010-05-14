@@ -93,14 +93,14 @@ Table of Contents
      6.3.  Scalability  . . . . . . . . . . . . . . . . . . . . . . . 12
    7.  Implementation approach  . . . . . . . . . . . . . . . . . . . 12
    8.  Consideration for legacy host support  . . . . . . . . . . . . 14
-     8.1.  Discrete interface . . . . . . . . . . . . . . . . . . . . 14
-     8.2.  Rewriting source prefix  . . . . . . . . . . . . . . . . . 14
-   9.  Security Considerations  . . . . . . . . . . . . . . . . . . . 14
-   10. IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 14
+   9.  Security Considerations  . . . . . . . . . . . . . . . . . . . 15
+   10. IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 15
    11. Contributors . . . . . . . . . . . . . . . . . . . . . . . . . 15
    12. Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 15
    13. Normative References . . . . . . . . . . . . . . . . . . . . . 15
    Author's Address . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+
 
 
 
@@ -731,38 +731,63 @@ Internet-Draft        IPv6 multi-homing withou NAT            April 2010
 
 8.  Consideration for legacy host support
 
-   This section presents serveral option along with legacy host.  There
-   may still remain the above issues on legacy hosts, which cannot
-   support the enhancement of 'source address selection policy'
-   described in Chapter 5.x.  Considering the various networking devices
-   such as Set-top Box, DVR, video game console and etc. have widely
-   been used in current residential network, it is expected to remain
-   without upgrade for long periods.  For supporting those legacy host,
-   some kind of solution needs to be provided.  The following is the
-   option on CPE device to mitigate it to a certain extent.
+   This section presents alternative approach to mitigate the problem in
+   multihomed network.  This approach will help even legacy host, which
+   is not capable of the enhancements for source address selection
+   policy, nexthop selection policy and DNS selection policy described
+   in section 7.  The idea is to delegate only a single prefix to the
+   host.  Other three features need to be implemented into GW rtr in
+   Scenario 2.
 
-   This draft intends to raise the need for holistic approach in
-   multiprefix environment.  Details of the problem in these option are
-   not covered.
+   Furthermore, In case of typical IPv4 multihomed network deployment,
+   IPv4 NAT is practically used and it can eventually avoid assigning
+   multiple addresses to the hosts and solve the nexthop selection
+   problem.  In a similar fashion, IPv6 NAT can be applicable to IPv6
+   multihomed network deployment so as to assign a single IPv6 prefix to
+   a host.
 
-8.1.  Discrete interface
+   Considering the scenario 2 as a popular deployment for residential
+   network, legacy hosts such as PC, Mac and also any other networked
+   appliances (STB and gaming console) can be helped by GW rtr with IPv6
+   NAT.
 
-   CPE has multiple LAN interfaces or multiple logical interfaces, which
-   are divided internally to associate the specific LAN interface with
-   each service.  Hosts are connected to each interface associated with
-   the service.  In this way, the host could substantively bind its
-   source address to the appropriate service.  While the usability could
-   be impaired for some users.  This is applicable to Scenario 2.
+   IPv6 NAT is implemented on GW rtr.  Only a single prefix (global or
+   ULA) is assigned to a host.  Its source prefix is rewritten at the GW
+   rtr to the associated prefix according to the destination or service.
+   Here is a possible implementation on GW rtr.
 
-8.2.  Rewriting source prefix
 
-   A single prefix (global or ULA) is given to the hosts.  Then its
-   source prefix is rewritten at the CPE to the associated prefix
-   according to the destination or service. a.k.a.  NAT66
-   (draft-mrw-behave-nat66).  The usability could be improved compared
-   with Option 2.  Although it is recognized that there will be issues
-   in transparency of application due to the changing of source address.
-   This is applicable to Scenario 1,2 and 3.
+
+                                                 __________
+                                                /          \
+                                           +---/  Internet  \
+                           GW rtr          |   \            /
+     +------+     +---------------------+  |    \__________/
+     |      |     |   |        |  WAN1  +--+
+     | host |-----|LAN| Router |--------|
+     |      |     |   |        |NAT|WAN2+--+
+     +------+     +---------------------+  |     __________
+                                           |    /          \
+                                           +---/    ASP     \
+                                               \            /
+                                                \__________/
+
+
+                                 Figure 4
+
+   GW router also has to support the three features described in section
+   7.
+
+
+
+Troan                    Expires October 3, 2010               [Page 14]
+
+Internet-Draft        IPv6 multi-homing withou NAT            April 2010
+
+
+   The implementation and issues of IPv6 NAT are out of the scope of
+   this document.  It may be covered by other document under discussion
+   (draft-mrw-behave-nat66).
 
 
 9.  Security Considerations
@@ -774,15 +799,6 @@ Internet-Draft        IPv6 multi-homing withou NAT            April 2010
 
 
 10.  IANA Considerations
-
-
-
-
-
-
-Troan                    Expires October 3, 2010               [Page 14]
-
-Internet-Draft        IPv6 multi-homing withou NAT            April 2010
 
 
 11.  Contributors
@@ -811,22 +827,6 @@ Author's Address
    Norway
 
    Email: ot@cisco.com
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
