@@ -17,7 +17,7 @@
 <!-- ***** FRONT MATTER ***** -->
 
 <front>
-<title abbrev="IPv6 multi-homing withou NAT">IPv6 Multi-homing without
+<title abbrev="IPv6 multi-homing without NAT">IPv6 Multi-homing without
 Network Address Translation</title>
 
 <author fullname="Ole Troan" initials="O." surname="Troan" role="editor">
@@ -46,7 +46,7 @@ Network Address Translation</title>
   been trying to deploy IPv6 then enjoy end-to-end transparency. In an
   IPv4 network, NAT works well not only for conserving global address
   but also solving multihoming problems because a IPv4 NAT router
-  implement three functions, which are next hop resolution, source
+  implement three functions, which are next-hop resolution, source
   address selection and DNS resolution.  Since these functions are not
   yet defined for IPv6, it is unavoidable that multihoming situation
   unfortunately requires IPv6 NAT with current standard suite. In this
@@ -92,7 +92,7 @@ Network Address Translation</title>
    consequent as the matter of course.</t>
 
    <t>However, how do the host know where the one to whom I send
-   packets is?  While the host is multihomed, appropriate next-hop
+   packets is?  While the host is multi-homed, appropriate next-hop
    exists for each of connected network respectively. Routing table is
    effective for next-hop resolution of course. Even though more than
    one next-hop exist, the default route can only resolve single
@@ -111,7 +111,7 @@ Network Address Translation</title>
    <t>How about resolving destination address with FQDN? In multi-home
    environment, we assume that address space based partitioning is not
    only network, but also DNS server's database. What this means that
-   if the multihomed host does not know the correct DNS server to
+   if the multi-homed host does not know the correct DNS server to
    resolve destination, the response would be whether correct or
    poisoning.</t>
 
@@ -126,7 +126,7 @@ Network Address Translation</title>
    <t>If a host connect network behind IPv4 NAT, the host has one
    private address in local network. There is no confusion. The NAT
    becomes the gateway of the host, and forwards the packet aiming at
-   an appropriate network when it is multihomed. It operates also DNS
+   an appropriate network when it is multi-homed. It operates also DNS
    cache server of which undertaken all inquires, and gives a correct
    answer to the host.</t>
 
@@ -139,7 +139,7 @@ Network Address Translation</title>
    the NAT have to recognize the multihoming scenario with IPv6 NAT
    then work for avoid it.</t>
 
-   <t>As the multihoming anchor, next hop resolution, source address
+   <t>As the multihoming anchor, next-hop resolution, source address
    selection, and DNS resolution, must implemented these but exclude
    the NAT. Otherwise, the nightmare of NAT will overcome us even
    though we have achieved the IPv6 Internet.</t>
@@ -169,7 +169,7 @@ Network Address Translation</title>
 
     <t>Scenario 1:</t>
 
-    <t>A multihomed host has single uplink, but multiple nexthops via
+    <t>A multi-homed host has single uplink, but multiple next-hops via
     shared segment link. Since each network advertise their prefix and
     DNS server address independently, the host would have multiple
     prefixes on the link correspond to each network and keep each DNS
@@ -203,15 +203,16 @@ Network Address Translation</title>
 
       <t>Figure 1 illustrates that the host connect to rtr1 and rtr2
       via shared link. network1 and 2 are reachable via rtr1 and rtr2
-      respectively. When the host send packets network1, the nexthop
-      to network1 is rtr1.  Similarly,rtr2 is the netxhop to network2.</t>
+      respectively. When the host send packets network1, the next-hop
+      to network1 is rtr1.  Similarly, rtr2 is the next-hop to
+      network2.</t>
 
       <t>- e.g, Broadband service (Internet, VoIP, IPTV, etc.,)</t>
 
 
       <t>Scenario 2: </t>
 
-      <t>A multihomed host has single uplink and single nexthop to
+      <t>A multi-homed host has single uplink and single next-hop to
       gateway.  As the gateway connects to multiple networks, multiple
       prefix delegations and DNS server addresses come from each
       network. The gateway advertises multiple prefix and single DNS
@@ -247,7 +248,7 @@ Network Address Translation</title>
       <t>Figure 2 illustrates that the host connected to GW rtr. GW
       rtr connect to network1 and 2 via rtr1 and rtr2
       respectively. When the host send packets to either network1 and
-      2, the nexthop is GW rtr. When the packets toward network1, GW
+      2, the next-hop is GW rtr. When the packets toward network1, GW
       rtr forward the packets to rtr1. Similarly, rtr2 for network2.</t>
 
       <t>- e.g, Internet + VPN/ASP</t>
@@ -255,7 +256,7 @@ Network Address Translation</title>
 
       <t>Scenario 3: </t>
 
-      <t>A multihomed host has multiple uplinks and multiple nexthops.
+      <t>A multi-homed host has multiple uplinks and multiple next-hops.
       As the host connects to multiple networks, multiple prefix
       advertisements and DNS server addresses come from each
       network. As a result, the host has multiple addresses, each link
@@ -288,8 +289,8 @@ Network Address Translation</title>
 
       <t>Figure 3 illustrates that the host connect to rtr1 and rtr2
       via direct connect or virtual link. When the host send packets
-      network1, the nexthop to network1 is rtr1. Similarly, rtr2 is
-      the netxhop to network2.</t>
+      network1, the next-hop to network1 is rtr1. Similarly, rtr2 is
+      the next-hop to network2.</t>
 
       <t>- e.g, Mobile Wifi + 3G, ISP A + ISP B</t>
 
@@ -297,32 +298,32 @@ Network Address Translation</title>
 
     <section title="Multihomed network environment">
 
-      <t>IPv6 multihomed network, a host has assigned two or more IPv6
+      <t>IPv6 multi-homed network, a host has assigned two or more IPv6
       addresses from networks, also got information of two or more DNS
-      addresses.  When the multihomed host communicate with other
+      addresses.  When the multi-homed host communicate with other
       host, unfortunately it would be fail so that selection of
-      nexthop, source address, DNS server policy does not accurate.</t>
+      next-hop, source address, DNS server policy does not accurate.</t>
 
-      <t>Multi-homed network has exsisted in a IPv4 environment. But
+      <t>Multi-homed network has existed in a IPv4 environment. But
       we got no trouble with connecting network and using services
       because of NAT router function.</t>
 
       <t>Studying IPv4 NAT router function would be good analysis the
       multihoming problems for IPv6. The functions of IPv4 NAT router
       has not only saving address space, but also key function of
-      multihoming. These functiuons are such as next hop resolution,
+      multihoming. These functions are such as next-hop resolution,
       source address selection and DNS resolution.  We can't get
       end-to-end transparency with avoiding NAT unless deploying
-      multihomed host and/or node on which these three functions
+      multi-homed host and/or node on which these three functions
       implemented.</t>
 
     </section>
 
     <section title="Problem happens at multihoming scenarios">
 
-      <t>The multihomed host got one more IPv6 prefixes and DNS cache
+      <t>The multi-homed host got one more IPv6 prefixes and DNS cache
       information.  If connecting network or service, the host must
-      decide next host resolution, source address selection and DNS
+      decide next-hop resolution, source address selection and DNS
       cache resolution.</t>
 
       <t>For the security reason, network connectivity and accessing
@@ -337,7 +338,7 @@ Network Address Translation</title>
       <t>- The host send a packet with wrong source address, they
       throws it away with the network administrators policy.</t>
 
-      <t>- The host send a packet to wrong next hop, they throws it
+      <t>- The host send a packet to wrong next-hop, they throws it
       away with the network administrators policy.</t>
 
       <t>Scenario 2:</t>
@@ -345,7 +346,7 @@ Network Address Translation</title>
       <t>- The host send a packet with wrong source address, they
       throws it away with the network administrators policy.</t>
 
-      <t>- The gateway router send a packet to wrong next hop, they
+      <t>- The gateway router send a packet to wrong next-hop, they
       throws it away with the network administrators policy.</t>
 
       <t>Scenario 3:</t>
@@ -368,7 +369,7 @@ Network Address Translation</title>
 
   <t>The problems described in section 2 can be classified into these
   three problems:<list>
-  <t>- Wrong next hop selection</t>
+  <t>- Wrong next-hop selection</t>
   <t>- Wrong source address selection</t>
   <t>- Wrong DNS server selection</t>
   </list></t>
@@ -377,20 +378,20 @@ Network Address Translation</title>
   describes that which device need to have the features to solve these
   problems.</t>
 
-  <section title="next hop selection">
+  <section title="Next-hop selection">
     <t>IPv6 multi-homed host or gateway router will have multiple
     uplinks, that means it has multiple default routers with only
     Neighbor Discovery Protocol [RFC4861] used for distributing
-    default route/next hop information to host or gateway router.</t>
+    default route/next-hop information to host or gateway router.</t>
 
     <t>In such case, the host or gateway router may chose wrong next
     hop and may not be reachable to required destination host.  For
     example, in all scenarios described in section 2, when the
     destination server is in network 2 and it does not have
     reachability from network 1 because it's used for closed service,
-    the source host or gateway router does not know which next hop is
+    the source host or gateway router does not know which next-hop is
     proper route for the destination server. The host or gateway
-    router may chose rtr1 as next hop for the server. It results
+    router may chose rtr1 as next-hop for the server. It results
     losing connectivity for the server.  The host or gateway router
     should have route information for each service, but the use of
     dynamic routing protocol between end node and service provider
@@ -570,8 +571,8 @@ Network Address Translation</title>
 
   <t>* The route selection</t>
 
-  <t>Just like the source address selection problem, both poliby based
-  approach and non policy basd approach are possible with regard to
+  <t>Just like the source address selection problem, both policy based
+  approach and non policy based approach are possible with regard to
   the route selection problem. Because of the same requirement the
   policy propagation based solution mechanism, whatever the policy
   looks like, should be more appropriate.</t>
@@ -582,11 +583,11 @@ Network Address Translation</title>
   and next-hops can be another example of route selection policy.</t>
 
   <t>The routing information based approach has a clear advantage on
-  the point of the implementational and operational experiences.</t>
+  the point of the implementation and operational experiences.</t>
 
   <t>The existing proposed or standardized routing information
   distribution mechanisms are the routing protocols, such as RIPng and
-  OSPFv3, the RA (Router Advertisement) extention option defined in
+  OSPFv3, the RA (Router Advertisement) extension option defined in
   RFC 4191, the DHCPv6 route information option proposed in draft-woj,
   and the TR-069 standardized at BBF.</t>
 
@@ -595,7 +596,7 @@ Network Address Translation</title>
   are not usually used between the residential users and ISP networks
   because of their scalability implications. DHCPv6 mechanism does not
   have these difficulties and has an advantage of its relaying
-  functionality and deploymental experiences.</t>
+  functionality and deployment experiences.</t>
 
   <t>Regarding TR-069, this is a possible solution mechanism for
   routing information distribution to CPE. It assumes, however, the IP
@@ -615,11 +616,11 @@ Network Address Translation</title>
   <t>In the non-policy based approach, however, by making a query to
   non-service providing ASP, a user can be directed to unexpected IP
   address, and cannot enjoy the ASP's private and legitimate service.
-  For example, some DNS servers replys different answers depending on
+  For example, some DNS servers replies different answers depending on
   the source address of the DNS query, which is sometimes called
   split-horizon. When the user mistakenly makes a query to different
   ASP's DNS server to resolve a FQDN of a certain ASP's private
-  service, and the ASP's DNS server adopts the split-hoziontal DNS
+  service, and the ASP's DNS server adopts the split-horizon DNS
   configuration, the queried DNS server resolves a IP address of the
   non-private side of the service. Another problem with this approach
   is to cause unnecessary DNS traffic to the DNS servers that are
@@ -638,18 +639,18 @@ Network Address Translation</title>
 <section title="Consideration for legacy host support">
 
   <t>This section presents alternative approach to mitigate the
-  problem in multihomed network. This approach will help even legacy
+  problem in multi-homed network. This approach will help even legacy
   host, which is not capable of the enhancements for source address
-  selection policy, nexthop selection policy and DNS selection policy
+  selection policy, next-hop selection policy and DNS selection policy
   described in section 7.  The idea is to delegate only a single
   prefix to the host.  Other three features need to be implemented
   into GW rtr in Scenario 2.</t>
 
-  <t>Furthermore, In case of typical IPv4 multihomed network
+  <t>Furthermore, In case of typical IPv4 multi-homed network
   deployment, IPv4 NAT is practically used and it can eventually avoid
-  assigning multiple addresses to the hosts and solve the nexthop
+  assigning multiple addresses to the hosts and solve the next-hop
   selection problem.  In a similar fashion, IPv6 NAT can be applicable
-  to IPv6 multihomed network deployment so as to assign a single IPv6
+  to IPv6 multi-homed network deployment so as to assign a single IPv6
   prefix to a host.</t>
 
   <t>Considering the scenario 2 as a popular deployment for
