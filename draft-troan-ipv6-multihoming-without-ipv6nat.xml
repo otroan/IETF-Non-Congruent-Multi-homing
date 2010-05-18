@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 <!ENTITY RFC2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
+<!ENTITY I-D.dec-dhcpv6-route-option SYSTEM 'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-dec-dhcpv6-route-option-03.xml'>
+<!ENTITY I-D.ietf-6man-addr-select-sol SYSTEM 'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-ietf-6man-addr-select-sol-03.xml'>
+<!ENTITY I-D.fujisaki-dhc-addr-select-opt SYSTEM 'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-fujisaki-dhc-addr-select-opt-09.xml'>
+<!ENTITY I-D.savolainen-mif-dns-server-selection SYSTEM 'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-savolainen-mif-dns-server-selection-02.xml'>
+<!ENTITY I-D.mrw-behave-nat66 SYSTEM 'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.draft-mrw-behave-nat66-02.xml'>
+
+
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 <?rfc strict="yes" ?>
@@ -375,8 +382,6 @@
       </section>
     </section>
 
-    <section anchor="terminology" title="Terminology"></section>
-
     <section title="Problem statement and Analysis">
       <t>The problems described in section 2 can be classified into these
       three problems:<list>
@@ -397,30 +402,34 @@
         Advertisements [RFC4861] for distributing default route/next-hop
         information to the host or gateway router.</t>
 
-        <t>In this case, the host or gateway router may select any valid
-        default router from the default routers list, resulting in traffic
-        being sent to the wrong router and discarded by the upstream service
-        provider. Using the above scenarios as an example, whenever the host
-        wishes to reach a destination in network 2 and there is no
-        connectivity between network 1 and network 2 (as is the case for a
-        walled-garden or closed service), the host or gateway router does not
-        know whether to forward traffic to rtr1 or rtr2 to reach a destination
-        in network 2. The host or gateway router may choose rtr1 as the
-        default router and traffic failing to reach the destination server.
-        The host or gateway router requires route information for each
-        upstream service provider, but the use of a routing protocol between a
-        host and router causes both configuration and scaling issues. For IPv4
-        hosts, the gateway router was often pre-configured with static route
-        information or made use of Classless Static Route Options [RFC3442]
-        for DHCPv4. Extensions to Router Advertisements through Default Router
-        Preference and More-Specific Routes [RFC4191] provides for
-        link-specific preferences but does not address per-host configuration
-        in a multi-access topology because of it's reliance on Router
-        Advertisements. A DHCPv6 option, such as is described in [draft-dec]
-        is preferred for host-specific configuration. By employing a DHCPv6
-        solution a DHCPv6 server could restrict address assignment (of
-        additional prefixes) only to hosts which support more advanced
-        next-hop and address selection requirements.</t>
+        <t>In this case, the host or gateway router may select any
+        valid default router from the default routers list, resulting
+        in traffic being sent to the wrong router and discarded by the
+        upstream service provider. Using the above scenarios as an
+        example, whenever the host wishes to reach a destination in
+        network 2 and there is no connectivity between network 1 and
+        network 2 (as is the case for a walled-garden or closed
+        service), the host or gateway router does not know whether to
+        forward traffic to rtr1 or rtr2 to reach a destination in
+        network 2. The host or gateway router may choose rtr1 as the
+        default router and traffic failing to reach the destination
+        server.  The host or gateway router requires route information
+        for each upstream service provider, but the use of a routing
+        protocol between a host and router causes both configuration
+        and scaling issues. For IPv4 hosts, the gateway router was
+        often pre-configured with static route information or made use
+        of Classless Static Route Options [RFC3442] for
+        DHCPv4. Extensions to Router Advertisements through Default
+        Router Preference and More-Specific Routes [RFC4191] provides
+        for link-specific preferences but does not address per-host
+        configuration in a multi-access topology because of it's
+        reliance on Router Advertisements. A DHCPv6 option, such as is
+        described in <xref
+        target="I-D.dec-dhcpv6-route-option"></xref> is preferred for
+        host-specific configuration. By employing a DHCPv6 solution a
+        DHCPv6 server could restrict address assignment (of additional
+        prefixes) only to hosts which support more advanced next-hop
+        and address selection requirements.</t>
 
         <t>Scenario 1: "Host" needs to support the solution for this
         problem</t>
@@ -433,16 +442,18 @@
       </section>
 
       <section title="Source address selection">
-        <t>A multihomed IPv6 host will typically have different addresses
-        assigned from each service provider either on the same link (scenario
-        1 &amp; 2) or different links (scenario 3). When the host wishes to
-        send a packet towards any given destination the current source address
-        selection rules [RFC3484] may not deterministically resolve the
-        correct source address when host addressing was via RA or DHCPv6. In
-        [draft-ietf-6man-addr-select-soln] describes the use of the policy
-        table [RFC3484] to resolve this problem, however there is no mechanism
-        defined to disseminate policy table information to a host. A proposal
-        exists in [draft-fujisaki-dhc-addr-select-opt] to provide a DHCPv6
+        <t>A multihomed IPv6 host will typically have different
+        addresses assigned from each service provider either on the
+        same link (scenario 1 &amp; 2) or different links (scenario
+        3). When the host wishes to send a packet towards any given
+        destination the current source address selection rules
+        [RFC3484] may not deterministically resolve the correct source
+        address when host addressing was via RA or DHCPv6. In <xref
+        target="I-D.ietf-6man-addr-select-sol"></xref> describes the
+        use of the policy table [RFC3484] to resolve this problem,
+        however there is no mechanism defined to disseminate policy
+        table information to a host. A proposal exists in
+        <xref target="I-D.fujisaki-dhc-addr-select-opt"></xref> to provide a DHCPv6
         mechanism for host policy table management.</t>
 
         <t>Again, by employing DHCPv6 the server could restrict address
@@ -476,12 +487,13 @@
         case, a DNS query may be unanswered if sent towards the incorrect
         resolver resulting in a lack of connectivity.</t>
 
-        <t>An IPv6 multihomed host or gateway router should have the ability
-        to select appropriate DNS resolvers for each service based on domain
-        space for the destination, and each service should provide rules
-        specific to that network. [draft-savolainen-mif-dns-server-selection]
-        proposes DNS server selection policy enforcement solution with DHCPv6
-        option.</t>
+        <t>An IPv6 multihomed host or gateway router should have the
+        ability to select appropriate DNS resolvers for each service
+        based on domain space for the destination, and each service
+        should provide rules specific to that network. <xref
+        target="I-D.savolainen-mif-dns-server-selection"></xref>
+        proposes DNS server selection policy enforcement solution with
+        DHCPv6 option.</t>
 
         <t>Scenario 1: "Host" needs to support the solution for this
         problem</t>
@@ -555,13 +567,14 @@
       <t>* Source address selection</t>
 
       <t>Possible solutions and their evaluation are summarized in
-      draft-ietf-6man-addr-select-sol. When those solutions are examined
-      against the requirements in Section 4, the proactive approaches, such as
-      the policy table distribution mechanism and the routing system
-      assistance mechanism, are more appropriate in that these mechanisms can
-      propagate network administrators policy directly. The policy
-      distribution mechanism has an advantage with regard to the host's
-      protocol stack impact, and the staticness of the assumed target network
+      <xref target="I-D.ietf-6man-addr-select-sol"></xref>. When those
+      solutions are examined against the requirements in Section 4,
+      the proactive approaches, such as the policy table distribution
+      mechanism and the routing system assistance mechanism, are more
+      appropriate in that these mechanisms can propagate network
+      administrators policy directly. The policy distribution
+      mechanism has an advantage with regard to the host's protocol
+      stack impact, and the staticness of the assumed target network
       environment.</t>
 
       <t>* Route selection</t>
@@ -581,10 +594,11 @@
       point of the implementation and operational experiences.</t>
 
       <t>The existing proposed or standardized routing information
-      distribution mechanisms are the routing protocols, such as RIPng and
-      OSPFv3, the RA (Router Advertisement) extension option defined in RFC
-      4191, the DHCPv6 route information option proposed in draft-woj, and the
-      TR-069 standardized at BBF.</t>
+      distribution mechanisms are the routing protocols, such as RIPng
+      and OSPFv3, the RA (Router Advertisement) extension option
+      defined in RFC 4191, the DHCPv6 route information option
+      proposed in <xref target="I-D.dec-dhcpv6-route-option"></xref>,
+      and the TR-069 standardized at BBF.</t>
 
       <t>The RA based mechanism has difficulty in per-host routing information
       distribution. The dynamic routing protocols like RIPng are not usually
@@ -620,12 +634,13 @@
       to the DNS resolvers that are visible to the users.</t>
 
       <t>The alternative of a policy-based approach is documented in
-      [draft-teemu], where several pairs of DNS resolver addresses and DNS
-      domain suffixes are defined as part of a policy and conveyed to hosts in
-      a new DHCP new. In a environment where a home gateway router exists, the
-      home gateway router can act as a DNS proxy, interpret this option and
-      distribute DNS queries to the appropriate DNS servers according to the
-      policy.</t>
+      <xref target="I-D.savolainen-mif-dns-server-selection"></xref>,
+      where several pairs of DNS resolver addresses and DNS domain
+      suffixes are defined as part of a policy and conveyed to hosts
+      in a new DHCP new. In a environment where a home gateway router
+      exists, the home gateway router can act as a DNS proxy,
+      interpret this option and distribute DNS queries to the
+      appropriate DNS servers according to the policy.</t>
     </section>
 
     <section title="Consideration for legacy host support">
@@ -681,9 +696,10 @@
       <t>GW router also has to support the three features described in section
       7.</t>
 
-      <t>The implementation and issues of IPv6 NAT are out of the scope of
-      this document. It may be covered by other document under discussion
-      (draft-mrw-behave-nat66).</t>
+      <t>The implementation and issues of IPv6 NAT are out of the
+      scope of this document. It may be covered by other document
+      under discussion <xref
+      target="I-D.mrw-behave-nat66"></xref>.</t>
     </section>
 
     <section anchor="Security" title="Security Considerations">
@@ -693,7 +709,9 @@
       in another document.</t>
     </section>
 
-    <section anchor="IANA" title="IANA Considerations"></section>
+    <section anchor="IANA" title="IANA Considerations">
+      <t>This document has no IANA actions.</t>
+    </section>
 
     <section title="Contributors">
       <t>The following people contributed to this document: Akiko Hattori,
@@ -703,7 +721,6 @@
       Kashimura, Yuji Yamazaki</t>
     </section>
 
-    <section anchor="Acknowledgements" title="Acknowledgements"></section>
   </middle>
 
   <!--  *****BACK MATTER ***** -->
@@ -711,6 +728,11 @@
   <back>
     <references title="Normative References">
       &RFC2119;
+      &I-D.dec-dhcpv6-route-option;
+      &I-D.ietf-6man-addr-select-sol;
+      &I-D.fujisaki-dhc-addr-select-opt;
+      &I-D.savolainen-mif-dns-server-selection;
+      &I-D.mrw-behave-nat66;
     </references>
 
     <!-- Change Log
