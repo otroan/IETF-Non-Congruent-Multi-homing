@@ -5,7 +5,7 @@
 REVISION=00
 DRAFT=draft-troan-ipv6-multihoming-without-ipv6nat.txt \
 
-XML2RFC=./xml2rfc-1.34/xml2rfc.tcl
+XML2RFC=./xml2rfc/xml2rfc.tcl
 
 # General rule to "compile" an XML file
 %.txt:  %.xml
