@@ -586,7 +586,7 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
    host or gateway router sends a DNS query it would normally choose one
    of the available DNS resolvers for the query.
 
-   In the IPv6 gateway router scenario, the Broadband Forum TR-124
+   In the IPv6 gateway router scenario, the Broadband Forum [TR124]
    required that the query was sent to all DNS resolvers and the gateway
    waits for the first reply.  In IPv6, given our employment of specific
    destination-based policy for both routing and source address
@@ -923,8 +923,12 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
               "IPv6 Router Advertisement Option for DNS Configuration",
               RFC 5006, September 2007.
 
-   [TR069]    "TR-069, CPE WAN Management Protocol v1.1, Version: Issue
-              1 Amendment 2", December 2007.
+   [TR069]    The BroadBand Forum, "TR-069, CPE WAN Management Protocol
+              v1.1, Version: Issue 1 Amendment 2", December 2007.
+
+   [TR124]    The BroadBand Forum, "TR-124i2, Functional Requirements
+              for Broadband Residential Gateway Devices (work in
+              progress)", May 2010.
 
 
 Authors' Addresses
@@ -937,12 +941,8 @@ Authors' Addresses
    Email: ot@cisco.com
 
 
-   David Miles
-   Alcatel-Lucent
-   Melbourne
-   Australia
 
-   Email: david.miles@alcatel-lucent.com
+
 
 
 
@@ -951,6 +951,14 @@ Authors' Addresses
 Troan, et al.           Expires November 19, 2010              [Page 17]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
+
+
+   David Miles
+   Alcatel-Lucent
+   Melbourne
+   Australia
+
+   Email: david.miles@alcatel-lucent.com
 
 
    Satoru Matsushima
@@ -967,14 +975,6 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
    Japan
 
    Email: t.okimoto@hco.ntt.co.jp
-
-
-
-
-
-
-
-
 
 
 

@@ -525,16 +525,18 @@
         router sends a DNS query it would normally choose one of the
         available DNS resolvers for the query.</t>
 
-        <t>In the IPv6 gateway router scenario, the Broadband Forum TR-124
-        required that the query was sent to all DNS resolvers and the gateway
-        waits for the first reply. In IPv6, given our employment of specific
+        <t>In the IPv6 gateway router scenario, the Broadband Forum
+        <xref target="TR124"></xref> required that the query was sent
+        to all DNS resolvers and the gateway waits for the first
+        reply. In IPv6, given our employment of specific
         destination-based policy for both routing and source address
-        selection, it is desirable to extend a policy-based concept to DNS
-        resolver selection. Doing so can minimize DNS resolver load and avoid
-        issues where DNS resolvers in different networks have connectivity
-        issues, or the DNS resolvers are not publicly accessible. In the worst
-        case, a DNS query may be unanswered if sent towards the incorrect
-        resolver resulting in a lack of connectivity.</t>
+        selection, it is desirable to extend a policy-based concept to
+        DNS resolver selection. Doing so can minimize DNS resolver
+        load and avoid issues where DNS resolvers in different
+        networks have connectivity issues, or the DNS resolvers are
+        not publicly accessible. In the worst case, a DNS query may be
+        unanswered if sent towards the incorrect resolver resulting in
+        a lack of connectivity.</t>
 
         <t>An IPv6 multihomed host or gateway router should have the
         ability to select appropriate DNS resolvers for each service
@@ -815,11 +817,19 @@
 	<front>
 	  <title>TR-069, CPE WAN Management Protocol v1.1, Version: Issue
 	  1 Amendment 2</title>
-	  <author><organization></organization></author>
+	  <author><organization>The BroadBand Forum</organization></author>
 	  <date month="December" year="2007"/>
 	</front>
 	<format type='PDF'
 		target='http://www.broadband-forum.org/technical/download/TR-069_Amendment-2.pdf' />
+      </reference>
+      <reference anchor="TR124">
+	<front>
+	  <title>TR-124i2, Functional Requirements for Broadband
+	  Residential Gateway Devices (work in progress)</title>
+	  <author><organization>The BroadBand Forum</organization></author>
+	  <date month="May" year="2010"/>
+	</front>
       </reference>
     </references>
 
