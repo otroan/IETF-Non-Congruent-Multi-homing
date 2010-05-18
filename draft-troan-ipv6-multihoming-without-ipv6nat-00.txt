@@ -3,8 +3,13 @@
 
 Internet Engineering Task Force                            O. Troan, Ed.
 Internet-Draft                                                     Cisco
-Intended status: Informational                              May 18, 2010
-Expires: November 19, 2010
+Intended status: Informational                                  D. Miles
+Expires: November 19, 2010                                Alcatel-Lucent
+                                                           S. Matsushima
+                                                  SOFTBANK TELECOM Corp.
+                                                              T. Okimoto
+                                                                     NTT
+                                                            May 18, 2010
 
 
          IPv6 Multi-homing without Network Address Translation
@@ -44,19 +49,19 @@ Status of this Memo
 Copyright Notice
 
    Copyright (c) 2010 IETF Trust and the persons identified as the
+
+
+
+Troan, et al.           Expires November 19, 2010               [Page 1]
+
+Internet-Draft        IPv6 multi-homing without NAT             May 2010
+
+
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
    (http://trustee.ietf.org/license-info) in effect on the date of
-
-
-
-Troan                   Expires November 19, 2010               [Page 1]
-
-Internet-Draft        IPv6 multi-homing without NAT             May 2010
-
-
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -83,6 +88,9 @@ Table of Contents
      5.2.  Policy enforcement . . . . . . . . . . . . . . . . . . . . 12
      5.3.  Scalability  . . . . . . . . . . . . . . . . . . . . . . . 12
    6.  Implementation approach  . . . . . . . . . . . . . . . . . . . 13
+     6.1.  Source address selection . . . . . . . . . . . . . . . . . 13
+     6.2.  Route selection  . . . . . . . . . . . . . . . . . . . . . 13
+     6.3.  DNS Resolver selection . . . . . . . . . . . . . . . . . . 14
    7.  Consideration for legacy host support  . . . . . . . . . . . . 14
    8.  Security Considerations  . . . . . . . . . . . . . . . . . . . 15
    9.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 16
@@ -90,7 +98,7 @@ Table of Contents
    11. References . . . . . . . . . . . . . . . . . . . . . . . . . . 16
      11.1. Normative References . . . . . . . . . . . . . . . . . . . 16
      11.2. Informative References . . . . . . . . . . . . . . . . . . 17
-   Author's Address . . . . . . . . . . . . . . . . . . . . . . . . . 17
+   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 17
 
 
 
@@ -100,15 +108,7 @@ Table of Contents
 
 
 
-
-
-
-
-
-
-
-
-Troan                   Expires November 19, 2010               [Page 2]
+Troan, et al.           Expires November 19, 2010               [Page 2]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
@@ -164,7 +164,7 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
 
 
-Troan                   Expires November 19, 2010               [Page 3]
+Troan, et al.           Expires November 19, 2010               [Page 3]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
@@ -220,7 +220,7 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
 
 
-Troan                   Expires November 19, 2010               [Page 4]
+Troan, et al.           Expires November 19, 2010               [Page 4]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
@@ -276,7 +276,7 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
 
 
-Troan                   Expires November 19, 2010               [Page 5]
+Troan, et al.           Expires November 19, 2010               [Page 5]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
@@ -332,7 +332,7 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
 
 
-Troan                   Expires November 19, 2010               [Page 6]
+Troan, et al.           Expires November 19, 2010               [Page 6]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
@@ -388,7 +388,7 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
 
 
-Troan                   Expires November 19, 2010               [Page 7]
+Troan, et al.           Expires November 19, 2010               [Page 7]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
@@ -444,7 +444,7 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
 
 
-Troan                   Expires November 19, 2010               [Page 8]
+Troan, et al.           Expires November 19, 2010               [Page 8]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
@@ -458,32 +458,32 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
    gateway router.  The gateway router is the only default router on the
    link.
 
-   - The source address selection policy on the host does not
-   deterministically resolve a source address.  Upstream uRPF or filter
-   policies will discard traffic with source addresses that the operator
-   did not assign.
+   o  The source address selection policy on the host does not
+      deterministically resolve a source address.  Upstream uRPF or
+      filter policies will discard traffic with source addresses that
+      the operator did not assign.
 
-   - The gateway router does not have a mechanism for determining which
-   traffic should be sent to which network.  If the gateway router is
-   implementing host functions (ie, processing RA) then two valid
-   default routers may be learnt.
+   o  The gateway router does not have a mechanism for determining which
+      traffic should be sent to which network.  If the gateway router is
+      implementing host functions (ie, processing RA) then two valid
+      default routers may be learnt.
 
    Scenario 3:
 
    A host has two separate interfaces and on each interface a different
    address is assigned.  Each link has its own router.
 
-   - The source address selection policy on the host does not
-   deterministically resolve a source address.  Upstream uRPF or filter
-   policies will discard traffic with source addresses that the operator
-   did not assign.
+   o  The source address selection policy on the host does not
+      deterministically resolve a source address.  Upstream uRPF or
+      filter policies will discard traffic with source addresses that
+      the operator did not assign.
 
-   - The host will select one of the two routers as the active default
-   router.  No traffic is sent to the other router.
+   o  The host will select one of the two routers as the active default
+      router.  No traffic is sent to the other router.
 
    All scenario:
 
-   - The host may use the incorrect DNS resolver for DNS queries.
+   o  The host may use the incorrect DNS resolver for DNS queries.
 
 
 4.  Problem statement and Analysis
@@ -491,16 +491,16 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
    The problems described in section 2 can be classified into these
    three problems:
 
-      - Wrong next-hop selection
+   o  Wrong next-hop selection
 
-      - Wrong source address selection
+   o  Wrong source address selection
 
-      - Wrong DNS server selection
-
-
+   o  Wrong DNS server selection
 
 
-Troan                   Expires November 19, 2010               [Page 9]
+
+
+Troan, et al.           Expires November 19, 2010               [Page 9]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
@@ -556,7 +556,7 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
 
 
-Troan                   Expires November 19, 2010              [Page 10]
+Troan, et al.           Expires November 19, 2010              [Page 10]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
@@ -612,7 +612,7 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
 
 
-Troan                   Expires November 19, 2010              [Page 11]
+Troan, et al.           Expires November 19, 2010              [Page 11]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
@@ -642,21 +642,21 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
    This enforcement mechanisms should have:
 
-   - a function to distribute policies to nodes dynamically to update
-   their behaviour.  When the network environment changes and the nodes'
-   behavior has to be changed, a network administrator can modify the
-   behavior of nodes.
+   o  a function to distribute policies to nodes dynamically to update
+      their behaviour.  When the network environment changes and the
+      nodes' behavior has to be changed, a network administrator can
+      modify the behavior of nodes.
 
-   - a function to control every node centrally.  A site administrator
-   or a service provider could determine or could have an effect on the
-   behavior at their users' hosts.
+   o  a function to control every node centrally.  A site administrator
+      or a service provider could determine or could have an effect on
+      the behavior at their users' hosts.
 
-   - a function to control node specific behavior.  Even when multiple
-   nodes are on the same subnet, the mechanism should be able to provide
-   a method for the network administrator to make nodes behave
-   differently.  For example, each node may have a different set of
-   assigned prefixes.  In such a case, the appropriate behavior may be
-   different.
+   o  a function to control node specific behavior.  Even when multiple
+      nodes are on the same subnet, the mechanism should be able to
+      provide a method for the network administrator to make nodes
+      behave differently.  For example, each node may have a different
+      set of assigned prefixes.  In such a case, the appropriate
+      behavior may be different.
 
 5.3.  Scalability
 
@@ -668,7 +668,7 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
 
 
-Troan                   Expires November 19, 2010              [Page 12]
+Troan, et al.           Expires November 19, 2010              [Page 12]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
@@ -681,7 +681,7 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
    for each problem are introduced and evaluated against the
    requirements in Section 4.
 
-   * Source address selection
+6.1.  Source address selection
 
    Possible solutions and their evaluation are summarized in
    [I-D.ietf-6man-addr-select-sol].  When those solutions are examined
@@ -693,7 +693,7 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
    protocol stack impact, and the staticness of the assumed target
    network environment.
 
-   * Route selection
+6.2.  Route selection
 
    Just like the source address selection problem, both a policy-based
    approach and a non policy-based approach are possible with regard to
@@ -713,7 +713,7 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
    distribution mechanisms are the routing protocols, such as RIPng and
    OSPFv3, the RA (Router Advertisement) extension option defined in
    [RFC4191], the DHCPv6 route information option proposed in
-   [I-D.dec-dhcpv6-route-option], and the TR-069 standardized at BBF.
+   [I-D.dec-dhcpv6-route-option], and the [TR069] standardized at BBF.
 
    The RA based mechanism has difficulty in per-host routing information
    distribution.  The dynamic routing protocols like RIPng are not
@@ -724,18 +724,18 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
 
 
-Troan                   Expires November 19, 2010              [Page 13]
+Troan, et al.           Expires November 19, 2010              [Page 13]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
 
-   Regarding TR-069, this is a possible solution mechanism for routing
+   Regarding [TR069], this is a possible solution mechanism for routing
    information distribution to CPE.  It assumes, however, the IP
    reachability to the ACS (Auto Configuration Server) is established.
-   Therefore, if the CPE needs routing information to reach the ACS, TR-
-   069 cannot be used to distribute the routing information.
+   Therefore, if the CPE needs routing information to reach the ACS,
+   [TR069] cannot be used to distribute the routing information.
 
-   * DNS Resolver selection
+6.3.  DNS Resolver selection
 
    Just like the above two problems, a policy-based approach and non
    policy-based approach are possible.  In non policy-based approach a
@@ -780,7 +780,7 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
 
 
-Troan                   Expires November 19, 2010              [Page 14]
+Troan, et al.           Expires November 19, 2010              [Page 14]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
@@ -836,7 +836,7 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
 
 
-Troan                   Expires November 19, 2010              [Page 15]
+Troan, et al.           Expires November 19, 2010              [Page 15]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
@@ -852,10 +852,9 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 10.  Contributors
 
    The following people contributed to this document: Akiko Hattori,
-   Arifumi Matsumoto, David Miles, Dan Wing, Frank Brockners, Fred
-   Baker, Tomohiro Fujisaki, Jun-ya Kato, Tadahisa Okimoto, Shigeru
-   Akiyama, Satoru Matsushima, Seiichi Morikawa, Mark Townsley, Wojciech
-   Dec, Yasuo Kashimura, Yuji Yamazaki
+   Arifumi Matsumoto, Dan Wing, Frank Brockners, Fred Baker, Tomohiro
+   Fujisaki, Jun-ya Kato, Shigeru Akiyama, Seiichi Morikawa, Mark
+   Townsley, Wojciech Dec, Yasuo Kashimura, Yuji Yamazaki
 
 
 11.  References
@@ -889,15 +888,15 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
               Hosts", draft-savolainen-mif-dns-server-selection-02 (work
               in progress), February 2010.
 
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
 
 
 
-Troan                   Expires November 19, 2010              [Page 16]
+Troan, et al.           Expires November 19, 2010              [Page 16]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
 
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
 
    [RFC3484]  Draves, R., "Default Address Selection for Internet
@@ -924,17 +923,50 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
               "IPv6 Router Advertisement Option for DNS Configuration",
               RFC 5006, September 2007.
 
+   [TR069]    "TR-069, CPE WAN Management Protocol v1.1, Version: Issue
+              1 Amendment 2", December 2007.
 
-Author's Address
+
+Authors' Addresses
 
    Ole Troan (editor)
    Cisco
-   Bergen,
+   Bergen
    Norway
 
    Email: ot@cisco.com
 
 
+   David Miles
+   Alcatel-Lucent
+   Melbourne
+   Australia
+
+   Email: david.miles@alcatel-lucent.com
+
+
+
+
+
+Troan, et al.           Expires November 19, 2010              [Page 17]
+
+Internet-Draft        IPv6 multi-homing without NAT             May 2010
+
+
+   Satoru Matsushima
+   SOFTBANK TELECOM Corp.
+   Tokyo
+   Japan
+
+   Email: satoru.matsushima@tm.softbank.co.jp
+
+
+   Tadahisa Okimoto
+   NTT
+   Tokyo
+   Japan
+
+   Email: t.okimoto@hco.ntt.co.jp
 
 
 
@@ -948,5 +980,29 @@ Author's Address
 
 
 
-Troan                   Expires November 19, 2010              [Page 17]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Troan, et al.           Expires November 19, 2010              [Page 18]
 

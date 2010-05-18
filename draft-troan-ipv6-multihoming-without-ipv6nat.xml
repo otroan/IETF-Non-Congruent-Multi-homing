@@ -33,52 +33,81 @@
 
     <author fullname="Ole Troan" initials="O." role="editor" surname="Troan">
       <organization>Cisco</organization>
-
       <address>
         <postal>
           <street></street>
-
           <city>Bergen</city>
-
-          <region></region>
-
-          <code></code>
-
           <country>Norway</country>
         </postal>
-
         <email>ot@cisco.com</email>
+      </address>
+    </author>
+
+    <author fullname="David Miles" initials="D." surname="Miles">
+      <organization>Alcatel-Lucent</organization>
+      <address>
+	<postal>
+          <street></street>
+	  <city>Melbourne</city>
+	  <country>Australia</country>
+	</postal>
+	<email>david.miles@alcatel-lucent.com</email>
+      </address>
+    </author>
+
+    <author fullname="Satoru Matsushima" initials="S." surname="Matsushima">
+      <organization>SOFTBANK TELECOM Corp.</organization>
+      <address>
+	<postal>
+          <street></street>
+	  <city>Tokyo</city>
+	  <country>Japan</country>
+	</postal>
+	<email>satoru.matsushima@tm.softbank.co.jp</email>
+      </address>
+    </author>
+
+    <author fullname="Tadahisa Okimoto" initials="T." surname="Okimoto">
+      <organization>NTT</organization>
+      <address>
+	<postal>
+          <street></street>
+	  <city>Tokyo</city>
+	  <country>Japan</country>
+	</postal>
+	<email>t.okimoto@hco.ntt.co.jp</email>
       </address>
     </author>
 
     <date month="May" year="2010" />
 
     <area>Internet</area>
-
     <workgroup>Internet Engineering Task Force</workgroup>
-
     <keyword></keyword>
 
     <abstract>
-      <t>Network Address Translation (NAT) works well not only for conserving
-      global address but also addressing multihoming requirements because a
-      IPv4 NAT router implements three functions: next-hop resolution; source
-      address selection, and; optional DNS resolution. For IPv6 hosts one
-      approach could be the use of NAT66 however there is a desire to avoid
-      NAT, if at all possible, to permit transparent host-to-host
-      connectivity. In this document, we analyze the use cases of multihoming
-      and also describe functional requirements for multihoming without the
-      use of NAT in IPv6 for hosts and small IPv6 networks which would
-      otherwise be unable to meet minimum IPv6 allocation criteria .</t>
+      <t>Network Address Translation (NAT) works well not only for
+      conserving global address but also addressing multihoming
+      requirements because a IPv4 NAT router implements three
+      functions: next-hop resolution; source address selection, and;
+      optional DNS resolution. For IPv6 hosts one approach could be
+      the use of NAT66 however there is a desire to avoid NAT, if at
+      all possible, to permit transparent host-to-host
+      connectivity. In this document, we analyze the use cases of
+      multihoming and also describe functional requirements for
+      multihoming without the use of NAT in IPv6 for hosts and small
+      IPv6 networks which would otherwise be unable to meet minimum
+      IPv6 allocation criteria .</t>
     </abstract>
   </front>
 
   <middle>
     <section title="Introduction">
-      <t>IPv6 provides enough globally unique addresses to permit every
-      conceivable host on the Internet to be uniquely addressed without the
-      requirement for Network Address Translation (NAT) offering a renaissance
-      in host-to-host transparent connectivity.</t>
+      <t>IPv6 provides enough globally unique addresses to permit
+      every conceivable host on the Internet to be uniquely addressed
+      without the requirement for Network Address Translation (NAT)
+      offering a renaissance in host-to-host transparent
+      connectivity.</t>
 
       <t>Unfortunately, such dream could be corrupted by the necessity of NAT
       even in IPv6. The reason is Multihoming.</t>
@@ -191,10 +220,11 @@
           multiple prefix</postamble>
         </figure>
 
-        <t>Figure 1 illustrates that the host connect to rtr1 and rtr2 via
-        shared link. network1 and 2 are reachable via rtr1 and rtr2
-        respectively. When the host send packets network1, the next-hop to
-        network1 is rtr1. Similarly, rtr2 is the next-hop to network2.</t>
+        <t>Figure 1 illustrates that the host connect to rtr1 and rtr2
+        via shared link. network1 and 2 are reachable via rtr1 and
+        rtr2 respectively. When the host send packets network1, the
+        next-hop to network1 is rtr1. Similarly, rtr2 is the next-hop
+        to network2.</t>
 
         <t>- e.g, Broadband service (Internet, VoIP, IPTV, etc.,)</t>
 
@@ -359,44 +389,52 @@
         gateway router. The gateway router is the only default router on the
         link.</t>
 
-        <t>- The source address selection policy on the host does not
-        deterministically resolve a source address. Upstream uRPF or filter
-        policies will discard traffic with source addresses that the operator
-        did not assign.</t>
+	<t><list style="symbols">
+	  <t>The source address selection policy on the host does not
+	  deterministically resolve a source address. Upstream uRPF or
+	  filter policies will discard traffic with source addresses
+	  that the operator did not assign.</t>
 
-        <t>- The gateway router does not have a mechanism for determining
-        which traffic should be sent to which network. If the gateway router
-        is implementing host functions (ie, processing RA) then two valid
-        default routers may be learnt.</t>
+	  <t>The gateway router does not have a mechanism for
+	  determining which traffic should be sent to which
+	  network. If the gateway router is implementing host
+	  functions (ie, processing RA) then two valid default routers
+	  may be learnt.</t>
+
+	</list></t>
 
         <t>Scenario 3:</t>
 
         <t>A host has two separate interfaces and on each interface a
         different address is assigned. Each link has its own router.</t>
 
-        <t>- The source address selection policy on the host does not
-        deterministically resolve a source address. Upstream uRPF or filter
-        policies will discard traffic with source addresses that the operator
-        did not assign.</t>
+	<t><list style="symbols">
+	  <t>The source address selection policy on the host does not
+	  deterministically resolve a source address. Upstream uRPF or
+	  filter policies will discard traffic with source addresses
+	  that the operator did not assign.</t>
 
-        <t>- The host will select one of the two routers as the active default
-        router. No traffic is sent to the other router.</t>
+	  <t>The host will select one of the two routers as the active
+	  default router. No traffic is sent to the other router.</t>
+
+	</list></t>
 
         <t>All scenario:</t>
-
-        <t>- The host may use the incorrect DNS resolver for DNS queries.</t>
+	<t><list style="symbols">
+	  <t>The host may use the incorrect DNS resolver for DNS
+	  queries.</t>
+	</list></t>
       </section>
     </section>
 
     <section title="Problem statement and Analysis">
       <t>The problems described in section 2 can be classified into these
-      three problems:<list>
-          <t>- Wrong next-hop selection</t>
-
-          <t>- Wrong source address selection</t>
-
-          <t>- Wrong DNS server selection</t>
-        </list></t>
+      three problems:
+      <list style="symbols">
+	<t>Wrong next-hop selection</t>
+	<t>Wrong source address selection</t>
+	<t>Wrong DNS server selection</t>
+      </list></t>
 
       <t>This section reviews the problem statements presented above and
       proposed functional requirements to resolve the issues without employing
@@ -439,8 +477,8 @@
         prefixes) only to hosts which support more advanced next-hop
         and address selection requirements.</t>
 
-        <t>Scenario 1: "Host" needs to support the solution for this
-        problem</t>
+	<t>Scenario 1: "Host" needs to support the solution for this
+	problem</t>
 
         <t>Scenario 2: "GW rtr" needs to support the solution for this
         problem</t>
@@ -543,21 +581,23 @@
 
         <t>This enforcement mechanisms should have:</t>
 
-        <t>- a function to distribute policies to nodes dynamically to update
-        their behaviour. When the network environment changes and the nodes'
-        behavior has to be changed, a network administrator can modify the
-        behavior of nodes.</t>
+	<t><list style="symbols">
+	  <t>a function to distribute policies to nodes dynamically to
+	  update their behaviour. When the network environment changes
+	  and the nodes' behavior has to be changed, a network
+	  administrator can modify the behavior of nodes.</t>
 
-        <t>- a function to control every node centrally. A site administrator
-        or a service provider could determine or could have an effect on the
-        behavior at their users' hosts.</t>
+	  <t>a function to control every node centrally. A site
+	  administrator or a service provider could determine or could
+	  have an effect on the behavior at their users' hosts.</t>
 
-        <t>- a function to control node specific behavior. Even when multiple
-        nodes are on the same subnet, the mechanism should be able to provide
-        a method for the network administrator to make nodes behave
-        differently. For example, each node may have a different set of
-        assigned prefixes. In such a case, the appropriate behavior may be
-        different.</t>
+	  <t>a function to control node specific behavior. Even when
+	  multiple nodes are on the same subnet, the mechanism should
+	  be able to provide a method for the network administrator to
+	  make nodes behave differently. For example, each node may
+	  have a different set of assigned prefixes. In such a case,
+	  the appropriate behavior may be different.</t>
+	</list></t>
       </section>
 
       <section title="Scalability">
@@ -577,84 +617,99 @@
       each problem are introduced and evaluated against the requirements in
       Section 4.</t>
 
-      <t>* Source address selection</t>
+      <section title="Source address selection">
 
-      <t>Possible solutions and their evaluation are summarized in
-      <xref target="I-D.ietf-6man-addr-select-sol"></xref>. When those
-      solutions are examined against the requirements in Section 4,
-      the proactive approaches, such as the policy table distribution
-      mechanism and the routing system assistance mechanism, are more
-      appropriate in that these mechanisms can propagate network
-      administrators policy directly. The policy distribution
-      mechanism has an advantage with regard to the host's protocol
-      stack impact, and the staticness of the assumed target network
-      environment.</t>
+	<t>Possible solutions and their evaluation are summarized in
+	<xref target="I-D.ietf-6man-addr-select-sol"></xref>. When
+	those solutions are examined against the requirements in
+	Section 4, the proactive approaches, such as the policy table
+	distribution mechanism and the routing system assistance
+	mechanism, are more appropriate in that these mechanisms can
+	propagate network administrators policy directly. The policy
+	distribution mechanism has an advantage with regard to the
+	host's protocol stack impact, and the staticness of the
+	assumed target network environment.</t>
 
-      <t>* Route selection</t>
+      </section>
 
-      <t>Just like the source address selection problem, both a policy-based
-      approach and a non policy-based approach are possible with regard to the
-      route selection problem. Because of the same requirement the policy
-      propagation based solution mechanism, whatever the policy looks like,
-      should be more appropriate.</t>
+      <section title="Route selection">
 
-      <t>Routing information is a typical example of policy related to route
-      selection. If we assume source address-based routing at hosts or
-      intermediate routers, the pairs of source prefixes and next-hops can be
-      another example of route selection policy.</t>
+	<t>Just like the source address selection problem, both a
+	policy-based approach and a non policy-based approach are
+	possible with regard to the route selection problem. Because
+	of the same requirement the policy propagation based solution
+	mechanism, whatever the policy looks like, should be more
+	appropriate.</t>
 
-      <t>The routing information based approach has a clear advantage on the
-      point of the implementation and operational experiences.</t>
+	<t>Routing information is a typical example of policy related
+	to route selection. If we assume source address-based routing
+	at hosts or intermediate routers, the pairs of source prefixes
+	and next-hops can be another example of route selection
+	policy.</t>
 
-      <t>The existing proposed or standardized routing information
-      distribution mechanisms are the routing protocols, such as RIPng
-      and OSPFv3, the RA (Router Advertisement) extension option
-      defined in <xref target="RFC4191"></xref>, the DHCPv6 route
-      information option proposed in <xref
-      target="I-D.dec-dhcpv6-route-option"></xref>, and the TR-069
-      standardized at BBF.</t>
+	<t>The routing information based approach has a clear
+	advantage on the point of the implementation and operational
+	experiences.</t>
 
-      <t>The RA based mechanism has difficulty in per-host routing information
-      distribution. The dynamic routing protocols like RIPng are not usually
-      used between the residential users and ISP networks because of their
-      scalability implications. DHCPv6 mechanism does not have these
-      difficulties and has an advantage of its relaying functionality and
-      deployment experiences.</t>
+	<t>The existing proposed or standardized routing information
+	distribution mechanisms are the routing protocols, such as
+	RIPng and OSPFv3, the RA (Router Advertisement) extension
+	option defined in <xref target="RFC4191"></xref>, the DHCPv6
+	route information option proposed in <xref
+	target="I-D.dec-dhcpv6-route-option"></xref>, and the <xref
+	target="TR069"></xref> standardized at BBF.</t>
 
-      <t>Regarding TR-069, this is a possible solution mechanism for routing
-      information distribution to CPE. It assumes, however, the IP
-      reachability to the ACS (Auto Configuration Server) is established.
-      Therefore, if the CPE needs routing information to reach the ACS, TR-069
-      cannot be used to distribute the routing information.</t>
+	<t>The RA based mechanism has difficulty in per-host routing
+	information distribution. The dynamic routing protocols like
+	RIPng are not usually used between the residential users and
+	ISP networks because of their scalability implications. DHCPv6
+	mechanism does not have these difficulties and has an
+	advantage of its relaying functionality and deployment
+	experiences.</t>
 
-      <t>* DNS Resolver selection</t>
+	<t>Regarding <xref target="TR069"></xref>, this is a possible
+	solution mechanism for routing information distribution to
+	CPE. It assumes, however, the IP reachability to the ACS (Auto
+	Configuration Server) is established.  Therefore, if the CPE
+	needs routing information to reach the ACS, <xref
+	target="TR069"></xref> cannot be used to distribute the
+	routing information.</t>
 
-      <t>Just like the above two problems, a policy-based approach and non
-      policy-based approach are possible. In non policy-based approach a host
-      or a home gateway router is assumed to send DNS queries to several DNS
-      servers at once or to select one of the available servers.</t>
+      </section>
 
-      <t>In the non policy-based approach by making a query to a resolver in a
-      different service provider to that which hosts the service, a user could
-      be directed to unexpected IP address or receive an invalid response, and
-      cannot connect to the service provider's private and legitimate service.
-      For example, some DNS servers replies different answers depending on the
-      source address of the DNS query, which is sometimes called
-      split-horizon. When the host mistakenly makes a query to different
-      provider's DNS to resolve a FQDN of another provider's private service,
-      and DNS resolver adopts the split-horizon configuration, the queried
-      server returns an IP address of the non-private side of the service.
-      Another problem with this approach is to cause unnecessary DNS traffic
-      to the DNS resolvers that are visible to the users.</t>
+      <section title="DNS Resolver selection">
 
-      <t>The alternative of a policy-based approach is documented in
-      <xref target="I-D.savolainen-mif-dns-server-selection"></xref>,
-      where several pairs of DNS resolver addresses and DNS domain
-      suffixes are defined as part of a policy and conveyed to hosts
-      in a new DHCP new. In a environment where a home gateway router
-      exists, the home gateway router can act as a DNS proxy,
-      interpret this option and distribute DNS queries to the
-      appropriate DNS servers according to the policy.</t>
+	<t>Just like the above two problems, a policy-based approach
+	and non policy-based approach are possible. In non
+	policy-based approach a host or a home gateway router is
+	assumed to send DNS queries to several DNS servers at once or
+	to select one of the available servers.</t>
+
+	<t>In the non policy-based approach by making a query to a
+	resolver in a different service provider to that which hosts
+	the service, a user could be directed to unexpected IP address
+	or receive an invalid response, and cannot connect to the
+	service provider's private and legitimate service.  For
+	example, some DNS servers replies different answers depending
+	on the source address of the DNS query, which is sometimes
+	called split-horizon. When the host mistakenly makes a query
+	to different provider's DNS to resolve a FQDN of another
+	provider's private service, and DNS resolver adopts the
+	split-horizon configuration, the queried server returns an IP
+	address of the non-private side of the service.  Another
+	problem with this approach is to cause unnecessary DNS traffic
+	to the DNS resolvers that are visible to the users.</t>
+
+	<t>The alternative of a policy-based approach is documented in
+	<xref
+	target="I-D.savolainen-mif-dns-server-selection"></xref>,
+	where several pairs of DNS resolver addresses and DNS domain
+	suffixes are defined as part of a policy and conveyed to hosts
+	in a new DHCP new. In a environment where a home gateway
+	router exists, the home gateway router can act as a DNS proxy,
+	interpret this option and distribute DNS queries to the
+	appropriate DNS servers according to the policy.</t>
+      </section>
     </section>
 
     <section title="Consideration for legacy host support">
@@ -728,11 +783,11 @@
     </section>
 
     <section title="Contributors">
-      <t>The following people contributed to this document: Akiko Hattori,
-      Arifumi Matsumoto, David Miles, Dan Wing, Frank Brockners, Fred Baker,
-      Tomohiro Fujisaki, Jun-ya Kato, Tadahisa Okimoto, Shigeru Akiyama,
-      Satoru Matsushima, Seiichi Morikawa, Mark Townsley, Wojciech Dec, Yasuo
-      Kashimura, Yuji Yamazaki</t>
+      <t>The following people contributed to this document: Akiko
+      Hattori, Arifumi Matsumoto, Dan Wing, Frank Brockners, Fred
+      Baker, Tomohiro Fujisaki, Jun-ya Kato, Shigeru Akiyama, Seiichi
+      Morikawa, Mark Townsley, Wojciech Dec, Yasuo Kashimura, Yuji
+      Yamazaki</t>
     </section>
 
   </middle>
@@ -756,6 +811,16 @@
       &RFC3442;
       &RFC4966;
       &RFC5006;
+      <reference anchor="TR069">
+	<front>
+	  <title>TR-069, CPE WAN Management Protocol v1.1, Version: Issue
+	  1 Amendment 2</title>
+	  <author><organization></organization></author>
+	  <date month="December" year="2007"/>
+	</front>
+	<format type='PDF'
+		target='http://www.broadband-forum.org/technical/download/TR-069_Amendment-2.pdf' />
+      </reference>
     </references>
 
     <!-- Change Log
