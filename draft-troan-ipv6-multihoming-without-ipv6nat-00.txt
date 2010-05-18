@@ -3,7 +3,7 @@
 
 Internet Engineering Task Force                            O. Troan, Ed.
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                            May 18, 2010
+Intended status: Informational                              May 18, 2010
 Expires: November 19, 2010
 
 
@@ -87,10 +87,10 @@ Table of Contents
    8.  Security Considerations  . . . . . . . . . . . . . . . . . . . 15
    9.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 16
    10. Contributors . . . . . . . . . . . . . . . . . . . . . . . . . 16
-   11. Normative References . . . . . . . . . . . . . . . . . . . . . 16
+   11. References . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+     11.1. Normative References . . . . . . . . . . . . . . . . . . . 16
+     11.2. Informative References . . . . . . . . . . . . . . . . . . 17
    Author's Address . . . . . . . . . . . . . . . . . . . . . . . . . 17
-
-
 
 
 
@@ -582,9 +582,9 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 4.3.  DNS server selection
 
    A multihomed IPv6 host or gateway router may be provided multiple DNS
-   resolvers through DHCPv6 or the experimental RFC 5006.  When the host
-   or gateway router sends a DNS query it would normally choose one of
-   the available DNS resolvers for the query.
+   resolvers through DHCPv6 or the experimental [RFC5006].  When the
+   host or gateway router sends a DNS query it would normally choose one
+   of the available DNS resolvers for the query.
 
    In the IPv6 gateway router scenario, the Broadband Forum TR-124
    required that the query was sent to all DNS resolvers and the gateway
@@ -624,7 +624,7 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
 5.1.  End-to-End transparency
 
-   End-to-end transparency is basic concept of the Internet.  RFC4966
+   End-to-end transparency is basic concept of the Internet.  [RFC4966]
    describes as follows."One of the major design goals for IPv6 is to
    restore the end-to-end transparency of the Internet.  Therefore,
    because IPv6 is expected to remove the need for NATs and similar
@@ -711,8 +711,8 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
 
    The existing proposed or standardized routing information
    distribution mechanisms are the routing protocols, such as RIPng and
-   OSPFv3, the RA (Router Advertisement) extension option defined in RFC
-   4191, the DHCPv6 route information option proposed in
+   OSPFv3, the RA (Router Advertisement) extension option defined in
+   [RFC4191], the DHCPv6 route information option proposed in
    [I-D.dec-dhcpv6-route-option], and the TR-069 standardized at BBF.
 
    The RA based mechanism has difficulty in per-host routing information
@@ -858,7 +858,9 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
    Dec, Yasuo Kashimura, Yuji Yamazaki
 
 
-11.  Normative References
+11.  References
+
+11.1.  Normative References
 
    [I-D.dec-dhcpv6-route-option]
               Dec, W. and R. Johnson, "DHCPv6 Route Option",
@@ -887,14 +889,40 @@ Internet-Draft        IPv6 multi-homing without NAT             May 2010
               Hosts", draft-savolainen-mif-dns-server-selection-02 (work
               in progress), February 2010.
 
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119, March 1997.
 
 
 
 Troan                   Expires November 19, 2010              [Page 16]
 
 Internet-Draft        IPv6 multi-homing without NAT             May 2010
+
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+   [RFC3484]  Draves, R., "Default Address Selection for Internet
+              Protocol version 6 (IPv6)", RFC 3484, February 2003.
+
+   [RFC4191]  Draves, R. and D. Thaler, "Default Router Preferences and
+              More-Specific Routes", RFC 4191, November 2005.
+
+   [RFC4861]  Narten, T., Nordmark, E., Simpson, W., and H. Soliman,
+              "Neighbor Discovery for IP version 6 (IPv6)", RFC 4861,
+              September 2007.
+
+11.2.  Informative References
+
+   [RFC3442]  Lemon, T., Cheshire, S., and B. Volz, "The Classless
+              Static Route Option for Dynamic Host Configuration
+              Protocol (DHCP) version 4", RFC 3442, December 2002.
+
+   [RFC4966]  Aoun, C. and E. Davies, "Reasons to Move the Network
+              Address Translator - Protocol Translator (NAT-PT) to
+              Historic Status", RFC 4966, July 2007.
+
+   [RFC5006]  Jeong, J., Park, S., Beloeil, L., and S. Madanapalli,
+              "IPv6 Router Advertisement Option for DNS Configuration",
+              RFC 5006, September 2007.
 
 
 Author's Address
@@ -905,34 +933,6 @@ Author's Address
    Norway
 
    Email: ot@cisco.com
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
