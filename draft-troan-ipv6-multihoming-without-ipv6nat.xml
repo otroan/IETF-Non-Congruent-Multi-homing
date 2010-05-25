@@ -146,7 +146,7 @@
       router may also implement a DNS cache or DNS policy to resolve
       address queries from hosts.</t>
 
-      <t>It is our goal to avoid the IPv6-equivilent of NAT. To reach
+      <t>It is our goal to avoid the IPv6 equivalent of NAT. To reach
       this goal, mechanisms are needed for end-user hosts to have
       multiple address assignments and resolve issues such as which
       address to use for sourcing traffic to which destination:</t>
@@ -167,7 +167,7 @@
       inappropriate source address for the upstream network would never reach
       their destination.</t>
 
-      <t>In multihomed environment, different DNS scopes or partitions may
+      <t>In multi-homed environment, different DNS scopes or partitions may
       exist in each independent upstream network. A DNS query sent to an
       arbitrary upstream resolver may result in incorrect or poisoned
       responses.</t>
@@ -188,8 +188,8 @@
       undertaken all inquires, and gives a correct answer to the
       host.</t>
 
-      <t>In this document, we identify the functions present in multihomed
-      IPv4 NAPT environments and propose requirements which address multihomed
+      <t>In this document, we identify the functions present in multi-homed
+      IPv4 NAPT environments and propose requirements which address multi-homed
       IPv6 environments without employing IPv6 NAT.</t>
 
 
@@ -263,7 +263,7 @@
         receive prefix delegations from each independent service provider
         network and a different set of DNS resolvers. The gateway in-turn
         advertises the provider prefixes to the host and for DNS may either
-        perform a lightweight DNS reslover/cache or may advertise the complete
+        perform a lightweight DNS resolver/cache or may advertise the complete
         set of service provider DNS resolvers to the hosts.</t>
 
         <figure align="center" anchor="multihome_architecture2"
@@ -336,18 +336,18 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       </section>
 
       <section title="Multihomed network environment">
-        <t>In an IPv6 multihomed network a host is assigned two or more IPv6
+        <t>In an IPv6 multi-homed network a host is assigned two or more IPv6
         addresses and DNS resolvers from independent service provider
-        networks. When this multihomed host attempts a connections with other
+        networks. When this multi-homed host attempts a connections with other
         hosts it may incorrectly resolve next-hop router, use an inappropriate
         source address or use a DNS response from the incorrect service
         provider that may result in impaired IP connectivity.</t>
 
-        <t>Multihomed networks in IPv4 have been commonly solved through the
+        <t>Multi-homed networks in IPv4 have been commonly solved through the
         use of a gateway router with NAPT function (scenario 2 with NAPT). An
         analysis of the current IPv4 NAPT and DNS functions within the gateway
         router should provide a baseline set of requirements for IPv6
-        multihomed environments. Destination prefix/route is often used on the
+        multi-homed environments. Destination prefix/route is often used on the
         gateway router to separate traffic between the networks.</t>
 
         <figure align="center" anchor="multihome_ipv4_architecture"
@@ -374,7 +374,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       </section>
 
       <section title="Multihomed Problem Statement">
-        <t>A multihomed IPv6 host has one or more assigned IPv6 address and
+        <t>A multi-homed IPv6 host has one or more assigned IPv6 address and
         DNS resolver from each upstream service provider, resulting in the
         host having multiple valid IPv6 addresses and DNS resolvers. The host
         must be able to resolve the appropriate next-hop, the correct source
@@ -466,7 +466,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       IPv6 NAT.</t>
 
       <section title="Source address selection">
-        <t>A multihomed IPv6 host will typically have different
+        <t>A multi-homed IPv6 host will typically have different
         addresses assigned from each service provider either on the
         same link (scenario 1 &amp; 2) or different links (scenario
         3). When the host wishes to send a packet towards any given
@@ -497,7 +497,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       </section>
 
       <section title="Next-hop selection">
-        <t>A multihomed IPv6 host or gateway may have multiple plinks
+        <t>A multi-homed IPv6 host or gateway may have multiple plinks
         to different service providers. Here each router would use
         Router Advertisements <xref target="RFC4861"></xref> for
         distributing default route/next-hop information to the host or
@@ -544,7 +544,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       </section>
 
       <section title="DNS server selection">
-        <t>A multihomed IPv6 host or gateway router may be provided
+        <t>A multi-homed IPv6 host or gateway router may be provided
         multiple DNS resolvers through DHCPv6 or the experimental
         <xref target="RFC5006"></xref>. When the host or gateway
         router sends a DNS query it would normally choose one of the
@@ -563,7 +563,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
         unanswered if sent towards the incorrect resolver resulting in
         a lack of connectivity.</t>
 
-        <t>An IPv6 multihomed host or gateway router should have the
+        <t>An IPv6 multi-homed host or gateway router should have the
         ability to select appropriate DNS resolvers for each service
         based on domain space for the destination, and each service
         should provide rules specific to that network. <xref
@@ -610,7 +610,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 
 	<t><list style="symbols">
 	  <t>a function to distribute policies to nodes dynamically to
-	  update their behaviour. When the network environment changes
+	  update their behavior. When the network environment changes
 	  and the nodes' behavior has to be changed, a network
 	  administrator can modify the behavior of nodes.</t>
 
@@ -741,7 +741,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 
     <section anchor="legacy_host" title="Considerations for legacy host support">
       <t>This section presents alternative approach to mitigate the
-      problem in a multihomed network. This approach will help legacy
+      problem in a multi-homed network. This approach will help legacy
       IPv6 hosts which are not capable of the enhancements for source
       address selection policy, next-hop selection policy and DNS
       selection policy described in <xref
@@ -750,11 +750,11 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       implemented into GW rtr in Scenario 2 alongside an IPv6 NAT
       component.</t>
 
-      <t>Furthermore, In case of typical IPv4 multihomed network deployment,
+      <t>Furthermore, In case of typical IPv4 multi-homed network deployment,
       IPv4 NAPT is practically used and it can eventually avoid assigning
       multiple addresses to the hosts and solve the next-hop selection
       problem. In a similar fashion, IPv6 NAT can be used as a last resort for
-      IPv6 multihomed network deployments where one needs to assign a single
+      IPv6 multi-homed network deployments where one needs to assign a single
       IPv6 address to a host.</t>
 
       <t>Considering the scenario 2 as a popular deployment for residential
@@ -811,8 +811,8 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 
     <section title="Contributors">
       <t>The following people contributed to this document: Akiko
-      Hattori, Arifumi Matsumoto, Dan Wing, Frank Brockners, Fred
-      Baker, Tomohiro Fujisaki, Jun-ya Kato, Shigeru Akiyama, Seiichi
+      Hattori, Arifumi Matsumoto, Frank Brockners, Fred Baker,
+      Tomohiro Fujisaki, Jun-ya Kato, Shigeru Akiyama, Seiichi
       Morikawa, Mark Townsley, Wojciech Dec, Yasuo Kashimura, Yuji
       Yamazaki</t>
     </section>
