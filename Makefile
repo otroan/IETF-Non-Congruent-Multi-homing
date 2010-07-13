@@ -2,7 +2,7 @@
 # Ole Troan, ot@cisco.com
 # April 2009
 
-REVISION=00
+REVISION=01
 DRAFT=draft-troan-ipv6-multihoming-without-ipv6nat.txt \
 
 XML2RFC=./xml2rfc/xml2rfc.tcl

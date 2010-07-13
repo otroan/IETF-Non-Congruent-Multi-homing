@@ -203,12 +203,21 @@
       document are to be interpreted as described in <xref
       target="RFC2119">RFC 2119</xref>.</t>
 
-      <t>The terms "NAT66" and "IPv6 NAT" refer to <xref
-      target="I-D.mrw-behave-nat66"></xref>.</t>
+      <t><list hangIndent="22" style="hanging">
+	<t hangText="NAT66 or IPv6 NAT">The terms "NAT66" and "IPv6
+	NAT" refer to <xref target="I-D.mrw-behave-nat66"></xref>.</t>
 
-      <t>NAPT refers to Network Address Port Translation as described
-      in <xref target="RFC3022"></xref>.  In other contexts, NAPT is
-      often pronounced "NAT" or written as "NAT".</t>
+	<t hangText="NAPT">Network Address Port Translation as
+	described in <xref target="RFC3022"></xref>.  In other
+	contexts, NAPT is often pronounced "NAT" or written as
+	"NAT".</t>
+
+	<t hangText="Multihomed with multi-prefix (MHMP)">A host implementation which supports the
+	mechanisms described in this document. Namely source address
+	selection policy, next-hop selection and DNS selection
+	policy.</t>
+      </list></t>
+
     </section>
 
     <section title="IPv6 multihomed network scenarios" anchor="multihomed-scenarios">
@@ -437,13 +446,11 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
         different address is assigned. Each link has its own router.</t>
 
 	<t><list style="symbols">
-	  <t>The source address selection policy on the host does not
-	  deterministically resolve a source address. Upstream uRPF or
-	  filter policies will discard traffic with source addresses
-	  that the operator did not assign.</t>
-
-	  <t>The host will select one of the two routers as the active
-	  default router. No traffic is sent to the other router.</t>
+ 	  <t>The host does not have enough information for determining
+ 	  which traffic should be sent to which upstream routers. The
+ 	  host will select one of the two routers as the active
+ 	  default router, and no traffic is sent to the other
+ 	  router.</t>
 
 	  <t>The default address selection rules select the address
 	  assigned to the outgoing interface as the source address.
@@ -748,34 +755,22 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       </section>
     </section>
 
-    <section anchor="legacy_host" title="Considerations for legacy host support">
+    <section anchor="legacy_host" title="Considerations for host without multi-prefix support">
       <t>This section presents an alternative approach to mitigate the
-      problem in a multihomed network. This approach will help legacy
-      IPv6 hosts that are not capable of the enhancements for the source
+      problem in a multihomed network. This approach will help IPv6
+      hosts that are not capable of the enhancements for the source
       address selection policy, next-hop selection policy, and DNS
       selection policy described in <xref
-      target="implementation"></xref>. The idea is to assign only a
-      single address to the host. The other three features need to be
-      implemented into GW rtr in Scenario 2 alongside an IPv6 NAT
-      component.</t>
+      target="implementation"></xref>.</t>
 
-      <t>Furthermore, in a typical IPv4 multihomed network deployment,
-      IPv4 NAPT is practically used and it can eventually avoid assigning
-      multiple addresses to the hosts and solve the next-hop selection
-      problem. In a similar fashion, IPv6 NAT can be used as a last resort for
-      IPv6 multihomed network deployments where one needs to assign a single
-      IPv6 address to a host.</t>
+      <section title="IPv6 NAT">
 
-      <t>In scenario 2, which is a popular deployment for residential
-      networks, legacy hosts such as PC, Macs and also any other
-      networked appliances (STB and gaming console) can access both
-      upstream networks by GW rtr with IPv6 NAT.</t>
-
-      <t>The functions of the IPv6 NAT are as follows: IPv6 NAT is
-      implemented on GW rtr. Only a single prefix (global or ULA) is
-      assigned to a host. Its source prefix is rewritten at the GW rtr
-      to the associated prefix according to the destination or
-      service. Here is a possible implementation on GW rtr.</t>
+	<t>In a typical IPv4 multihomed network deployment, IPv4 NAPT
+	is practically used and it can eventually avoid assigning
+	multiple addresses to the hosts and solve the next-hop
+	selection problem.  In a similar fashion, IPv6 NAT can be used
+	as a last resort for IPv6 multihomed network deployments where
+	one needs to assign a single IPv6 address to a host.</t>
 
       <figure align="center" anchor="fig-legacy_host" title="Legacy Host">
         <preamble></preamble>
@@ -808,7 +803,36 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       target="I-D.mrw-behave-nat66"></xref>.</t>
     </section>
 
-    <section anchor="Security" title="Security Considerations">
+    <section title="Co-exisitence consideration">
+
+      <t>The above scenario relies on the assumption that only hosts
+      without multi-prefix support are connected to the GW rtr in
+      scenario 2.  To allow the coexistence of non-MHMP hosts and
+      MHMP hosts(i.e.  hosts supporting multi-prefix with the
+      enhancements for the source address selection), GW-rtr may need
+      to treat those hosts separately.</t>
+
+      <t>An idea to achieve this is that GW-rtr identifies the hosts,
+      and then assigns single prefix to non-MHMP hosts and assigns
+      multiple prefix to MHMP hosts.  In this case, GW-rtr can
+      perform IPv6 NAT only for the traffic from MHMP hosts if its
+      source address is not appropriate.</t>
+
+      <t>Another idea is that GW-rtr assigns multiple prefix to the
+      both hosts, and it performs IPv6 NAT for the traffic from
+      non-MHMP hosts if its source address is not appropriate.</t>
+
+      <t>In scenario 1 and 3, the non-MHMP hosts can be placed behind
+      the NAT box.  In this case, non-MHMP host can access the service
+      through the NAT box.</t>
+
+      <t>The implementation of identifying non-MHMP hosts and NAT policy
+      is outside the scope of this document.</t>
+
+    </section>
+  </section>
+
+  <section anchor="Security" title="Security Considerations">
       <t>This document does not define any new mechanisms. Each solution
       mechanisms should consider security risks independently. Security risks
       that occur as a result of combining solution mechanisms should be considered
