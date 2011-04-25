@@ -16,7 +16,7 @@
 <!ENTITY I-D.ietf-6man-addr-select-sol SYSTEM 'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-6man-addr-select-sol.xml'>
 <!ENTITY I-D.ietf-6man-addr-select-opt SYSTEM 'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-6man-addr-select-opt.xml'>
 <!ENTITY I-D.ietf-mif-dns-server-selection SYSTEM 'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-mif-dns-server-selection.xml'>
-<!ENTITY I-D.mrw-behave-nat66 SYSTEM 'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.mrw-behave-nat66.xml'>
+<!ENTITY I-D.mrw-nat66 SYSTEM 'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.mrw-nat66.xml'>
 
 
 ]>
@@ -28,7 +28,7 @@
 <?rfc sortrefs="yes" ?>
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
-<rfc category="info" docName="draft-v6ops-multihoming-without-ipv6nat-01"
+<rfc category="info" docName="draft-ietf-v6ops-ipv6-multihoming-without-ipv6nat-00"
      ipr="trust200902">
   <!-- ***** FRONT MATTER ***** -->
 
@@ -73,14 +73,14 @@
     </author>
 
     <author fullname="Tadahisa Okimoto" initials="T." surname="Okimoto">
-      <organization>NTT</organization>
+      <organization>NTT West</organization>
       <address>
 	<postal>
           <street></street>
-	  <city>Tokyo</city>
+	  <city>Osaka</city>
 	  <country>Japan</country>
 	</postal>
-	<email>t.okimoto@hco.ntt.co.jp</email>
+	<email>t.okimoto@rdc.west.ntt.co.jp</email>
       </address>
     </author>
 
@@ -96,7 +96,7 @@
       </address>
     </author>
     <!--  -->
-    <date month="December" year="2010" />
+    <date month="March" year="2011" />
 
     <area>Internet</area>
     <workgroup>Internet Engineering Task Force</workgroup>
@@ -221,7 +221,7 @@
 
       <t><list hangIndent="22" style="hanging">
 	<t hangText="IPv6 NAT">The terms "NAT66" and "IPv6
-	NAT" refer to <xref target="I-D.mrw-behave-nat66"></xref>.</t>
+	NAT" refer to <xref target="I-D.mrw-nat66"></xref>.</t>
 
 	<t hangText="NAPT">Network Address Port Translation as
 	described in <xref target="RFC3022"></xref>.  In other
@@ -818,7 +818,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       <t>The implementation and issues of IPv6 NAT are out of the
       scope of this document. They may be covered by another document
       under discussion <xref
-      target="I-D.mrw-behave-nat66"></xref>.</t>
+      target="I-D.mrw-nat66"></xref>.</t>
     </section>
 
     <section title="Co-exisitence consideration">
@@ -849,9 +849,15 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
   </section>
 
   <section anchor="Security" title="Security Considerations">
-      <t>This document does not define any new mechanisms. Each solution
-      mechanisms should consider security risks independently. Security risks
-      of MHMP is considered as a <xref target="RFC4218"></xref> scenario.</t>
+      <t>This document requires that the solutions for MHMP should have a 
+      policy providing function. So, new security risks can be introduced 
+      depending on what kind and what form of the policy. The threats can be 
+      categorized in two parts: the policy receiver side and the policy 
+      distributer side. A policy receiver may receive an evil policy from a 
+      policy distributor. A policy distributor should expect some hosts in 
+      his network do not follow the distributed policy. The security threats 
+      related to IPv6 multihoming are described in <xref target="RFC4218"></xref>.
+      </t>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
@@ -881,7 +887,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       &I-D.ietf-6man-addr-select-sol;
       &I-D.ietf-6man-addr-select-opt;
       &I-D.ietf-mif-dns-server-selection;
-      &I-D.mrw-behave-nat66;
+      &I-D.mrw-nat66;
     </references>
 
     <references title="Informative References">
