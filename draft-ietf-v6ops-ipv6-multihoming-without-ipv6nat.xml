@@ -4,6 +4,7 @@
 <!ENTITY RFC3022 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3022.xml">
 <!ENTITY RFC3484 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3484.xml">
 <!ENTITY RFC3582 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3582.xml">
+<!ENTITY RFC3646 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3646.xml">
 <!ENTITY RFC4116 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4116.xml">
 <!ENTITY RFC4191 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4191.xml">
 <!ENTITY RFC4218 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4218.xml">
@@ -120,27 +121,28 @@
 
   <middle>
     <section title="Introduction">
-      <t>IPv6 provides enough globally unique addresses to permit
-      every conceivable host on the Internet to be uniquely addressed
-      without the requirement for Network Address Port Translation
-      (<xref target="RFC3022">NAPT</xref>) offering a renaissance in
+      <t>IPv6 provides enough globally unique addresses to permit every
+      conceivable host on the Internet to be uniquely addressed without
+      the requirement for Network Address Port Translation (<xref
+      target="RFC3022">NAPT</xref>), offering a renaissance in
       host-to-host transparent connectivity.</t>
 
-      <t>Unfortunately, this may not be possible due to the necessity of NAT
-      even in IPv6, because of multihoming.  Though there are some
-      mechanisms to implement multihoming, such as <xref target="RFC4116">
-      BGP multihoming</xref> and <xref target="RFC4960">SCTP based 
-      multihoming</xref>, there is no mechanism in IPv6 that serves as a
-      replacement for NAT based multihoming in IPv4.  In IPv4, for a host or 
-      a small network, NAT based multihoming is easily deployable and already
-      deployed technique.  The same situation that depends on NAT technique 
-      may be brought to the IPv6 world.</t>
+      <t>Unfortunately, this may not be possible due to the necessity of
+      NAT even in IPv6, because of multihoming.  Though there are some
+      mechanisms to implement multihoming, such as <xref
+      target="RFC4116"> BGP multihoming</xref> and <xref
+      target="RFC4960">SCTP based multihoming</xref>, there is no
+      mechanism in IPv6 that serves as a replacement for NAT based
+      multihoming in IPv4.  In IPv4, for a host or a small network, NAT
+      based multihoming is easily deployable and an already deployed
+      technique.  The same situations that require the NAT technique to be 
+      used in the IPv4 world may be applicable to the IPv6 world.</t>
 
       <t>Whenever a host or small network (which does not meet minimum IPv6
-      allocation criteria) is connected to multiple upstream networks, IPv6
+      allocation criteria) is connected to multiple upstream networks, an IPv6
       address is assigned by each respective service provider resulting in
       hosts with multiple global scope IPv6 addresses with different prefixes.
-      As each service provided is allocated a different address space from 
+      As each service provider is allocated a different address space from 
       its Internet Registry, it in-turn assigns a different address space 
       to the end-user network or host.  For example, a remote access user's 
       host or router may use a VPN to simultaneously connect to a remote network
@@ -158,7 +160,7 @@
 
       <t>It is our goal to avoid the IPv6 equivalent of NAT. So, the
       goals for IPv6 multihoming defined in <xref target="RFC3582">
-      </xref> do not exactly match the goals of us. Also regardless of 
+      </xref> do not match the goals of this document. Also regardless of 
       what the IPv6 NAT's specification is, we are trying to avoid 
       any form of network address translation technique that may not
       be visible for either of the end hosts. To reach this goal, 
@@ -166,14 +168,13 @@
       multiple address assignments and resolve issues such as which
       address to use for sourcing traffic to which destination:</t>
 
-      <t><list style="symbols">
-      <t>If multiple routers exist on a single link the host must
-      appropriately select next-hop for each connected
-      network. Each router is in turn connected to a different service 
-      provider network, which provides independent address assignment 
-      and DNS resolvers. Routing protocols that would normally be 
-      employed for router-to-router network advertisement seem 
-      inappropriate for use by individual hosts.</t>
+      <t><list style="symbols"> <t>If multiple routers exist on a single
+      link the host must select the appropriate next-hop for each
+      connected network. Each router is in turn connected to a different
+      service provider network, which provides independent address
+      assignment. Routing protocols that would normally be employed for
+      router-to-router network advertisement seem inappropriate for use
+      by individual hosts.</t>
 
       <t>Source address selection also becomes difficult whenever a host
       has more than one address within the same address scope.  Current
@@ -182,20 +183,20 @@
       the host, the appropriate source address is a function of the
       upstream network for which the packet is bound for.  If an upstream
       service provider uses IP anti-spoofing or ingress filtering, it is
-      conceivable that the packets that have inappropriate source address
+      conceivable that the packets that have an inappropriate source address
       for the upstream network would never reach their destination.</t>
 
       <t>In a multihomed environment, different DNS scopes or partitions
       may exist in each independent upstream network.  A DNS query sent
-      to an arbitrary upstream resolver may result in incorrect or
-      poisoned responses</t>
+      to an arbitrary upstream DNS recursive name servier may result in
+      incorrect or poisoned responses.</t>
       </list></t>
 
       <t>In short, while IPv6 facilitates hosts having more than one 
       address in the same address scope, the application of this causes 
       significant issues for a host from routing, source address selection
       and DNS resolution perspectives.  A possible consequence of assigning 
-      a host multiple identical-scoped addresses is severely impaired IP
+      a host multiple identically-scoped addresses is severely impaired IP
       connectivity.</t>
 
       <t>If a host connects to a network behind an IPv4 NAPT, the host has 
@@ -242,12 +243,12 @@
       <section anchor="classification" title="Classification of network scenarios for multihomed host">
         <t>Scenario 1:</t>
 
-        <t>In this scenario, two or more routers are present on a single link
-        shared with the host(s). Each router is in turn connected to a
-        different service provider network, which provides independent address
-        assignment and DNS resolvers. A host in this environment would be
-        offered multiple prefixes and DNS resolvers advertised from the two
-        different routers.</t>
+        <t>In this scenario, two or more routers are present on a single
+        link shared with the host(s). Each router is in turn connected
+        to a different service provider network, which provides
+        independent address assignment and DNS recursive name servers. A
+        host in this environment would be offered multiple prefixes and
+        DNS recursive name servers advertised from the two different routers.</t>
 
         <figure align="center" anchor="multihome_architecture1"
           title="single uplink, multiple next-hop,
@@ -284,13 +285,14 @@
 
         <t>Scenario 2:</t>
 
-        <t>In this scenario, a single gateway router connects the host to two
-        or more upstream service provider networks. This gateway router would
-        receive prefix delegations from each independent service provider
-        network and a different set of DNS resolvers. The gateway in turn
-        advertises the provider prefixes to the host, and for DNS, may either
-        act as a lightweight DNS resolver/cache or may advertise the complete
-        set of service provider DNS resolvers to the hosts.</t>
+        <t>In this scenario, a single gateway router connects the host
+        to two or more upstream service provider networks. This gateway
+        router would receive prefix delegations and a different set of
+        DNS recursive name servers from each independent service
+        provider network. The gateway in turn advertises the provider
+        prefixes to the host, and for DNS, may either act as a
+        lightweight DNS cache server or may advertise the complete set
+        of service provider DNS recursive name servers to the hosts.</t>
 
         <figure align="center" anchor="multihome_architecture2"
 title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
@@ -328,7 +330,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
         <t>In this scenario, a host has more than one active interface that
         connects to different routers and service provider networks. Each
         router provides the host with a different address prefix and set of
-        DNS resolvers, resulting in a host with a unique address per
+        DNS recursive name servers, resulting in a host with a unique address per
         link/interface.</t>
 
         <figure align="center" anchor="multihome_architecture3"
@@ -362,13 +364,13 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       </section>
 
       <section title="Multihomed network environment">
-        <t>In an IPv6 multihomed network, a host is assigned two or
-        more IPv6 addresses and DNS resolvers from independent service
-        provider networks. When this multihomed host attempts to
+        <t>In an IPv6 multihomed network, a host is assigned two or more
+        IPv6 addresses and DNS recursive name servers from independent
+        service provider networks. When this multihomed host attempts to
         connect with other hosts, it may incorrectly resolve the
         next-hop router, use an inappropriate source address, or use a
-        DNS response from an incorrect service provider that may
-        result in impaired IP connectivity.</t>
+        DNS response from an incorrect service provider that may result
+        in impaired IP connectivity.</t>
 
         <t>Multihomed networks in IPv4 have been commonly implemented
         through the use of a gateway router with NAPT function
@@ -402,16 +404,17 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       </section>
 
       <section title="Problem Statement">
-        <t>A multihomed IPv6 host has one or more assigned IPv6 
-        addresses and DNS resolvers from each upstream service provider, 
-        resulting in the host having multiple valid IPv6 addresses and 
-        DNS resolvers.  The host must be able to resolve the appropriate 
-        next-hop, the correct source address and DNS resolver to use based 
-        on the destination prefix.  To prevent IP spoofing, operators will 
-        often implement ingress filtering to discard traffic with an 
-        inappropriate source address, making it essential for the host to 
-        correctly resolve these three criteria before sourcing the first 
-        packet.</t>
+        <t>A multihomed IPv6 host has one or more assigned IPv6
+        addresses and DNS recursive name servers from each upstream
+        service provider, resulting in the host having multiple valid
+        IPv6 addresses and DNS recursive name servers.  The host must be
+        able to resolve the appropriate next-hop, the correct source
+        address and DNS recursive name server to use based on the
+        destination prefix. To prevent IP spoofing, operators will often
+        implement ingress filtering to discard traffic with an
+        inappropriate source address, making it essential for the host
+        to correctly resolve these three items before sourcing the
+        first packet.</t>
 
         <t>IPv6 has mechanisms for the provision of multiple routers
         on a single link and multiple address assignments to a single
@@ -476,8 +479,9 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 
         <t>All scenarios:</t>
 	<t><list style="symbols">
-	  <t>The host may use an incorrect DNS resolver for DNS
-	  queries.</t>
+	  <t>In network deployments utilizing local namespaces, the host may
+	  choose to communicate with a "wrong" DNS recursive server unable
+	  to serve a local namespace.</t>
 	</list></t>
       </section>
     </section>
@@ -500,7 +504,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
         by avoiding IPv6 NAT.</t>
       </section>
 
-      <section title="Policy providing">
+      <section title="Policy distribution">
         <t>The solution SHOULD have a function to provide a policy on
         sites/nodes. In particular, in a managed environment such as enterprise
         networks, an administrator has to control all nodes in his or her
@@ -572,14 +576,19 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
         policy table management.</t>
 
         <t>Scenario 1: "Host" needs to support the solution for this
-        problem</t>
+        problem.</t>
 
         <t>Scenario 2: "Host" needs to support the solution for this
-        problem</t>
+        problem.</t>
 
         <t>Scenario 3: If "Host" support the next-hop selection
         solution, there is no need to support the address selection
         functionality on the host.</t>
+        
+        <t>It is noted that the service providers (i.e., ISP and
+        enterprise/VPN) must also support <xref
+        target="I-D.ietf-6man-addr-select-opt"></xref>.</t>
+
       </section>
 
       <section title="Next-hop selection">
@@ -618,64 +627,78 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
         prefixes) only to hosts that support more advanced next-hop and
         address selection requirements.</t>
 
-	<t>Scenario 1: "Host" needs to support the solution for this
-	problem</t>
+		<t>Scenario 1: "Host" needs to support the solution for this
+		problem.</t>
 
         <t>Scenario 2: "GW rtr" needs to support the solution for this
-        problem</t>
+        problem.</t>
 
         <t>Scenario 3: "Host" needs to support the solution for this
-        problem</t>
+        problem.</t>
+        
+        <t>It is noted that the service providers (i.e., ISP and
+        enterprise/VPN) must also support <xref
+        target="I-D.ietf-mif-dhcpv6-route-option"></xref>.</t>
+
       </section>
 
-      <section title="DNS server selection">
+      <section title="DNS recursive name server selection">
         <t>A multihomed IPv6 host or gateway router may be provided
-        multiple DNS resolvers through DHCPv6 or <xref target="RFC6106">
-        RA</xref>. When the host or gateway router sends a DNS query, 
-        it would normally choose one of the available DNS resolvers for 
-        the query.</t>
+        multiple DNS recursive name servers through <xref
+        target="RFC3646">DHCPv6</xref> or <xref target="RFC6106">
+        RA</xref>. When the host or gateway router sends a DNS query, it would
+        normally choose one of the available DNS recursive name servers
+        for the query.</t>
 
         <t>In the IPv6 gateway router scenario, the Broadband Forum
-        <xref target="TR124"></xref> required that the query be sent
-        to all DNS resolvers, and the gateway waits for the first
-        reply. In IPv6, given our use of specific
+        <xref target="TR124"></xref> required that the query be sent to
+        all DNS recursive name servers, and the gateway waits for the
+        first reply. In IPv6, given our use of specific
         destination-based policy for both routing and source address
         selection, it is desirable to extend a policy-based concept to
-        DNS resolver selection. Doing so can minimize DNS resolver
-        load and avoid issues where DNS resolvers in different
-        networks have connectivity issues, or the DNS resolvers are
-        not publicly accessible. In the worst case, a DNS query may be
-        unanswered if sent towards an incorrect resolver, resulting in
-        a lack of connectivity.</t>
+        DNS recursive name server selection. Doing so can minimize DNS
+        recursive name server load and avoid issues where DNS recursive
+        name servers in different networks have connectivity issues, or
+        the DNS recursive name server are not publicly accessible. In
+        the worst case, a DNS query for a name from a local namespace
+        may not be resolved correctly if sent towards a DNS server not
+        aware of said local namespace, resulting in a lack of
+        connectivity.</t>
 
-        <t>An IPv6 multihomed host or gateway router should have the
-        ability to select appropriate DNS resolvers for each service
-        based on the domain space for the destination, and each
+        <t>It is not issue of Domain Name System model itself, but an
+        IPv6 multihomed host or gateway router should have the ability
+        to select appropriate DNS recursive name servers for each
+        service based on the domain space for the destination, and each
         service should provide rules specific to that network. <xref
-        target="I-D.ietf-mif-dns-server-selection"></xref>
-        proposes a solution for DNS server selection policy
-        providing solution with a DHCPv6 option.</t>
+        target="I-D.ietf-mif-dns-server-selection"></xref> proposes a
+        solution for distributing DNS server selection policy using
+        a DHCPv6 option.</t>
 
         <t>Scenario 1: "Host" needs to support the solution for this
-        problem</t>
+        problem.</t>
 
         <t>Scenario 2: "GW rtr" needs to support the solution for this
-        problem</t>
+        problem.</t>
 
         <t>Scenario 3: "Host" needs to support the solution for this
-        problem</t>
+        problem.</t>
+        
+        <t>It is noted that the service providers (i.e., ISP and
+        enterprise/VPN) must also support <xref
+        target="I-D.ietf-mif-dns-server-selection"></xref>.</t>
+
       </section>
     </section>
 
   
 
     <section anchor="implementation" title="Implementation approach">
-      <t>As mentioned in <xref target="analysis"></xref>,
-      in the multi-prefix environment, we have three problems in
-      source address selection, next-hop selection, and DNS resolver
-      selection. In this section, possible solution mechanisms for
-      each problem are introduced and evaluated against the
-      requirements in <xref target="requirements"></xref>.</t>
+      <t>As mentioned in <xref target="analysis"></xref>, in the
+      multi-prefix environment, we have three problems in source address
+      selection, next-hop selection, and DNS recursive name server
+      selection. In this section, possible solution mechanisms for each
+      problem are introduced and evaluated against the requirements in
+      <xref target="requirements"></xref>.</t>
 
       <section title="Source address selection">
 
@@ -688,7 +711,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 	they can propagate the network administrator's policy
 	directly. The policy distribution mechanism has an advantage
 	with regard to the host's protocol stack impact and the
-	staticness of the assumed target network environment.</t>
+	static nature of the assumed target network environment.</t>
 
       </section>
 
@@ -722,7 +745,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 	RIPng are not usually used between the residential users and
 	ISP networks because of their scalability implications. The DHCPv6
 	mechanism does not have these difficulties and has the
-	advantages of its relaying functionality. It is commonly
+	advantage of its relaying functionality. It is commonly
 	used and is thus easy to deploy.</t>
 
 	<t><xref target="TR069"></xref>, mentioned above, is a possible
@@ -736,36 +759,38 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 
       </section>
 
-      <section title="DNS resolver selection">
+      <section title="DNS recursive name server selection">
 
 	<t>As in the above two problems, a policy-based approach and non 
 	policy-based approach are possible.  In a non policy-based approach, 
 	a host or a home gateway router is assumed to send DNS queries to 
-	several DNS servers at once or to select one of the available 
+	several DNS recursive name servers at once or to select one of the available 
 	servers.</t>
 
-	<t>In the non policy-based approach, by making a query to a resolver 
-	in a different service provider to that which hosts the service, a 
-	user could be directed to unexpected IP address or receive an invalid
-	response, and thus cannot connect to the service provider's private
-	and legitimate service.  For example, some DNS servers reply with
-	different answers depending on the source address of the DNS query,
-	which is sometimes called split-horizon.  When the host mistakenly
-	makes a query to a different provider's DNS to resolve a FQDN of
-	another provider's private service, and the DNS resolver adopts the
-	split-horizon configuration, the queried server returns an IP address
-     of the non-private side of the service.  Another problem with this
-     approach is that it causes unnecessary DNS traffic to the DNS
-     resolvers that are visible to the users.</t>
+	<t>In the non policy-based approach, by making a query to a DNS
+	recursive name server in a different service provider to that which
+	hosts the service, a user could be directed to unexpected IP address
+	or receive an invalid response, and thus cannot connect to the
+	service provider's private and legitimate service.  For example,
+	some DNS recursive name servers reply with different answers
+	depending on the source address of the DNS query, which is sometimes
+	called split-horizon. When the host mistakenly makes a query to a
+	different provider's DNS recursive name server to resolve a FQDN of
+	another provider's private service, and the DNS recursive name
+	server adopts the split-horizon configuration, the queried server
+	returns an IP address of the non-private side of the service. 
+	Another problem with this approach is that it causes unnecessary DNS
+	traffic to the DNS recursive name servers that are visible to the
+	users.</t>
 
-	<t>The alternative of a policy-based approach is documented in
-	<xref
-	target="I-D.ietf-mif-dns-server-selection"></xref>,where several pairs
-	of DNS resolver addresses and DNS domain suffixes are defined as part 
-	of a policy and conveyed to hosts in a new DHCP option.  
-	In an environment where there is a home gateway router, that router 
-	can act as a DNS proxy, interpret this option and distribute DNS queries 
-	to the appropriate DNS servers according to the policy.</t>
+	<t>The alternative of a policy-based approach is documented in <xref
+	target="I-D.ietf-mif-dns-server-selection"></xref>, where several
+	pairs of DNS recursive name server addresses and DNS domain suffixes
+	are defined as part of a policy and conveyed to hosts in a new DHCP
+	option. In an environment where there is a home gateway router, that
+	router can act as a DNS recursive name server, interpret this option
+	and distribute DNS queries to the appropriate DNS servers according
+	to the policy.</t>
       </section>
     </section>
 
@@ -817,26 +842,26 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       target="RFC6296"></xref>.</t>
     </section>
 
-    <section title="Coexistence consideration">
+    <section title="Co-existence consideration">
 
-      <t>To allow the coexistence of non-MHMP hosts and MHMP hosts
+      <t>To allow the co-existence of non-MHMP hosts and MHMP hosts
       (i.e. hosts supporting multi-prefix with the enhancements for 
       the source address selection), GW-rtr may need to treat those 
       hosts separately.</t>
 
-      <t>An idea to achieve this is that GW-rtr identifies the hosts, 
-      and then assigns single prefix to non-MHMP hosts and assigns 
-      multiple prefix to MHMP hosts.  In this case, GW-rtr can perform 
-      IPv6 NAT only for the traffic from MHMP hosts if its source address 
-      is not appropriate.</t>
+      <t>An idea to achieve this is that GW-rtr identifies the hosts,
+      and then assigns a single prefix to non-MHMP hosts and assigns
+      multiple prefixes to MHMP hosts.  In this case, GW-rtr can perform
+      IPv6 NAT only for the traffic from non-MHMP hosts if its source
+      address is not appropriate.</t>
 
-      <t>Another idea is that GW-rtr assigns multiple prefix to the
+      <t>Another idea is that GW-rtr assigns multiple prefixes to the
       both hosts, and it performs IPv6 NAT for the traffic from
       non-MHMP hosts if its source address is not appropriate.</t>
 
       <t>In scenario 1 and 3, the non-MHMP hosts can be placed behind
-      the NAT box.  In this case, non-MHMP host can access the service
-      through the NAT box.</t>
+      the NAT box.  In this case, the non-MHMP host can access the
+      service through the NAT box.</t>
 
       <t>The implementation of identifying non-MHMP hosts and NAT policy
       is outside the scope of this document.</t>
@@ -933,6 +958,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       &RFC3022;
       &RFC3442;
       &RFC3582;
+      &RFC3646;
       &RFC4116;
       &RFC4218;
       &RFC4960;
