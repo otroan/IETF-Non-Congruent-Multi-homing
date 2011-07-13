@@ -130,13 +130,14 @@
       <t>Unfortunately, this may not be possible due to the necessity of
       NAT even in IPv6, because of multihoming.  Though there are some
       mechanisms to implement multihoming, such as <xref
-      target="RFC4116"> BGP multihoming</xref> and <xref
-      target="RFC4960">SCTP based multihoming</xref>, there is no
-      mechanism in IPv6 that serves as a replacement for NAT based
-      multihoming in IPv4.  In IPv4, for a host or a small network, NAT
-      based multihoming is easily deployable and an already deployed
-      technique.  The same situations that require the NAT technique to be 
-      used in the IPv4 world may be applicable to the IPv6 world.</t>
+      target="RFC4116"> BGP multihoming</xref> in network level, and
+      <xref target="RFC4960">SCTP based multihoming</xref> in
+      application transport level, there is no mechanism in IPv6 that
+      serves as a replacement for NAT based multihoming in IPv4.  In
+      IPv4, for a host or a small network, NAT based multihoming is
+      easily deployable and an already deployed technique.  The same
+      situations that require the NAT technique to be used in the IPv4
+      world may be applicable to the IPv6 world.</t>
 
       <t>Whenever a host or small network (which does not meet minimum IPv6
       allocation criteria) is connected to multiple upstream networks, an IPv6
