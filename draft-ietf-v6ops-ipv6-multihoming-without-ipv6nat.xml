@@ -10,7 +10,7 @@
 <!ENTITY RFC4218 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4218.xml">
 <!ENTITY RFC4861 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4861.xml">
 <!ENTITY RFC4960 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4960.xml">
-<!ENTITY RFC4966 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4966.xml">
+<!-- <!ENTITY RFC4966 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4966.xml"> -->
 <!ENTITY RFC3442 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3442.xml">
 <!ENTITY RFC6106 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6106.xml">
 <!ENTITY RFC6296 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6296.xml">
@@ -97,7 +97,7 @@
       </address>
     </author>
     <!--  -->
-    <date month="August" year="2011" />
+    <date month="August" day="31" year="2011" />
 
     <area>Internet</area>
     <workgroup>Internet Engineering Task Force</workgroup>
@@ -495,17 +495,31 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       and multi-uplink architectures need to meet.</t>
 
       <section title="End-to-End transparency">
-        <t>End-to-end transparency is a basic concept of the
-        Internet. <xref target="RFC4966"></xref> states,
-        "One of the major design goals for IPv6 is to restore
-        the end-to-end transparency of the Internet. Therefore,
-        because IPv6 is expected to remove the need for NATs and
-        similar impediments to transparency, developers creating
-        applications to work with IPv6 may be tempted to assume that
-        the complex mechanisms employed by an application to work in a
-        'NATted' IPv4 environment are not required." The IPv6
-        multihoming solution SHOULD guarantee end-to-end transparency
-        by avoiding IPv6 NAT.</t>
+		<t>One of the major design goals for IPv6 is to restore the
+		end-to-end transparency of the Internet.  If NAT mechanism is
+		applied to IP communication between hosts, it is required to
+		apply complex NAT traversal mechanism to establish
+		bi-directional IP communication. Essentially, extra NAT
+		traversal meachanism does not need to be implemented on
+		application, on an environment with end-to-end transparency.
+		Therefore, The IPv6 multihoming solution SHOULD guarantee
+		end-to-end transparency by avoiding IPv6 NAT.</t>
+		
+		<!--
+
+			<t>End-to-end transparency is a basic concept of the
+			Internet. <xref target="RFC4966"></xref> states, "One of the
+			major design goals for IPv6 is to restore the end-to-end
+			transparency of the Internet. Therefore, because IPv6 is
+			expected to remove the need for NATs and similar impediments
+			to transparency, developers creating applications to work
+			with IPv6 may be tempted to assume that the complex
+			mechanisms employed by an application to work in a 'NATted'
+			IPv4 environment are not required." The IPv6 multihoming
+			solution SHOULD guarantee end-to-end transparency by
+			avoiding IPv6 NAT.</t>
+        
+        -->
       </section>
 
       <section title="Policy distribution">
@@ -617,7 +631,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
         default router, and traffic fails to reach the destination
         server.  The host or gateway router requires route information
         for each upstream service provider, but the use of a routing
-        protocol between the gateway and the two router causes both
+        protocol between the gateway and the two routers causes both
         configuration and scaling issues. For IPv4 hosts, the gateway
         router is often pre-configured with static route information or
         uses of Classless Static Route Options <xref
@@ -890,58 +904,82 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 	target="RFC4218"></xref>. Those threats that are specific to MHMP
 	solutions are enumerated below.</t>
 	
-	<t>Threats related to the policy distributor side:</t>
+	<t>
+		<list style="hanging">
+			<t hangText="Threats related to the policy distributor side:">
+				<list>
+					<t>Policy collision can happen. When multiple policy
+					distributor exists, a policy receiver may not follow
+					one or each of the received policy. Especially when
+					a policy conflicts with another policy, a policy
+					receiver cannot implement each of the policy. To
+					solve or mitigate this issue, policy prioritization
+					rule should be defined, such as preference for the
+					policy received on a trusted interface. Another
+					solution is to preclude the functionality of
+					multiple policy acceptance at the receiver side. In
+					this case, a policy distributor should cooperate
+					with other policy distributors, and a single
+					representative provider should distribute a merged
+					policy.</t>
 
-	<t>Policy collision can happen. When multiple policy distributor
-	exists, a policy receiver may not follow one or each of the received
-	policy. Especially when a policy conflicts with another policy, a
-	policy receiver cannot implement each of the policy. To solve or
-	mitigate this issue, policy prioritization rule should be defined,
-	such as preference for the policy received on a trusted interface.
-	Another solution is to preclude the functionality of multiple policy
-	acceptance at the receiver side. In this case, a policy distributor
-	should cooperate with other policy distributors, and a single
-	representative provider should distribute a merged policy.</t>
+					<t>Apart from the policy collision, a network
+					service provider should expect the existence of
+					hosts that will not obey the received policy. A
+					possible solutions is to ingress-filter those
+					packets that do not match the distributed policy and
+					drop them. About the route selection, packet
+					forwarding or redirection can be another possible
+					solution. About the source address selection, IPv6
+					NAT can be another possible solution.</t>
+				</list>
+			</t>
+			
+			<t hangText="Threats related to the policy receiver side:">
+				<list>
+					<t>A policy receiver are exposed to the threats of
+					unauthorized policy, which can lead to session
+					hijack, DoS, wiretapping and phishing. Unauthorized
+					policy here means a policy distributed from an
+					entity that does not have rights to do so. Usually,
+					only a site administrator and a network service
+					provider have rights to distribute these policies
+					just as well as IP address assignment and DNS server
+					address notification. Regarding source address
+					selection, unauthorized policy can expose an IP
+					address that will not usually be exposed to an
+					external server, which can be a privacy problem. To
+					solve or mitigate this problem of unauthorized
+					policy, one approach is limiting on use of these
+					policy distribution mechanisms, as described in the
+					section 4.4 of <xref
+					target="I-D.ietf-mif-dns-server-selection"></xref>.
+					For example, a policy should be preferred or
+					accepted when the policy is delivered across a
+					secure, trusted channel such as 3G connection in
+					cellular services. The proposed solutions are baed
+					on DHCP, so the limitation of local site
+					communication, which is often used in WiFi access
+					services, should be another solution or mitigation
+					for this problem. About DNS server selection issue,
+					DNSSEC can be another solution. About source address
+					selection, the ingress filter at the
+					network	service provider router can be a
+					solution.</t>
 
-	<t>Apart from the policy collision, a network service provider
-	should expect the existence of hosts that will not obey the received
-	policy. A possible solutions is to ingress-filter those packets that
-	do not match the distributed policy and drop them. About the route
-	selection, packet forwarding or redirection can be another possible
-	solution. About the source address selection, IPv6 NAT can be
-	another possible solution.</t>
-
-
-	<t>Threats related to the policy receiver side:</t>
-
-	<t>A policy receiver are exposed to the threats of unauthorized
-	policy, which can lead to session hijack, DoS, wiretapping and
-	phishing. Unauthorized policy here means a policy distributed from
-	an entity that does not have rights to do so. Usually, only a site
-	administrator and a network service provider have rights to
-	distribute these policies just as well as IP address assignment and
-	DNS server address notification. Regarding source address selection,
-	unauthorized policy can expose an IP address that will not usually
-	be exposed to an external server, which can be a privacy problem. To
-	solve or mitigate this problem of unauthorized policy, one approach
-	is limiting on use of these policy distribution mechanisms, as
-	described in the section 4.4 of <xref
-	target="I-D.ietf-mif-dns-server-selection"></xref>. For example, a
-	policy should be preferred or accepted when the policy is delivered
-	across a secure, trusted channel such as 3G connection in cellular
-	services. The proposed solutions are baed on DHCP, so the limitation
-	of local site communication, which is often used in WiFi access
-	services, should be another solution or mitigation for this problem.
-	About DNS server selection issue, DNSSEC can be another solution.
-	About source address selection, the ingress filter at the
-	network	service provider router can be a solution.</t>
-
-	<t>Another threat is the leakage of the policy and privacy issues
-	resulting from that. Especially when each client is distributed its
-	own policy from the network service provider, the policy can give a
-	hint of which service the client subscribes. Encryption of
-	communication channel, separation of communication channel per host
-	can be solutions for this problem.</t>
+					<t>Another threat is the leakage of the policy and
+					privacy issues resulting from that. Especially when
+					each client is distributed its own policy from the
+					network service provider, the policy can give a hint
+					of which service the client subscribes. Encryption
+					of communication channel, separation of
+					communication channel per host can be solutions for
+					this problem.</t>
+					
+				</list>
+			</t>
+		</list>
+	</t>
 
 
 	<!--
@@ -1027,7 +1065,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       &RFC4116;
       &RFC4218;
       &RFC4960;
-      &RFC4966;
+      <!-- &RFC4966; -->
       &RFC6106;
       <reference anchor="TR069">
 	<front>
