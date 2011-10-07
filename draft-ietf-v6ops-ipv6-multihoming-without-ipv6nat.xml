@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
-<!ENTITY RFC2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
+<!-- <!ENTITY RFC2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"> -->
 <!ENTITY RFC3022 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3022.xml">
 <!ENTITY RFC3484 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3484.xml">
 <!ENTITY RFC3582 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3582.xml">
@@ -69,7 +69,7 @@
 	  <city>Tokyo</city>
 	  <country>Japan</country>
 	</postal>
-	<email>satoru.matsushima@tm.softbank.co.jp</email>
+	<email>satoru.matsushima@g.softbank.co.jp</email>
       </address>
     </author>
 
@@ -81,7 +81,7 @@
 	  <city>Osaka</city>
 	  <country>Japan</country>
 	</postal>
-	<email>t.okimoto@rdc.west.ntt.co.jp</email>
+	<email>t.okimoto@west.ntt.co.jp</email>
       </address>
     </author>
 
@@ -97,7 +97,7 @@
       </address>
     </author>
     <!--  -->
-    <date month="August" day="31" year="2011" />
+    <date month="October" day="7" year="2011" />
 
     <area>Internet</area>
     <workgroup>Internet Engineering Task Force</workgroup>
@@ -134,7 +134,7 @@
       mechanisms to implement multihoming, such as <xref
       target="RFC4116"> BGP multihoming</xref> in network level, and
       <xref target="RFC4960">SCTP based multihoming</xref> in
-      application transport level, there is no mechanism in IPv6 that
+      transport layer for application level, there is no mechanism in IPv6 that
       serves as a replacement for NAT based multihoming in IPv4.  In
       IPv4, for a host or a small network, NAT based multihoming is
       easily deployable and an already deployed technique. Some of the
@@ -219,10 +219,12 @@
     </section>
 
     <section title="Terminology">
+    <!--
       <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
       "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
       document are to be interpreted as described in <xref
       target="RFC2119">RFC 2119</xref>.</t>
+	-->
 
       <t><list hangIndent="22" style="hanging">
 	<t hangText="IPv6 NAT">The terms "NAT66" and "IPv6
@@ -286,7 +288,7 @@
         next-hop to network 1 is rtr1. Similarly, rtr2 is the next-hop
         to network 2.</t>
 
-        <t>- e.g., broadband service (Internet, VoIP, IPTV, etc.)</t>
+        <t>- e.g., multiple broadband service providers (Internet, VoIP, IPTV, etc.)</t>
 
         <t>Scenario 2:</t>
 
@@ -314,7 +316,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 |      |     | rtr |    
 +------+     |     |       +------+       ___________
              |     |port2  |      |      /           \
-             |     |=======| rtr2 |=====/   network   \
+             |     |-------| rtr2 |=====/   network   \
              +-----+       |      |     \      2      /
                            +------+      \___________/
             ]]></artwork>
@@ -323,10 +325,13 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 
         <t><xref target="multihome_architecture2"></xref> illustrates
         the host connected to GW rtr. GW rtr connects to networks 1 and
-        2 via port1 and 2 respectively. When the host sends packets to
-        either network 1 or 2, the next-hop is GW rtr. When the packets
-        are sent to network 1 (network 2), GW rtr forwards the packets
-        to port1 (port2).</t>
+        2 via port1 and 2 respectively. As the figure shows a logical
+        view of the scenario, the port1 could be a pseudo interface that
+        utilizes something to tunneling, which connects to the network 1
+        through the network 2, and vice versa. When the host sends
+        packets to either network 1 or 2, the next-hop is GW rtr. When
+        the packets are sent to network 1 (network 2), GW rtr forwards
+        the packets to port1 (port2).</t>
 
         <t>- e.g, Internet + VPN/Application Service Provider (ASP)</t>
 
@@ -397,7 +402,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
                        |   |      |     \      1      /
 +------+     +-----+   |   +------+      \___________/
 | IPv4 |     |     |   |
-| host |-----| GW  |---+
+| hosts|-----| GW  |---+
 |      |     | rtr |   |
 +------+     +-----+   |   +------+       ___________
             (NAPT&DNS) |   |      |      /           \
@@ -502,7 +507,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 		bi-directional IP communication. Essentially, extra NAT
 		traversal meachanism does not need to be implemented on
 		application, on an environment with end-to-end transparency.
-		Therefore, The IPv6 multihoming solution SHOULD guarantee
+		Therefore, The IPv6 multihoming solution should guarantee
 		end-to-end transparency by avoiding IPv6 NAT.</t>
 		
 		<!--
@@ -922,6 +927,17 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 					with other policy distributors, and a single
 					representative provider should distribute a merged
 					policy.</t>
+					
+					<t>This document does not presume specific
+					recommendations for resolving policy collision. It
+					is left to the implementation to decide how to
+					resolve the conflicts. If they are not resolved
+					consistently by different implementations, that
+					could affect interoperability and security trust
+					boundaries. Future work will be expected to address
+					the need for consistent policy resolution to avoid
+					interoperability and security trust boundary
+					issues.</t>
 
 					<t>Apart from the policy collision, a network
 					service provider should expect the existence of
@@ -932,39 +948,49 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 					forwarding or redirection can be another possible
 					solution. About the source address selection, IPv6
 					NAT can be another possible solution.</t>
+										
 				</list>
 			</t>
 			
 			<t hangText="Threats related to the policy receiver side:">
 				<list>
+					<t>For policy receiver side, who should be trusted
+					to accept policies is a fundamental issue. How is
+					the trust established, and how can the network
+					element be assured that it can established that
+					trust before the network is fully configured. If a
+					policy receiver trusts untrusted network, it will
+					cause that distributing unwanted and unauthorized
+					policy that described below.</t>
+				
 					<t>A policy receiver are exposed to the threats of
 					unauthorized policy, which can lead to session
-					hijack, DoS, wiretapping and phishing. Unauthorized
-					policy here means a policy distributed from an
-					entity that does not have rights to do so. Usually,
-					only a site administrator and a network service
-					provider have rights to distribute these policies
-					just as well as IP address assignment and DNS server
-					address notification. Regarding source address
-					selection, unauthorized policy can expose an IP
-					address that will not usually be exposed to an
-					external server, which can be a privacy problem. To
-					solve or mitigate this problem of unauthorized
-					policy, one approach is limiting on use of these
-					policy distribution mechanisms, as described in the
-					section 4.4 of <xref
+					hijack, falsification, DoS, wiretapping and
+					phishing. Unauthorized policy here means a policy
+					distributed from an entity that does not have rights
+					to do so. Usually, only a site administrator and a
+					network service provider have rights to distribute
+					these policies just as well as IP address assignment
+					and DNS server address notification. Regarding
+					source address selection, unauthorized policy can
+					expose an IP address that will not usually be
+					exposed to an external server, which can be a
+					privacy problem. To solve or mitigate this problem
+					of unauthorized policy, one approach is limiting on
+					use of these policy distribution mechanisms, as
+					described in the section 4.4 of <xref
 					target="I-D.ietf-mif-dns-server-selection"></xref>.
 					For example, a policy should be preferred or
-					accepted when the policy is delivered across a
-					secure, trusted channel such as 3G connection in
-					cellular services. The proposed solutions are baed
-					on DHCP, so the limitation of local site
-					communication, which is often used in WiFi access
-					services, should be another solution or mitigation
-					for this problem. About DNS server selection issue,
-					DNSSEC can be another solution. About source address
-					selection, the ingress filter at the
-					network	service provider router can be a
+					accepted when the policy is verified its integrity
+					and delivered across a secure, trusted channel such
+					as 3G connection in cellular services. The proposed
+					solutions are based on DHCP, so the limitation of
+					local site communication, which is often used in
+					WiFi access services, should be another solution or
+					mitigation for this problem. About DNS server
+					selection issue, DNSSEC can be another solution.
+					About source address selection, the ingress filter
+					at the network	service provider router can be a
 					solution.</t>
 
 					<t>Another threat is the leakage of the policy and
@@ -974,12 +1000,23 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 					of which service the client subscribes. Encryption
 					of communication channel, separation of
 					communication channel per host can be solutions for
-					this problem.</t>
+					this problem.  </t>
 					
 				</list>
 			</t>
 		</list>
 	</t>
+
+	<t>In terms of MHMP networks, administrators of different networks
+	might need to control policies (and nodes' behaviors) independently
+	of other administrators. It means that the need to have access
+	controls for such cross-administrative policy access. Administrators
+	must control only nodes that are part of their own networks, or some
+	administrators must control only nodes that are part of their own
+	networks, while others are authorized to control nodes across
+	administrative boundaries. To be success to cross-administrative
+	policy-control, per-user authorization might be required with
+	existing AAA and network management standards.</t>
 
 
 	<!--
@@ -1046,7 +1083,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 
   <back>
     <references title="Normative References">
-      &RFC2119;
+      <!-- &RFC2119; -->
       &RFC3484;
       &RFC4861;
       &RFC4191;
