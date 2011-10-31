@@ -97,7 +97,7 @@
       </address>
     </author>
     <!--  -->
-    <date month="October" day="7" year="2011" />
+    <date month="October" day="31" year="2011" />
 
     <area>Internet</area>
     <workgroup>Internet Engineering Task Force</workgroup>
@@ -109,15 +109,17 @@
       requirements, because an IPv4 NAPT router implements three
       functions: source address selection, next-hop resolution and
       optionally DNS resolution. For IPv6 hosts one approach could be
-      the use of IPv6 NAT. However, NAT should be avoided, if at all
+      the use of NPTv6. However, NAT should be avoided, if at all
       possible, to permit transparent end-to-end connectivity. In this
       document, we analyze the use cases of multihoming. We also
       describe functional requirements and possible solutions for
       multihoming without the use of NAT in IPv6 for hosts and small
       IPv6 networks that would otherwise be unable to meet minimum IPv6
-      allocation criteria. Nevertheless, we mention that the possible
-      needs for IPv6 NAT in the transition phase to the fully deployment
-      of the proposed solutions.</t>
+      allocation criteria. We conclude that DHCPv6 based solutions are
+      suitable to solve the multihoming issues, which described in this
+      document. Nevertheless, we mention that the possible needs for
+      NPTv6 in the transition phase to the fully deployment of the
+      proposed solutions.</t>
     </abstract>
   </front>
 
@@ -129,16 +131,17 @@
       target="RFC3022">NAPT</xref>), offering a renaissance in
       end-to-end transparent connectivity.</t>
 
-      <t>Unfortunately, this may not be possible due to the necessity of
-      NAT even in IPv6, because of multihoming.  Though there are some
-      mechanisms to implement multihoming, such as <xref
-      target="RFC4116"> BGP multihoming</xref> in network level, and
-      <xref target="RFC4960">SCTP based multihoming</xref> in
-      transport layer for application level, there is no mechanism in IPv6 that
-      serves as a replacement for NAT based multihoming in IPv4.  In
-      IPv4, for a host or a small network, NAT based multihoming is
-      easily deployable and an already deployed technique. Some of the
-      same reasons for IPv4 NATs may be applicable to IPv6.</t>
+      <t>Unfortunately, this may not be possible in every case, due to
+      the possible necessity of NAT even in IPv6, because of multihoming.
+       Though there are some mechanisms to implement multihoming, such
+      as <xref target="RFC4116"> BGP multihoming</xref> in network
+      level, and <xref target="RFC4960">SCTP based multihoming</xref> in
+      transport layer for application level, there is no mechanism in
+      IPv6 that serves as a replacement for NAT based multihoming in
+      IPv4.  In IPv4, for a host or a small network, NAT based
+      multihoming is easily deployable and an already deployed
+      technique. Some of the same reasons for IPv4 NATs may be
+      applicable to IPv6.</t>
 
       <t>Whenever a host or small network (which does not meet minimum IPv6
       allocation criteria) is connected to multiple upstream networks, an IPv6
@@ -163,7 +166,7 @@
       <t>It is our goal to avoid the IPv6 equivalent of NAT. So, the
       goals for IPv6 multihoming defined in <xref target="RFC3582">
       </xref> do not match the goals of this document. Also regardless of 
-      what the IPv6 NAT's specification is, we are trying to avoid 
+      what the NPTv6 specification is, we are trying to avoid 
       any form of network address translation technique that may not
       be visible for either of the end hosts. To reach this goal, 
       mechanisms are needed for end-user hosts to have
@@ -210,11 +213,13 @@
 
       <t>In this document, we analyze the use cases of multihoming. We
       also describe functional requirements and possible solutions for
-      multihoming without the use of NAT in IPv6 for hosts and small
-      IPv6 networks that would otherwise be unable to meet minimum IPv6
-      allocation criteria. Nevertheless, we mention that the possible
-      needs for IPv6 NAT in the transition phase to the fully deployment
-      of the proposed solutions.</t>
+      multihoming without the use of prefix translation in IPv6 for
+      hosts and small IPv6 networks that would otherwise be unable to
+      meet minimum IPv6 allocation criteria. We conclude that DHCPv6
+      based solutions are suitable to solve the multihoming issues,
+      which described in this document. Nevertheless, we mention that
+      the possible needs for NPTv6 in the transition phase to the fully
+      deployment of the proposed solutions.</t>
 
     </section>
 
@@ -227,8 +232,8 @@
 	-->
 
       <t><list hangIndent="22" style="hanging">
-	<t hangText="IPv6 NAT">The terms "NAT66" and "IPv6
-	NAT" refer to <xref target="RFC6296">NPTv6</xref>.</t>
+	<t hangText="NPTv6">IPv6-to-IPv6 Network Prefix Translation in <xref
+	target="RFC6296">NPTv6</xref>.</t>
 
 	<t hangText="NAPT">Network Address Port Translation as
 	described in <xref target="RFC3022"></xref>.  In other
@@ -326,12 +331,12 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
         <t><xref target="multihome_architecture2"></xref> illustrates
         the host connected to GW rtr. GW rtr connects to networks 1 and
         2 via port1 and 2 respectively. As the figure shows a logical
-        view of the scenario, the port1 could be a pseudo interface that
-        utilizes something to tunneling, which connects to the network 1
-        through the network 2, and vice versa. When the host sends
-        packets to either network 1 or 2, the next-hop is GW rtr. When
-        the packets are sent to network 1 (network 2), GW rtr forwards
-        the packets to port1 (port2).</t>
+        topology of the scenario, the port1 could be a pseudo interface
+        for tunneling, which connects to the network 1 through the
+        network 2, and vice versa. When the host sends packets to either
+        network 1 or 2, the next-hop is GW rtr. When the packets are
+        sent to network 1 (network 2), GW rtr forwards the packets to
+        port1 (port2).</t>
 
         <t>- e.g, Internet + VPN/Application Service Provider (ASP)</t>
 
@@ -382,13 +387,13 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
         DNS response from an incorrect service provider that may result
         in impaired IP connectivity.</t>
 
-        <t>Multihomed networks in IPv4 have been commonly implemented
-        through the use of a gateway router with NAPT function
-        (scenario 2 with NAPT). An analysis of the current IPv4 NAPT
-        and DNS functions within the gateway router should provide a
-        baseline set of requirements for IPv6 multihomed
-        environments. A destination prefix/route is often used on the
-        gateway router to separate traffic between the networks.</t>
+        <t>Multihomed networks in IPv4 have been implemented through the
+        use of a gateway router with NAPT function (scenario 2 with
+        NAPT) in many cases. An analysis of the current IPv4 NAPT and
+        DNS functions within the gateway router should provide a
+        baseline set of requirements for IPv6 multihomed environments. A
+        destination prefix/route is often used on the gateway router to
+        separate traffic between the networks.</t>
 
         <figure align="center" anchor="multihome_ipv4_architecture"
           title="IPv4 Multihomed environment with Gateway Router
@@ -508,7 +513,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 		traversal meachanism does not need to be implemented on
 		application, on an environment with end-to-end transparency.
 		Therefore, The IPv6 multihoming solution should guarantee
-		end-to-end transparency by avoiding IPv6 NAT.</t>
+		end-to-end transparency by avoiding NPTv6.</t>
 		
 		<!--
 
@@ -819,22 +824,19 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       </section>
     </section>
 
-    <section anchor="legacy_host" title="Considerations for host without multi-prefix support">
-      <t>This section presents an alternative approach to mitigate the
-      problem in a multihomed network. This approach will help IPv6
-      hosts that are not capable of the enhancements for the source
-      address selection policy, next-hop selection policy, and DNS
-      selection policy described in <xref
+    <section anchor="legacy_host" title="Considerations for MHMP deployment">
+      <t>This section describes considerations to mitigate possible
+      problem in a network which implements MHMP described in <xref
       target="implementation"></xref>.</t>
 
-      <section title="IPv6 NAT">
+      <section title="Non-MHMP host consideration">
 
 	<t>In a typical IPv4 multihomed network deployment, IPv4 NAPT
 	is practically used and it can eventually avoid assigning
 	multiple addresses to the hosts and solve the next-hop
-	selection problem.  In a similar fashion, IPv6 NAT can be used
+	selection problem.  In a similar fashion, NPTv6 can be used
 	as a last resort for IPv6 multihomed network deployments where
-	one needs to assign a single IPv6 address to a host.</t>
+	one needs to assign a single IPv6 address to a non-MHMP host.</t>
 
       <figure align="center" anchor="fig-legacy_host" title="Legacy Host">
         <preamble></preamble>
@@ -861,7 +863,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 		  selection and DNS server selection,
       shown in <xref target="implementation"></xref>.</t>
 
-      <t>The implementation and issues of IPv6 NAT are out of the
+      <t>The implementation and issues of NPTv6 are out of the
       scope of this document. They may be covered by another document
       under discussion <xref
       target="RFC6296"></xref>.</t>
@@ -892,6 +894,33 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       is outside the scope of this document.</t>
 
     </section>
+    
+    <section title="Policy collision consideration">
+
+		<t>When multiple policy distributors exist, a policy receiver
+		may not follow one or each of the received policy. In
+		particular, when a policy conflicts with another policy, a
+		policy receiver cannot implement each of the policy. To solve or
+		mitigate this issue, it is required that prioritization rule to
+		align these policies along preference on a trusted interface.
+		Another solution is to preclude the functionality of multiple
+		policy acceptance at the receiver side. In this case, a policy
+		distributor should cooperate with other policy distributors, and
+		a single representative provider should distribute a merged
+		policy.</t>
+
+		<t>This document does not presume specific recommendations for
+		resolving policy collision. It is expected to the implementation
+		to decide how to resolve the conflicts. If they are not resolved
+		consistently by different implementations, that could affect
+		interoperability and security trust boundaries. Future work will
+		be expected to address the need for consistent policy resolution
+		to avoid interoperability and security trust boundary
+		issues.</t>
+
+
+    </section>
+    
   </section>
 
   <section anchor="Security" title="Security Considerations">
@@ -913,34 +942,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 		<list style="hanging">
 			<t hangText="Threats related to the policy distributor side:">
 				<list>
-					<t>Policy collision can happen. When multiple policy
-					distributor exists, a policy receiver may not follow
-					one or each of the received policy. Especially when
-					a policy conflicts with another policy, a policy
-					receiver cannot implement each of the policy. To
-					solve or mitigate this issue, policy prioritization
-					rule should be defined, such as preference for the
-					policy received on a trusted interface. Another
-					solution is to preclude the functionality of
-					multiple policy acceptance at the receiver side. In
-					this case, a policy distributor should cooperate
-					with other policy distributors, and a single
-					representative provider should distribute a merged
-					policy.</t>
-					
-					<t>This document does not presume specific
-					recommendations for resolving policy collision. It
-					is left to the implementation to decide how to
-					resolve the conflicts. If they are not resolved
-					consistently by different implementations, that
-					could affect interoperability and security trust
-					boundaries. Future work will be expected to address
-					the need for consistent policy resolution to avoid
-					interoperability and security trust boundary
-					issues.</t>
-
-					<t>Apart from the policy collision, a network
-					service provider should expect the existence of
+					<t>Service provider should expect the existence of
 					hosts that will not obey the received policy. A
 					possible solutions is to ingress-filter those
 					packets that do not match the distributed policy and
@@ -948,7 +950,20 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 					forwarding or redirection can be another possible
 					solution. About the source address selection, IPv6
 					NAT can be another possible solution.</t>
-										
+
+					<t>Administrators of different networks might need
+					to control policies (and nodes' behaviors)
+					independently of other administrators. It means that
+					the need to have access controls for such
+					cross-administrative policy access. Administrators
+					must control only nodes that are part of their own
+					networks, or some administrators must control only
+					nodes that are part of their own networks, while
+					others are authorized to control nodes across
+					administrative boundaries. To be success to
+					cross-administrative policy-control, per-user
+					authorization might be required with existing AAA
+					and network management standards.</t>
 				</list>
 			</t>
 			
@@ -1007,16 +1022,6 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 		</list>
 	</t>
 
-	<t>In terms of MHMP networks, administrators of different networks
-	might need to control policies (and nodes' behaviors) independently
-	of other administrators. It means that the need to have access
-	controls for such cross-administrative policy access. Administrators
-	must control only nodes that are part of their own networks, or some
-	administrators must control only nodes that are part of their own
-	networks, while others are authorized to control nodes across
-	administrative boundaries. To be success to cross-administrative
-	policy-control, per-user authorization might be required with
-	existing AAA and network management standards.</t>
 
 
 	<!--
