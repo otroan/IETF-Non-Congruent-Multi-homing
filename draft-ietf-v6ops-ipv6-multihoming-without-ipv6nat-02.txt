@@ -4,18 +4,18 @@
 Internet Engineering Task Force                            O. Troan, Ed.
 Internet-Draft                                                     Cisco
 Intended status: Informational                                  D. Miles
-Expires: March 3, 2012                                    Alcatel-Lucent
+Expires: May 3, 2012                                      Alcatel-Lucent
                                                            S. Matsushima
                                                         Softbank Telecom
                                                               T. Okimoto
                                                                 NTT West
                                                                  D. Wing
                                                                    Cisco
-                                                         August 31, 2011
+                                                        October 31, 2011
 
 
           IPv6 Multihoming without Network Address Translation
-          draft-ietf-v6ops-ipv6-multihoming-without-ipv6nat-01
+          draft-ietf-v6ops-ipv6-multihoming-without-ipv6nat-02
 
 Abstract
 
@@ -23,14 +23,16 @@ Abstract
    global addresses and addressing multihoming requirements, because an
    IPv4 NAPT router implements three functions: source address
    selection, next-hop resolution and optionally DNS resolution.  For
-   IPv6 hosts one approach could be the use of IPv6 NAT.  However, NAT
+   IPv6 hosts one approach could be the use of NPTv6.  However, NAT
    should be avoided, if at all possible, to permit transparent end-to-
    end connectivity.  In this document, we analyze the use cases of
    multihoming.  We also describe functional requirements and possible
    solutions for multihoming without the use of NAT in IPv6 for hosts
    and small IPv6 networks that would otherwise be unable to meet
-   minimum IPv6 allocation criteria.  Nevertheless, we mention that the
-   possible needs for IPv6 NAT in the transition phase to the fully
+   minimum IPv6 allocation criteria.  We conclude that DHCPv6 based
+   solutions are suitable to solve the multihoming issues, which
+   described in this document.  Nevertheless, we mention that the
+   possible needs for NPTv6 in the transition phase to the fully
    deployment of the proposed solutions.
 
 Status of this Memo
@@ -48,14 +50,14 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on March 3, 2012.
 
 
-
-Troan, et al.             Expires March 3, 2012                 [Page 1]
+Troan, et al.              Expires May 3, 2012                  [Page 1]
 
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
+
+   This Internet-Draft will expire on May 3, 2012.
 
 Copyright Notice
 
@@ -73,44 +75,98 @@ Copyright Notice
    described in the Simplified BSD License.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Troan, et al.              Expires May 3, 2012                  [Page 2]
+
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
+
+
 Table of Contents
 
-   1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  3
-   2.  Terminology  . . . . . . . . . . . . . . . . . . . . . . . . .  5
-   3.  IPv6 multihomed network scenarios  . . . . . . . . . . . . . .  5
-     3.1.  Classification of network scenarios for multihomed host  .  5
-     3.2.  Multihomed network environment . . . . . . . . . . . . . .  8
-     3.3.  Problem Statement  . . . . . . . . . . . . . . . . . . . .  9
-   4.  Requirements . . . . . . . . . . . . . . . . . . . . . . . . . 10
-     4.1.  End-to-End transparency  . . . . . . . . . . . . . . . . . 10
-     4.2.  Policy distribution  . . . . . . . . . . . . . . . . . . . 11
-     4.3.  Scalability  . . . . . . . . . . . . . . . . . . . . . . . 11
-   5.  Problem statement and analysis . . . . . . . . . . . . . . . . 11
-     5.1.  Source address selection . . . . . . . . . . . . . . . . . 12
-     5.2.  Next-hop selection . . . . . . . . . . . . . . . . . . . . 12
-     5.3.  DNS recursive name server selection  . . . . . . . . . . . 13
-   6.  Implementation approach  . . . . . . . . . . . . . . . . . . . 14
-     6.1.  Source address selection . . . . . . . . . . . . . . . . . 14
-     6.2.  Next-hop selection . . . . . . . . . . . . . . . . . . . . 14
-     6.3.  DNS recursive name server selection  . . . . . . . . . . . 15
-   7.  Considerations for host without multi-prefix support . . . . . 16
-     7.1.  IPv6 NAT . . . . . . . . . . . . . . . . . . . . . . . . . 16
-     7.2.  Co-existence consideration . . . . . . . . . . . . . . . . 17
-   8.  Security Considerations  . . . . . . . . . . . . . . . . . . . 17
-   9.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 19
-   10. Contributors . . . . . . . . . . . . . . . . . . . . . . . . . 19
-   11. References . . . . . . . . . . . . . . . . . . . . . . . . . . 19
-     11.1. Normative References . . . . . . . . . . . . . . . . . . . 19
-     11.2. Informative References . . . . . . . . . . . . . . . . . . 20
-   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 21
+   1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  4
+   2.  Terminology  . . . . . . . . . . . . . . . . . . . . . . . . .  6
+   3.  IPv6 multihomed network scenarios  . . . . . . . . . . . . . .  6
+     3.1.  Classification of network scenarios for multihomed host  .  6
+     3.2.  Multihomed network environment . . . . . . . . . . . . . .  9
+     3.3.  Problem Statement  . . . . . . . . . . . . . . . . . . . . 10
+   4.  Requirements . . . . . . . . . . . . . . . . . . . . . . . . . 11
+     4.1.  End-to-End transparency  . . . . . . . . . . . . . . . . . 11
+     4.2.  Policy distribution  . . . . . . . . . . . . . . . . . . . 12
+     4.3.  Scalability  . . . . . . . . . . . . . . . . . . . . . . . 12
+   5.  Problem statement and analysis . . . . . . . . . . . . . . . . 12
+     5.1.  Source address selection . . . . . . . . . . . . . . . . . 13
+     5.2.  Next-hop selection . . . . . . . . . . . . . . . . . . . . 13
+     5.3.  DNS recursive name server selection  . . . . . . . . . . . 14
+   6.  Implementation approach  . . . . . . . . . . . . . . . . . . . 15
+     6.1.  Source address selection . . . . . . . . . . . . . . . . . 15
+     6.2.  Next-hop selection . . . . . . . . . . . . . . . . . . . . 15
+     6.3.  DNS recursive name server selection  . . . . . . . . . . . 16
+   7.  Considerations for MHMP deployment . . . . . . . . . . . . . . 17
+     7.1.  Non-MHMP host consideration  . . . . . . . . . . . . . . . 17
+     7.2.  Co-existence consideration . . . . . . . . . . . . . . . . 18
+     7.3.  Policy collision consideration . . . . . . . . . . . . . . 18
+   8.  Security Considerations  . . . . . . . . . . . . . . . . . . . 19
+   9.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 20
+   10. Contributors . . . . . . . . . . . . . . . . . . . . . . . . . 20
+   11. References . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+     11.1. Normative References . . . . . . . . . . . . . . . . . . . 21
+     11.2. Informative References . . . . . . . . . . . . . . . . . . 21
+   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 22
 
 
 
 
 
-Troan, et al.             Expires March 3, 2012                 [Page 2]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Troan, et al.              Expires May 3, 2012                  [Page 3]
 
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
 
 1.  Introduction
@@ -120,15 +176,16 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
    requirement for Network Address Port Translation (NAPT [RFC3022]),
    offering a renaissance in end-to-end transparent connectivity.
 
-   Unfortunately, this may not be possible due to the necessity of NAT
-   even in IPv6, because of multihoming.  Though there are some
-   mechanisms to implement multihoming, such as BGP multihoming
-   [RFC4116] in network level, and SCTP based multihoming [RFC4960] in
-   application transport level, there is no mechanism in IPv6 that
-   serves as a replacement for NAT based multihoming in IPv4.  In IPv4,
-   for a host or a small network, NAT based multihoming is easily
-   deployable and an already deployed technique.  Some of the same
-   reasons for IPv4 NATs may be applicable to IPv6.
+   Unfortunately, this may not be possible in every case, due to the
+   possible necessity of NAT even in IPv6, because of multihoming.
+   Though there are some mechanisms to implement multihoming, such as
+   BGP multihoming [RFC4116] in network level, and SCTP based
+   multihoming [RFC4960] in transport layer for application level, there
+   is no mechanism in IPv6 that serves as a replacement for NAT based
+   multihoming in IPv4.  In IPv4, for a host or a small network, NAT
+   based multihoming is easily deployable and an already deployed
+   technique.  Some of the same reasons for IPv4 NATs may be applicable
+   to IPv6.
 
    Whenever a host or small network (which does not meet minimum IPv6
    allocation criteria) is connected to multiple upstream networks, an
@@ -152,8 +209,8 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
    It is our goal to avoid the IPv6 equivalent of NAT.  So, the goals
    for IPv6 multihoming defined in [RFC3582] do not match the goals of
-   this document.  Also regardless of what the IPv6 NAT's specification
-   is, we are trying to avoid any form of network address translation
+   this document.  Also regardless of what the NPTv6 specification is,
+   we are trying to avoid any form of network address translation
    technique that may not be visible for either of the end hosts.  To
    reach this goal, mechanisms are needed for end-user hosts to have
    multiple address assignments and resolve issues such as which address
@@ -163,10 +220,9 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
 
 
-
-Troan, et al.             Expires March 3, 2012                 [Page 3]
+Troan, et al.              Expires May 3, 2012                  [Page 4]
 
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
 
    o  If multiple routers exist on a single link the host must select
@@ -208,31 +264,27 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
    In this document, we analyze the use cases of multihoming.  We also
    describe functional requirements and possible solutions for
-   multihoming without the use of NAT in IPv6 for hosts and small IPv6
-   networks that would otherwise be unable to meet minimum IPv6
-   allocation criteria.  Nevertheless, we mention that the possible
-   needs for IPv6 NAT in the transition phase to the fully deployment of
-   the proposed solutions.
+   multihoming without the use of prefix translation in IPv6 for hosts
+   and small IPv6 networks that would otherwise be unable to meet
+   minimum IPv6 allocation criteria.  We conclude that DHCPv6 based
+   solutions are suitable to solve the multihoming issues, which
+   described in this document.  Nevertheless, we mention that the
+   possible needs for NPTv6 in the transition phase to the fully
+   deployment of the proposed solutions.
 
 
 
 
 
-
-
-Troan, et al.             Expires March 3, 2012                 [Page 4]
+Troan, et al.              Expires May 3, 2012                  [Page 5]
 
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
 
 2.  Terminology
 
-   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-   document are to be interpreted as described in RFC 2119 [RFC2119].
-
-   IPv6 NAT              The terms "NAT66" and "IPv6 NAT" refer to NPTv6
-                         [RFC6296].
+   NPTv6                 IPv6-to-IPv6 Network Prefix Translation in
+                         NPTv6 [RFC6296].
 
    NAPT                  Network Address Port Translation as described
                          in [RFC3022].  In other contexts, NAPT is often
@@ -276,9 +328,13 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
 
 
-Troan, et al.             Expires March 3, 2012                 [Page 5]
+
+
+
+
+Troan, et al.              Expires May 3, 2012                  [Page 6]
 
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
 
                                 +------+       ___________
@@ -303,7 +359,8 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
    respectively.  When the host sends packets to network 1, the next-hop
    to network 1 is rtr1.  Similarly, rtr2 is the next-hop to network 2.
 
-   - e.g., broadband service (Internet, VoIP, IPTV, etc.)
+   - e.g., multiple broadband service providers (Internet, VoIP, IPTV,
+   etc.)
 
    Scenario 2:
 
@@ -331,10 +388,9 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
 
 
-
-Troan, et al.             Expires March 3, 2012                 [Page 6]
+Troan, et al.              Expires May 3, 2012                  [Page 7]
 
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
 
                                      +------+       ___________
@@ -347,7 +403,7 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
           |      |     | rtr |
           +------+     |     |       +------+       ___________
                        |     |port2  |      |      /           \
-                       |     |=======| rtr2 |=====/   network   \
+                       |     |-------| rtr2 |=====/   network   \
                        +-----+       |      |     \      2      /
                                      +------+      \___________/
 
@@ -355,10 +411,12 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
                                (Scenario 2)
 
    Figure 2 illustrates the host connected to GW rtr.  GW rtr connects
-   to networks 1 and 2 via port1 and 2 respectively.  When the host
-   sends packets to either network 1 or 2, the next-hop is GW rtr.  When
-   the packets are sent to network 1 (network 2), GW rtr forwards the
-   packets to port1 (port2).
+   to networks 1 and 2 via port1 and 2 respectively.  As the figure
+   shows a logical topology of the scenario, the port1 could be a pseudo
+   interface for tunneling, which connects to the network 1 through the
+   network 2, and vice versa.  When the host sends packets to either
+   network 1 or 2, the next-hop is GW rtr.  When the packets are sent to
+   network 1 (network 2), GW rtr forwards the packets to port1 (port2).
 
    - e.g, Internet + VPN/Application Service Provider (ASP)
 
@@ -386,11 +444,9 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
 
 
-
-
-Troan, et al.             Expires March 3, 2012                 [Page 7]
+Troan, et al.              Expires May 3, 2012                  [Page 8]
 
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
 
                  +------+     +------+       ___________
@@ -427,9 +483,9 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
    incorrect service provider that may result in impaired IP
    connectivity.
 
-   Multihomed networks in IPv4 have been commonly implemented through
-   the use of a gateway router with NAPT function (scenario 2 with
-   NAPT).  An analysis of the current IPv4 NAPT and DNS functions within
+   Multihomed networks in IPv4 have been implemented through the use of
+   a gateway router with NAPT function (scenario 2 with NAPT) in many
+   cases.  An analysis of the current IPv4 NAPT and DNS functions within
    the gateway router should provide a baseline set of requirements for
    IPv6 multihomed environments.  A destination prefix/route is often
    used on the gateway router to separate traffic between the networks.
@@ -444,9 +500,9 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
 
 
-Troan, et al.             Expires March 3, 2012                 [Page 8]
+Troan, et al.              Expires May 3, 2012                  [Page 9]
 
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
 
                                      +------+       ___________
@@ -455,7 +511,7 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
                                  |   |      |     \      1      /
           +------+     +-----+   |   +------+      \___________/
           | IPv4 |     |     |   |
-          | host |-----| GW  |---+
+          | hosts|-----| GW  |---+
           |      |     | rtr |   |
           +------+     +-----+   |   +------+       ___________
                       (NAPT&DNS) |   |      |      /           \
@@ -500,9 +556,9 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
 
 
-Troan, et al.             Expires March 3, 2012                 [Page 9]
+Troan, et al.              Expires May 3, 2012                 [Page 10]
 
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
 
    Scenario 2:
@@ -556,15 +612,15 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
 
 
-Troan, et al.             Expires March 3, 2012                [Page 10]
+Troan, et al.              Expires May 3, 2012                 [Page 11]
 
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
 
    Essentially, extra NAT traversal meachanism does not need to be
    implemented on application, on an environment with end-to-end
-   transparency.  Therefore, The IPv6 multihoming solution SHOULD
-   guarantee end-to-end transparency by avoiding IPv6 NAT.
+   transparency.  Therefore, The IPv6 multihoming solution should
+   guarantee end-to-end transparency by avoiding NPTv6.
 
 4.2.  Policy distribution
 
@@ -612,9 +668,9 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
 
 
-Troan, et al.             Expires March 3, 2012                [Page 11]
+Troan, et al.              Expires May 3, 2012                 [Page 12]
 
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
 
    o  Wrong DNS server selection
@@ -668,9 +724,9 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
 
 
-Troan, et al.             Expires March 3, 2012                [Page 12]
+Troan, et al.              Expires May 3, 2012                 [Page 13]
 
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
 
    service), the host or gateway router does not know whether to forward
@@ -724,9 +780,9 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
 
 
-Troan, et al.             Expires March 3, 2012                [Page 13]
+Troan, et al.              Expires May 3, 2012                 [Page 14]
 
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
 
    It is not issue of Domain Name System model itself, but an IPv6
@@ -780,9 +836,9 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
 
 
-Troan, et al.             Expires March 3, 2012                [Page 14]
+Troan, et al.              Expires May 3, 2012                 [Page 15]
 
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
 
    intermediate routers, the pairs of source prefixes and next-hops can
@@ -836,9 +892,9 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
 
 
-Troan, et al.             Expires March 3, 2012                [Page 15]
+Troan, et al.              Expires May 3, 2012                 [Page 16]
 
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
 
    recursive name servers that are visible to the users.
@@ -853,22 +909,19 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
    the policy.
 
 
-7.  Considerations for host without multi-prefix support
+7.  Considerations for MHMP deployment
 
-   This section presents an alternative approach to mitigate the problem
-   in a multihomed network.  This approach will help IPv6 hosts that are
-   not capable of the enhancements for the source address selection
-   policy, next-hop selection policy, and DNS selection policy described
-   in Section 6.
+   This section describes considerations to mitigate possible problem in
+   a network which implements MHMP described in Section 6.
 
-7.1.  IPv6 NAT
+7.1.  Non-MHMP host consideration
 
    In a typical IPv4 multihomed network deployment, IPv4 NAPT is
    practically used and it can eventually avoid assigning multiple
    addresses to the hosts and solve the next-hop selection problem.  In
-   a similar fashion, IPv6 NAT can be used as a last resort for IPv6
+   a similar fashion, NPTv6 can be used as a last resort for IPv6
    multihomed network deployments where one needs to assign a single
-   IPv6 address to a host.
+   IPv6 address to a non-MHMP host.
 
 
                                                        __________
@@ -890,16 +943,17 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
    The gateway router also has to support the two features, next-hop
    selection and DNS server selection, shown in Section 6.
 
+   The implementation and issues of NPTv6 are out of the scope of this
+   document.  They may be covered by another document under discussion
 
 
-Troan, et al.             Expires March 3, 2012                [Page 16]
+
+Troan, et al.              Expires May 3, 2012                 [Page 17]
 
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
 
-   The implementation and issues of IPv6 NAT are out of the scope of
-   this document.  They may be covered by another document under
-   discussion [RFC6296].
+   [RFC6296].
 
 7.2.  Co-existence consideration
 
@@ -924,6 +978,36 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
    The implementation of identifying non-MHMP hosts and NAT policy is
    outside the scope of this document.
 
+7.3.  Policy collision consideration
+
+   When multiple policy distributors exist, a policy receiver may not
+   follow one or each of the received policy.  In particular, when a
+   policy conflicts with another policy, a policy receiver cannot
+   implement each of the policy.  To solve or mitigate this issue, it is
+   required that prioritization rule to align these policies along
+   preference on a trusted interface.  Another solution is to preclude
+   the functionality of multiple policy acceptance at the receiver side.
+   In this case, a policy distributor should cooperate with other policy
+   distributors, and a single representative provider should distribute
+   a merged policy.
+
+   This document does not presume specific recommendations for resolving
+   policy collision.  It is expected to the implementation to decide how
+   to resolve the conflicts.  If they are not resolved consistently by
+   different implementations, that could affect interoperability and
+   security trust boundaries.  Future work will be expected to address
+   the need for consistent policy resolution to avoid interoperability
+   and security trust boundary issues.
+
+
+
+
+
+
+Troan, et al.              Expires May 3, 2012                 [Page 18]
+
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
+
 
 8.  Security Considerations
 
@@ -941,58 +1025,69 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
    Threats related to the policy distributor side:
 
-         Policy collision can happen.  When multiple policy distributor
-         exists, a policy receiver may not follow one or each of the
-         received policy.  Especially when a policy conflicts with
-         another policy, a policy receiver cannot implement each of the
+         Service provider should expect the existence of hosts that will
+         not obey the received policy.  A possible solutions is to
+         ingress-filter those packets that do not match the distributed
+         policy and drop them.  About the route selection, packet
+         forwarding or redirection can be another possible solution.
+         About the source address selection, IPv6 NAT can be another
+         possible solution.
 
-
-
-Troan, et al.             Expires March 3, 2012                [Page 17]
-
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
-
-
-         policy.  To solve or mitigate this issue, policy prioritization
-         rule should be defined, such as preference for the policy
-         received on a trusted interface.  Another solution is to
-         preclude the functionality of multiple policy acceptance at the
-         receiver side.  In this case, a policy distributor should
-         cooperate with other policy distributors, and a single
-         representative provider should distribute a merged policy.
-
-         Apart from the policy collision, a network service provider
-         should expect the existence of hosts that will not obey the
-         received policy.  A possible solutions is to ingress-filter
-         those packets that do not match the distributed policy and drop
-         them.  About the route selection, packet forwarding or
-         redirection can be another possible solution.  About the source
-         address selection, IPv6 NAT can be another possible solution.
+         Administrators of different networks might need to control
+         policies (and nodes' behaviors) independently of other
+         administrators.  It means that the need to have access controls
+         for such cross-administrative policy access.  Administrators
+         must control only nodes that are part of their own networks, or
+         some administrators must control only nodes that are part of
+         their own networks, while others are authorized to control
+         nodes across administrative boundaries.  To be success to
+         cross-administrative policy-control, per-user authorization
+         might be required with existing AAA and network management
+         standards.
 
    Threats related to the policy receiver side:
 
+         For policy receiver side, who should be trusted to accept
+         policies is a fundamental issue.  How is the trust established,
+         and how can the network element be assured that it can
+         established that trust before the network is fully configured.
+         If a policy receiver trusts untrusted network, it will cause
+         that distributing unwanted and unauthorized policy that
+         described below.
+
+
+
+
+
+
+Troan, et al.              Expires May 3, 2012                 [Page 19]
+
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
+
+
          A policy receiver are exposed to the threats of unauthorized
-         policy, which can lead to session hijack, DoS, wiretapping and
-         phishing.  Unauthorized policy here means a policy distributed
-         from an entity that does not have rights to do so.  Usually,
-         only a site administrator and a network service provider have
-         rights to distribute these policies just as well as IP address
-         assignment and DNS server address notification.  Regarding
-         source address selection, unauthorized policy can expose an IP
-         address that will not usually be exposed to an external server,
-         which can be a privacy problem.  To solve or mitigate this
-         problem of unauthorized policy, one approach is limiting on use
-         of these policy distribution mechanisms, as described in the
-         section 4.4 of [I-D.ietf-mif-dns-server-selection].  For
-         example, a policy should be preferred or accepted when the
-         policy is delivered across a secure, trusted channel such as 3G
-         connection in cellular services.  The proposed solutions are
-         baed on DHCP, so the limitation of local site communication,
-         which is often used in WiFi access services, should be another
-         solution or mitigation for this problem.  About DNS server
-         selection issue, DNSSEC can be another solution.  About source
-         address selection, the ingress filter at the network service
-         provider router can be a solution.
+         policy, which can lead to session hijack, falsification, DoS,
+         wiretapping and phishing.  Unauthorized policy here means a
+         policy distributed from an entity that does not have rights to
+         do so.  Usually, only a site administrator and a network
+         service provider have rights to distribute these policies just
+         as well as IP address assignment and DNS server address
+         notification.  Regarding source address selection, unauthorized
+         policy can expose an IP address that will not usually be
+         exposed to an external server, which can be a privacy problem.
+         To solve or mitigate this problem of unauthorized policy, one
+         approach is limiting on use of these policy distribution
+         mechanisms, as described in the section 4.4 of
+         [I-D.ietf-mif-dns-server-selection].  For example, a policy
+         should be preferred or accepted when the policy is verified its
+         integrity and delivered across a secure, trusted channel such
+         as 3G connection in cellular services.  The proposed solutions
+         are based on DHCP, so the limitation of local site
+         communication, which is often used in WiFi access services,
+         should be another solution or mitigation for this problem.
+         About DNS server selection issue, DNSSEC can be another
+         solution.  About source address selection, the ingress filter
+         at the network service provider router can be a solution.
 
          Another threat is the leakage of the policy and privacy issues
          resulting from that.  Especially when each client is
@@ -1001,12 +1096,6 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
          subscribes.  Encryption of communication channel, separation of
          communication channel per host can be solutions for this
          problem.
-
-
-
-Troan, et al.             Expires March 3, 2012                [Page 18]
-
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
 
 9.  IANA Considerations
@@ -1022,6 +1111,14 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
    Wojciech Dec, Yasuo Kashimura, Yuji Yamazaki.  This document has
    greatly benefited from inputs by Randy Bush, Brian Carpenter, and
    Teemu Savolainen.
+
+
+
+
+
+Troan, et al.              Expires May 3, 2012                 [Page 20]
+
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
 
 
 11.  References
@@ -1042,28 +1139,17 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
    [I-D.ietf-mif-dhcpv6-route-option]
               Dec, W., Mrugalski, T., Sun, T., and B. Sarikaya, "DHCPv6
-              Route Options", draft-ietf-mif-dhcpv6-route-option-02
-              (work in progress), July 2011.
+              Route Options", draft-ietf-mif-dhcpv6-route-option-03
+              (work in progress), September 2011.
 
    [I-D.ietf-mif-dns-server-selection]
               Savolainen, T., Kato, J., and T. Lemon, "Improved DNS
-              Server Selection for Multi-Homed Nodes",
-              draft-ietf-mif-dns-server-selection-03 (work in progress),
-              June 2011.
-
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119, March 1997.
+              Server Selection for Multi-Interfaced Nodes",
+              draft-ietf-mif-dns-server-selection-07 (work in progress),
+              October 2011.
 
    [RFC3484]  Draves, R., "Default Address Selection for Internet
               Protocol version 6 (IPv6)", RFC 3484, February 2003.
-
-
-
-
-Troan, et al.             Expires March 3, 2012                [Page 19]
-
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
-
 
    [RFC4191]  Draves, R. and D. Thaler, "Default Router Preferences and
               More-Specific Routes", RFC 4191, November 2005.
@@ -1083,6 +1169,14 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
 
    [RFC3442]  Lemon, T., Cheshire, S., and B. Volz, "The Classless
               Static Route Option for Dynamic Host Configuration
+
+
+
+Troan, et al.              Expires May 3, 2012                 [Page 21]
+
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
+
+
               Protocol (DHCP) version 4", RFC 3442, December 2002.
 
    [RFC3582]  Abley, J., Black, B., and V. Gill, "Goals for IPv6 Site-
@@ -1114,13 +1208,6 @@ Internet-Draft        IPv6 Multihoming without NAT           August 2011
               progress)", May 2010.
 
 
-
-
-Troan, et al.             Expires March 3, 2012                [Page 20]
-
-Internet-Draft        IPv6 Multihoming without NAT           August 2011
-
-
 Authors' Addresses
 
    Ole Troan (editor)
@@ -1139,12 +1226,19 @@ Authors' Addresses
    Email: david.miles@alcatel-lucent.com
 
 
+
+
+Troan, et al.              Expires May 3, 2012                 [Page 22]
+
+Internet-Draft        IPv6 Multihoming without NAT          October 2011
+
+
    Satoru Matsushima
    Softbank Telecom
    Tokyo
    Japan
 
-   Email: satoru.matsushima@tm.softbank.co.jp
+   Email: satoru.matsushima@g.softbank.co.jp
 
 
    Tadahisa Okimoto
@@ -1152,7 +1246,7 @@ Authors' Addresses
    Osaka
    Japan
 
-   Email: t.okimoto@rdc.west.ntt.co.jp
+   Email: t.okimoto@west.ntt.co.jp
 
 
    Dan Wing
@@ -1172,5 +1266,23 @@ Authors' Addresses
 
 
 
-Troan, et al.             Expires March 3, 2012                [Page 21]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Troan, et al.              Expires May 3, 2012                 [Page 23]
 
