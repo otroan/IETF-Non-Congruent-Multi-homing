@@ -12,6 +12,8 @@
 <!ENTITY RFC4960 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4960.xml">
 <!-- <!ENTITY RFC4966 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4966.xml"> -->
 <!ENTITY RFC3442 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3442.xml">
+<!ENTITY RFC5206 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5206.xml">
+<!ENTITY RFC5533 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5533.xml">
 <!ENTITY RFC6106 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6106.xml">
 <!ENTITY RFC6296 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6296.xml">
 <!ENTITY I-D.ietf-mif-dhcpv6-route-option SYSTEM 'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-mif-dhcpv6-route-option.xml'>
@@ -29,7 +31,7 @@
 <?rfc sortrefs="yes" ?>
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
-<rfc category="info" docName="draft-ietf-v6ops-ipv6-multihoming-without-ipv6nat-02"
+<rfc category="info" docName="draft-ietf-v6ops-ipv6-multihoming-without-ipv6nat-03"
      ipr="trust200902">
   <!-- ***** FRONT MATTER ***** -->
 
@@ -97,7 +99,7 @@
       </address>
     </author>
     <!--  -->
-    <date month="October" day="31" year="2011" />
+    <date month="November" day="15" year="2011" />
 
     <area>Internet</area>
     <workgroup>Internet Engineering Task Force</workgroup>
@@ -822,6 +824,17 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 	and distribute DNS queries to the appropriate DNS servers according
 	to the policy.</t>
       </section>
+      
+      <section anchor="other_algo" title="Other algorithms available in RFCs">
+      	<t>The authors of this document are aware of a variety of other
+      	algorithms and architectures, such as <xref
+      	target="RFC5533">shim6</xref> and <xref target="RFC5206">HIP</xref>,
+      	that may be useful in this environment. At this writing, there is not
+      	enough operational experience on which to base a recommendation.
+      	Should such operational experience become available, this document may
+      	be updated in the future.</t>
+	 </section>
+      
     </section>
 
     <section anchor="legacy_host" title="Considerations for MHMP deployment">
@@ -1107,6 +1120,8 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       &RFC4116;
       &RFC4218;
       &RFC4960;
+      &RFC5206;
+      &RFC5533;
       <!-- &RFC4966; -->
       &RFC6106;
       <reference anchor="TR069">
