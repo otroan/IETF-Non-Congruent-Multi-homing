@@ -31,7 +31,7 @@
 <?rfc sortrefs="yes" ?>
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
-<rfc category="info" docName="draft-ietf-v6ops-ipv6-multihoming-without-ipv6nat-03"
+<rfc category="info" docName="draft-ietf-v6ops-ipv6-multihoming-without-ipv6nat-04"
      ipr="trust200902">
   <!-- ***** FRONT MATTER ***** -->
 
@@ -99,7 +99,7 @@
       </address>
     </author>
     <!--  -->
-    <date month="November" day="15" year="2011" />
+    <date month="February" year="2012" />
 
     <area>Internet</area>
     <workgroup>Internet Engineering Task Force</workgroup>
@@ -127,6 +127,21 @@
 
   <middle>
     <section title="Introduction">
+      <t>In this document, we analyze the use cases of multihoming,
+      describe functional requirements and the problems with IPv6
+      multihoming.  There are two ways to avoid the problems of IPv6
+      multihoming:
+<list style="numbers">
+<t>IPv6 network prefix translation
+(NPTv6, <xref target="RFC6296"></xref>), or;</t>
+<t>refining IPv6 specifications to resolve the problems with IPv6
+multihoming.</t>
+      </list>
+      This document concerns itself with the latter, and explores the
+      solution space.  We hope this will encourage the development
+      of solutions to the problem so that, in the long run, NPTv6 can
+      be avoided.</t>
+
       <t>IPv6 provides enough globally unique addresses to permit every
       conceivable host on the Internet to be uniquely addressed without
       the requirement for Network Address Port Translation (<xref
@@ -213,17 +228,7 @@
       cache server, which receives all DNS inquires, and gives a correct
       answer to the host.</t>
 
-      <t>In this document, we analyze the use cases of multihoming. We
-      also describe functional requirements and possible solutions for
-      multihoming without the use of prefix translation in IPv6 for
-      hosts and small IPv6 networks that would otherwise be unable to
-      meet minimum IPv6 allocation criteria. We conclude that DHCPv6
-      based solutions are suitable to solve the multihoming issues,
-      which described in this document. Nevertheless, we mention that
-      the possible needs for NPTv6 in the transition phase to the fully
-      deployment of the proposed solutions.</t>
-
-    </section>
+   </section>
 
     <section title="Terminology">
     <!--
@@ -792,6 +797,18 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       </section>
 
       <section title="DNS recursive name server selection">
+
+<t><list style="empty">
+<t>Note: Split-horizon DNS is discussed in this section.  Split-horizon DNS
+is known to cause problems with applications to allow information 
+leakage.  The discussion of split-horizon DNS is not condoning its
+use, but rather acknowledging that split-horizon DNS is used and
+that its use is another justification for network address translation.
+The goal of this document is to encourage building solutions which
+do not need network address translation.  Two solutions appear 
+possible:  make split-horizon DNS work better (which is discussed
+below) or meet network administrator's requirements without
+split-horizon DNS (which is out of scope of this document).</t></list></t>
 
 	<t>As in the above two problems, a policy-based approach and non 
 	policy-based approach are possible.  In a non policy-based approach, 
