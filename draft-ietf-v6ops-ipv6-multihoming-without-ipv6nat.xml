@@ -958,148 +958,105 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
   </section>
 
   <section anchor="Security" title="Security Considerations">
+    <t>In today's multi-homed IPv4 networks, it is difficult to
+    resolve or coordinate conflicts between the two upstream networks.
+    This problem persists with IPv6, no matter if the hosts use IPv6
+    provider-dependent or provider-independent addresses.</t>
 
     <t>This document requires that the solutions for MHMP should have
     policy providing functions.  New security threats can be
     introduced depending on what kind and what form of the policy.
     The threats can be categorized in two parts: the policy receiver
     side and the policy distributor side.</t>
-	
+
     <t>A policy receiver may receive an evil policy from a policy
-    distributor. A policy distributor should expect some hosts in its
-    network do not follow the distributed policy. The security threats
-    related to IPv6 multihoming are described in <xref
-    target="RFC4218"></xref>. Those threats that are specific to MHMP
-    solutions are enumerated below.</t>
-	
-	<t>
-	  <list style="hanging">
-	    <t hangText="Threats related to the policy distributor side:">
-	      <list>
-		<t>Service provider should expect the existence of
-		hosts that will not obey the received policy. A
-		possible solutions is to ingress-filter those packets
-		that do not match the distributed policy and drop
-		them. About the route selection, packet forwarding or
-		redirection can be another possible solution. About
-		the source address selection, IPv6 NAT can be another
-		possible solution.</t>
+    distributor.  A policy distributor should expect some hosts in its
+    network do not follow the distributed policy.  At the time of
+    writing, there are no known methods to resolve conflicts between
+    the host's own policy (policy receiver) and the policies of
+    upstream providers (policy provider).  As this document is
+    analyzing the problem space, rather than proposing a solution, we
+    note the following problems:</t>
 
-		<t>Administrators of different networks might need to
-		control policies (and nodes' behaviors) independently
-		of other administrators. It means that the need to
-		have access controls for such cross-administrative
-		policy access. Administrators must control only nodes
-		that are part of their own networks, or some
-		administrators must control only nodes that are part
-		of their own networks, while others are authorized to
-		control nodes across administrative boundaries. To be
-		success to cross-administrative policy-control,
-		per-user authorization might be required with existing
-		AAA and network management standards.</t>
-	      </list>
-	    </t>
+    <t><list style="hanging">
+      <t hangText="Threats related to the policy distributor side:">
+	<list>
+	  <t>Service provider should expect the existence of hosts
+	  that will not obey the received policy. A possible solutions
+	  is to ingress-filter those packets that do not match the
+	  distributed policy and drop them. About the route selection,
+	  packet forwarding or redirection can be another possible
+	  solution. About the source address selection, IPv6 NAT can
+	  be another possible solution.</t>
+
+	  <t>Administrators of different networks might need to
+	  control policies (and nodes' behaviors) independently of
+	  other administrators. It means that the need to have access
+	  controls for such cross-administrative policy
+	  access. Administrators must control only nodes that are part
+	  of their own networks, or some administrators must control
+	  only nodes that are part of their own networks, while others
+	  are authorized to control nodes across administrative
+	  boundaries. To be success to cross-administrative
+	  policy-control, per-user authorization might be required
+	  with existing AAA and network management standards.</t>
+	</list>
+      </t>
 			
-	    <t hangText="Threats related to the policy receiver side:">
-	      <list>
-		<t>For policy receiver side, who should be trusted to
-		accept policies is a fundamental issue. How is the
-		trust established, and how can the network element be
-		assured that it can established that trust before the
-		network is fully configured. If a policy receiver
-		trusts untrusted network, it will cause that
-		distributing unwanted and unauthorized policy that
-		described below.</t>
+      <t hangText="Threats related to the policy receiver side:">
+	<list>
+	  <t>For policy receiver side, who should be trusted to accept
+	  policies is a fundamental issue. How is the trust
+	  established, and how can the network element be assured that
+	  it can established that trust before the network is fully
+	  configured. If a policy receiver trusts untrusted network,
+	  it will cause that distributing unwanted and unauthorized
+	  policy that described below.</t>
 				
-		<t>A policy receiver are exposed to the threats of
-		unauthorized policy, which can lead to session hijack,
-		falsification, DoS, wiretapping and
-		phishing. Unauthorized policy here means a policy
-		distributed from an entity that does not have rights
-		to do so. Usually, only a site administrator and a
-		network service provider have rights to distribute
-		these policies just as well as IP address assignment
-		and DNS server address notification. Regarding source
-		address selection, unauthorized policy can expose an
-		IP address that will not usually be exposed to an
-		external server, which can be a privacy problem. To
-		solve or mitigate this problem of unauthorized policy,
-		one approach is limiting on use of these policy
-		distribution mechanisms, as described in the section
-		4.4 of <xref
-		target="I-D.ietf-mif-dns-server-selection"></xref>.
-		For example, a policy should be preferred or accepted
-		when the policy is verified its integrity and
-		delivered across a secure, trusted channel such as 3G
-		connection in cellular services. The proposed
-		solutions are based on DHCP, so the limitation of
-		local site communication, which is often used in WiFi
-		access services, should be another solution or
-		mitigation for this problem. About DNS server
-		selection issue, DNSSEC can be another solution.
-		About source address selection, the ingress filter at
-		the network service provider router can be a
-		solution.</t>
+	  <t>A policy receiver are exposed to the threats of
+	  unauthorized policy, which can lead to session hijack,
+	  falsification, DoS, wiretapping and phishing. Unauthorized
+	  policy here means a policy distributed from an entity that
+	  does not have rights to do so. Usually, only a site
+	  administrator and a network service provider have rights to
+	  distribute these policies just as well as IP address
+	  assignment and DNS server address notification. Regarding
+	  source address selection, unauthorized policy can expose an
+	  IP address that will not usually be exposed to an external
+	  server, which can be a privacy problem. To solve or mitigate
+	  this problem of unauthorized policy, one approach is
+	  limiting on use of these policy distribution mechanisms, as
+	  described in the section 4.4 of <xref
+	  target="I-D.ietf-mif-dns-server-selection"></xref>.  For
+	  example, a policy should be preferred or accepted when the
+	  policy is verified its integrity and delivered across a
+	  secure, trusted channel such as 3G connection in cellular
+	  services. The proposed solutions are based on DHCP, so the
+	  limitation of local site communication, which is often used
+	  in WiFi access services, should be another solution or
+	  mitigation for this problem. About DNS server selection
+	  issue, DNSSEC can be another solution.  About source address
+	  selection, the ingress filter at the network service
+	  provider router can be a solution.</t>
 
-		<t>Another threat is the leakage of the policy and
-		privacy issues resulting from that. Especially when
-		each client is distributed its own policy from the
-		network service provider, the policy can give a hint
-		of which service the client subscribes. Encryption of
-		communication channel, separation of communication
-		channel per host can be solutions for this problem.
-		</t>
+	  <t>Another threat is the leakage of the policy and privacy
+	  issues resulting from that. Especially when each client is
+	  distributed its own policy from the network service
+	  provider, the policy can give a hint of which service the
+	  client subscribes. Encryption of communication channel,
+	  separation of communication channel per host can be
+	  solutions for this problem.
+	  </t>
 		
-	      </list>
-	    </t>
-	  </list>
-	</t>
+	</list>
+      </t>
+    </list>
+    </t>
 
-
-	<!--
-
-	<t>The security considerations of MHMP are brief, simply noting that
-	a policy might be "evil" or the participants might ignore the
-	policy. I think it is more complicated.</t>
-
-	<t>There is a fundamental question of who should be trusted to
-	distribute policy. How is the trust established, and how can the
-	network element be assured that it can established that trust before
-	the network is fully configured.  This might be quite difficult,
-	because there could be more than one policy distributor, each with a
-	slightly different view of the network. It seems inevitable that a
-	host will have to be able to merge policies and deal with
-	updates.</t>
-
-	<t>Discussion: Shouldn't the device policy be out of scope? 'Further, a
-	host might have its own policies to merge into the mix. For example,
-	it might require a DNSSEC capable server for queries about network
-	A, but the policy might specify a non-DNSSEC server for that
-	network.  Thus, I can see a need for hosts to communicate their
-	security requirements to the policy server.'</t>
-
-	<t>Discussion: Shouldn't it be out of scope? 'There are issues about
-	the privacy of the policy itself.  Perhaps particular network
-	prefixes reveal business relationships that are confidential. Thus,
-	some policy information might be sent on encrypted channels.'</t>
-
-	<t>Discussion: Shoundn't it need define behavior? 'What kind of
-	policy enforcement is necessary?  If a host violates the multihoming
-	policy and sends a packet with a source address that is appropriate
-	to a network over the path to another network, should the packet be
-	blocked, redirected, or allowed?  What about DNS queries that are
-	sent to a server that is not recommended for the target? Quash,
-	redirect, or allow?  What information should go back to the
-	host?'</t>
-
-	<t>I think that most of these comments apply to any policy server,
-	and I believe that various IETF documents in the past have attempted
-	to define generic security considerations for them.</t>
-  
-  
-    -->
+    <t>The security threats related to IPv6 multihoming are described
+    in <xref target="RFC4218"></xref>.</t>
     
-    </section>
+  </section>
 
     <section anchor="IANA" title="IANA Considerations">
       <t>This document has no IANA actions.</t>

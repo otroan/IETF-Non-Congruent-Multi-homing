@@ -4,14 +4,14 @@
 Internet Engineering Task Force                            O. Troan, Ed.
 Internet-Draft                                                     Cisco
 Intended status: Informational                                  D. Miles
-Expires: August 9, 2012                                   Alcatel-Lucent
+Expires: August 13, 2012                                  Alcatel-Lucent
                                                            S. Matsushima
                                                         Softbank Telecom
                                                               T. Okimoto
                                                                 NTT West
                                                                  D. Wing
                                                                    Cisco
-                                                        February 6, 2012
+                                                       February 10, 2012
 
 
           IPv6 Multihoming without Network Address Translation
@@ -52,12 +52,12 @@ Status of this Memo
 
 
 
-Troan, et al.            Expires August 9, 2012                 [Page 1]
+Troan, et al.            Expires August 13, 2012                [Page 1]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
-   This Internet-Draft will expire on August 9, 2012.
+   This Internet-Draft will expire on August 13, 2012.
 
 Copyright Notice
 
@@ -108,7 +108,7 @@ Copyright Notice
 
 
 
-Troan, et al.            Expires August 9, 2012                 [Page 2]
+Troan, et al.            Expires August 13, 2012                [Page 2]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
@@ -140,8 +140,8 @@ Table of Contents
    8.  Security Considerations  . . . . . . . . . . . . . . . . . . . 18
    9.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 20
    10. Contributors . . . . . . . . . . . . . . . . . . . . . . . . . 20
-   11. References . . . . . . . . . . . . . . . . . . . . . . . . . . 20
-     11.1. Normative References . . . . . . . . . . . . . . . . . . . 20
+   11. References . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+     11.1. Normative References . . . . . . . . . . . . . . . . . . . 21
      11.2. Informative References . . . . . . . . . . . . . . . . . . 21
    Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 22
 
@@ -164,7 +164,7 @@ Table of Contents
 
 
 
-Troan, et al.            Expires August 9, 2012                 [Page 3]
+Troan, et al.            Expires August 13, 2012                [Page 3]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
@@ -220,7 +220,7 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
 
-Troan, et al.            Expires August 9, 2012                 [Page 4]
+Troan, et al.            Expires August 13, 2012                [Page 4]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
@@ -276,7 +276,7 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
 
-Troan, et al.            Expires August 9, 2012                 [Page 5]
+Troan, et al.            Expires August 13, 2012                [Page 5]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
@@ -332,7 +332,7 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
 
-Troan, et al.            Expires August 9, 2012                 [Page 6]
+Troan, et al.            Expires August 13, 2012                [Page 6]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
@@ -388,7 +388,7 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
 
-Troan, et al.            Expires August 9, 2012                 [Page 7]
+Troan, et al.            Expires August 13, 2012                [Page 7]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
@@ -444,7 +444,7 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
 
-Troan, et al.            Expires August 9, 2012                 [Page 8]
+Troan, et al.            Expires August 13, 2012                [Page 8]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
@@ -500,7 +500,7 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
 
-Troan, et al.            Expires August 9, 2012                 [Page 9]
+Troan, et al.            Expires August 13, 2012                [Page 9]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
@@ -556,7 +556,7 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
 
-Troan, et al.            Expires August 9, 2012                [Page 10]
+Troan, et al.            Expires August 13, 2012               [Page 10]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
@@ -612,7 +612,7 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
 
-Troan, et al.            Expires August 9, 2012                [Page 11]
+Troan, et al.            Expires August 13, 2012               [Page 11]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
@@ -668,7 +668,7 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
 
-Troan, et al.            Expires August 9, 2012                [Page 12]
+Troan, et al.            Expires August 13, 2012               [Page 12]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
@@ -724,7 +724,7 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
 
-Troan, et al.            Expires August 9, 2012                [Page 13]
+Troan, et al.            Expires August 13, 2012               [Page 13]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
@@ -780,7 +780,7 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
 
-Troan, et al.            Expires August 9, 2012                [Page 14]
+Troan, et al.            Expires August 13, 2012               [Page 14]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
@@ -836,7 +836,7 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
 
-Troan, et al.            Expires August 9, 2012                [Page 15]
+Troan, et al.            Expires August 13, 2012               [Page 15]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
@@ -892,7 +892,7 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
 
-Troan, et al.            Expires August 9, 2012                [Page 16]
+Troan, et al.            Expires August 13, 2012               [Page 16]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
@@ -948,7 +948,7 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
 
-Troan, et al.            Expires August 9, 2012                [Page 17]
+Troan, et al.            Expires August 13, 2012               [Page 17]
 
 Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
@@ -996,24 +996,33 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 8.  Security Considerations
 
+   In today's multi-homed IPv4 networks, it is difficult to resolve or
+   coordinate conflicts between the two upstream networks.  This problem
+   persists with IPv6, no matter if the hosts use IPv6 provider-
+   dependent or provider-independent addresses.
+
+
+
+
+Troan, et al.            Expires August 13, 2012               [Page 18]
+
+Internet-Draft        IPv6 Multihoming without NAT         February 2012
+
+
    This document requires that the solutions for MHMP should have policy
    providing functions.  New security threats can be introduced
    depending on what kind and what form of the policy.  The threats can
    be categorized in two parts: the policy receiver side and the policy
    distributor side.
 
-
-
-Troan, et al.            Expires August 9, 2012                [Page 18]
-
-Internet-Draft        IPv6 Multihoming without NAT         February 2012
-
-
    A policy receiver may receive an evil policy from a policy
    distributor.  A policy distributor should expect some hosts in its
-   network do not follow the distributed policy.  The security threats
-   related to IPv6 multihoming are described in [RFC4218].  Those
-   threats that are specific to MHMP solutions are enumerated below.
+   network do not follow the distributed policy.  At the time of
+   writing, there are no known methods to resolve conflicts between the
+   host's own policy (policy receiver) and the policies of upstream
+   providers (policy provider).  As this document is analyzing the
+   problem space, rather than proposing a solution, we note the
+   following problems:
 
    Threats related to the policy distributor side:
 
@@ -1047,6 +1056,15 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
          that distributing unwanted and unauthorized policy that
          described below.
 
+
+
+
+
+Troan, et al.            Expires August 13, 2012               [Page 19]
+
+Internet-Draft        IPv6 Multihoming without NAT         February 2012
+
+
          A policy receiver are exposed to the threats of unauthorized
          policy, which can lead to session hijack, falsification, DoS,
          wiretapping and phishing.  Unauthorized policy here means a
@@ -1057,14 +1075,6 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
          notification.  Regarding source address selection, unauthorized
          policy can expose an IP address that will not usually be
          exposed to an external server, which can be a privacy problem.
-
-
-
-Troan, et al.            Expires August 9, 2012                [Page 19]
-
-Internet-Draft        IPv6 Multihoming without NAT         February 2012
-
-
          To solve or mitigate this problem of unauthorized policy, one
          approach is limiting on use of these policy distribution
          mechanisms, as described in the section 4.4 of
@@ -1087,6 +1097,9 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
          communication channel per host can be solutions for this
          problem.
 
+   The security threats related to IPv6 multihoming are described in
+   [RFC4218].
+
 
 9.  IANA Considerations
 
@@ -1100,6 +1113,14 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
    Jun-ya Kato, Shigeru Akiyama, Seiichi Morikawa, Mark Townsley,
    Wojciech Dec, Yasuo Kashimura, Yuji Yamazaki.  This document has
    greatly benefited from inputs by Randy Bush, Brian Carpenter, and
+
+
+
+Troan, et al.            Expires August 13, 2012               [Page 20]
+
+Internet-Draft        IPv6 Multihoming without NAT         February 2012
+
+
    Teemu Savolainen.
 
 
@@ -1112,14 +1133,6 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
               Address Selection Policy Changes",
               draft-ietf-6man-addr-select-considerations-04 (work in
               progress), October 2011.
-
-
-
-
-Troan, et al.            Expires August 9, 2012                [Page 20]
-
-Internet-Draft        IPv6 Multihoming without NAT         February 2012
-
 
    [I-D.ietf-6man-addr-select-opt]
               Matsumoto, A., Fujisaki, T., Kato, J., and T. Chown,
@@ -1157,6 +1170,13 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
               Address Translator (Traditional NAT)", RFC 3022,
               January 2001.
 
+
+
+Troan, et al.            Expires August 13, 2012               [Page 21]
+
+Internet-Draft        IPv6 Multihoming without NAT         February 2012
+
+
    [RFC3442]  Lemon, T., Cheshire, S., and B. Volz, "The Classless
               Static Route Option for Dynamic Host Configuration
               Protocol (DHCP) version 4", RFC 3442, December 2002.
@@ -1169,14 +1189,6 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
               December 2003.
 
    [RFC4116]  Abley, J., Lindqvist, K., Davies, E., Black, B., and V.
-
-
-
-Troan, et al.            Expires August 9, 2012                [Page 21]
-
-Internet-Draft        IPv6 Multihoming without NAT         February 2012
-
-
               Gill, "IPv4 Multihoming Practices and Limitations",
               RFC 4116, July 2005.
 
@@ -1205,6 +1217,22 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
               progress)", May 2010.
 
 
+
+
+
+
+
+
+
+
+
+
+
+Troan, et al.            Expires August 13, 2012               [Page 22]
+
+Internet-Draft        IPv6 Multihoming without NAT         February 2012
+
+
 Authors' Addresses
 
    Ole Troan (editor)
@@ -1221,16 +1249,6 @@ Authors' Addresses
    Australia
 
    Email: david.miles@alcatel-lucent.com
-
-
-
-
-
-
-
-Troan, et al.            Expires August 9, 2012                [Page 22]
-
-Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
    Satoru Matsushima
@@ -1266,23 +1284,5 @@ Internet-Draft        IPv6 Multihoming without NAT         February 2012
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Troan, et al.            Expires August 9, 2012                [Page 23]
+Troan, et al.            Expires August 13, 2012               [Page 23]
 
