@@ -2,7 +2,7 @@
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 <!-- <!ENTITY RFC2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"> -->
 <!ENTITY RFC3022 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3022.xml">
-<!ENTITY RFC3484 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3484.xml">
+<!ENTITY RFC6724 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6724.xml">
 <!ENTITY RFC3582 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3582.xml">
 <!ENTITY RFC3646 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3646.xml">
 <!ENTITY RFC4116 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4116.xml">
@@ -16,9 +16,9 @@
 <!ENTITY RFC5533 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5533.xml">
 <!ENTITY RFC6106 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6106.xml">
 <!ENTITY RFC6296 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6296.xml">
-<!ENTITY I-D.ietf-6man-addr-select-considerations SYSTEM 'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-6man-addr-select-considerations.xml'>
-<!ENTITY I-D.ietf-6man-addr-select-opt SYSTEM 'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-6man-addr-select-opt.xml'>
+<!ENTITY RFC7078 SYSTEM 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7078.xml'>
 <!ENTITY RFC6731 SYSTEM 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.6731.xml'>
+<!ENTITY RFC5220 SYSTEM 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5220.xml'>
 
 
 ]>
@@ -30,7 +30,7 @@
 <?rfc sortrefs="yes" ?>
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
-<rfc category="info" docName="draft-ietf-v6ops-ipv6-multihoming-without-ipv6nat-05"
+<rfc category="info" docName="draft-ietf-v6ops-ipv6-multihoming-without-ipv6nat-06"
      ipr="trust200902">
   <!-- ***** FRONT MATTER ***** -->
 
@@ -98,7 +98,7 @@
       </address>
     </author>
     <!--  -->
-    <date month="February" year="2012" />
+    <date month="February" year="2014" />
 
     <area>Internet</area>
     <workgroup>Internet Engineering Task Force</workgroup>
@@ -601,14 +601,10 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       service provider either on the same link (scenarios 1 &amp; 2)
       or different links (scenario 3). When the host wishes to send a
       packet to any given destination, the current source address
-      selection rules <xref target="RFC3484"></xref> may not
+      selection rules <xref target="RFC6724"></xref> may not
       deterministically select the correct source address. <xref
-      target="I-D.ietf-6man-addr-select-considerations"></xref>
-      describes the use of the policy table <xref
-      target="RFC3484"></xref> to resolve this problem, but there is
-      no mechanism defined to disseminate the policy table information
-      to a host. A proposal is in <xref
-      target="I-D.ietf-6man-addr-select-opt"></xref> to provide a
+      target="RFC7078"></xref> describes the use of the policy table
+      <xref target="RFC6724"></xref> to resolve this problem, using a
       DHCPv6 mechanism for host policy table management.</t>
 
         <t>Again, by employing DHCPv6, the server could restrict address
@@ -627,7 +623,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
         
         <t>It is noted that the service providers (i.e., ISP and
         enterprise/VPN) must also support <xref
-        target="I-D.ietf-6man-addr-select-opt"></xref>.</t>
+        target="RFC7078"></xref>.</t>
 
       </section>
 
@@ -731,16 +727,17 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
 
       <section title="Source address selection">
 
-	<t>Possible solutions and their evaluation are summarized in
-	<xref target="I-D.ietf-6man-addr-select-considerations"></xref>. When
-	those solutions are examined against the requirements in <xref
-	target="requirements"></xref>, the proactive approaches, such
-	as the policy table distribution mechanism and the routing
-	hints mechanism, are more appropriate in that
-	they can propagate the network administrator's policy
-	directly. The policy distribution mechanism has an advantage
-	with regard to the host's protocol stack impact and the
-	static nature of the assumed target network environment.</t>
+	<t>The problems of address selection in multi-prefix
+	environments are summarized in <xref
+	target="RFC5220"></xref>. When solutions are examined against
+	the requirements in <xref target="requirements"></xref>, the
+	proactive approaches, such as the policy table distribution
+	mechanism and the routing hints mechanism, are more
+	appropriate in that they can propagate the network
+	administrator's policy directly. The policy distribution
+	mechanism has an advantage with regard to the host's protocol
+	stack impact and the static nature of the assumed target
+	network environment.</t>
 
       </section>
 
@@ -1066,12 +1063,11 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
   <back>
     <references title="Normative References">
       <!-- &RFC2119; -->
-      &RFC3484;
+      &RFC6724;
       &RFC4861;
       &RFC4191;
       &RFC6296;
-      &I-D.ietf-6man-addr-select-considerations;
-      &I-D.ietf-6man-addr-select-opt;
+      &RFC7078;
       &RFC6731;
     </references>
 
@@ -1084,6 +1080,7 @@ title="single uplink, single next-hop, multiple prefix (Scenario&#160;2)">
       &RFC4218;
       &RFC4960;
       &RFC5206;
+      &RFC5220;
       &RFC5533;
       <!-- &RFC4966; -->
       &RFC6106;

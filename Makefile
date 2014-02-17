@@ -2,10 +2,10 @@
 # Ole Troan, ot@cisco.com
 # April 2009
 
-REVISION=05
+REVISION=06
 DRAFT=draft-ietf-v6ops-ipv6-multihoming-without-ipv6nat.txt \
 
-XML2RFC=./xml2rfc/xml2rfc.tcl
+XML2RFC=xml2rfc
 
 # General rule to "compile" an XML file
 %.txt:  %.xml
